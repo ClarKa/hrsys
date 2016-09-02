@@ -44,40 +44,40 @@ public class Employee implements java.io.Serializable {
     @Column(name = "em_firstname", unique = false, nullable = false, insertable = true, updatable = true)
     public String getFirstname()  { return firstname; }
 
-    @Column(name = "em_lastname", unique = false, nullable = true, insertable = true, updatable = true)
+    @Column(name = "em_lastname", unique = false, nullable = false, insertable = true, updatable = true)
     public String getLastname()   { return lastname; }
 
-    @Column(name = "em_gender", unique = false, nullable = false, insertable = true, updatable = true)
+    @Column(name = "em_gender", unique = false, nullable = true, insertable = true, updatable = true)
     public String getGender()   { return gender; }
 
-    @Column(name = "em_birth", unique = false, nullable = false, insertable = true, updatable = true)
+    @Column(name = "em_birth", unique = false, nullable = true, insertable = true, updatable = true)
     public Date getBirth()   { return birth; }
 
-    @Column(name = "em_ssn", unique = true, nullable = false, insertable = true, updatable = true)
+    @Column(name = "em_ssn", unique = true, nullable = true, insertable = true, updatable = true)
     public String getSSN()   { return SSN; }
 
-    @Column(name = "em_marriage", unique = false, nullable = false, insertable = true, updatable = true)
+    @Column(name = "em_marriage", unique = false, nullable = true, insertable = true, updatable = true)
     public String getMarriage()  { return marriage; }
 
-    @Column(name = "em_nationality", unique = false, nullable = false, insertable = true, updatable = true)
+    @Column(name = "em_nationality", unique = false, nullable = true, insertable = true, updatable = true)
     public String getNationality()  { return nationality; }
 
-    @Column(name = "em_education", unique = false, nullable = false, insertable = true, updatable = true)
+    @Column(name = "em_education", unique = false, nullable = true, insertable = true, updatable = true)
     public String getEducation() { return education; }
 
-    @Column(name = "em_enrollment_date", unique = false, nullable = false, insertable = true, updatable = true)
+    @Column(name = "em_enrollment_date", unique = false, nullable = true, insertable = true, updatable = true)
     public Date getEnrollmentDate()  { return enrollmentDate; }
 
     @Column(name = "em_email", unique = true, nullable = true, insertable = true, updatable = true)
     public String getEmail()      { return email; }
 
-    @Column(name = "em_position", unique = false, nullable = false, insertable = true, updatable = true)
+    @Column(name = "em_position", unique = false, nullable = true, insertable = true, updatable = true)
     public String getPosition()   { return position; }
 
-    @Column(name = "em_phone", unique = true, nullable = false, insertable = true, updatable = true)
+    @Column(name = "em_phone", unique = true, nullable = true, insertable = true, updatable = true)
     public String getPhone()  { return phone; }
 
-    @Column(name = "em_address", unique = false, nullable = false, insertable = true, updatable = true)
+    @Column(name = "em_address", unique = false, nullable = true, insertable = true, updatable = true)
     public String getAddress()  { return address; }
 
     @Column(name = "em_comment", unique = false, nullable = true, insertable = true, updatable = true)

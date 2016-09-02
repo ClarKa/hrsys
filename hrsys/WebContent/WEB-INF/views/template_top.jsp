@@ -34,12 +34,13 @@
 			          <ul class="dropdown-menu">
 			           	<li><a href="#">All Employee</a></li>
 			            <li role="separator" class="divider"></li>
-			            <li><a href="#" data-toggle="modal" data-target="#addEmployeeModal">Add Employee</a></li>
+			            <!-- <li><a href="#" data-toggle="modal" data-target="#addEmployeeModal" id="add_employee_modal_trigger">Add Employee</a></li> -->
 			          </ul>
 		        	</li>
       				<li><a href="#" id="nav-admin-attendance">Attendance</a></li>
       				<li><a href="#" id="nav-admin-training">Training</a>
       				<li><a href="#" id="nav-admin-record">Record</a></li>
+      				<li><a href="#" data-toggle="modal" data-target="#addEmployeeModal" id="add_employee_modal_trigger">Add Employee</a></li>
       			</ul>
     		</sec:authorize>
     		<sec:authorize access="hasRole('USER')">

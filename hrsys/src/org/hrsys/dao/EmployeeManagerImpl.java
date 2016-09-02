@@ -12,9 +12,10 @@ import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.hrsys.dto.EmployeeDTO;
 import org.hrsys.entity.*;
 
 @Repository
@@ -42,5 +43,12 @@ public class EmployeeManagerImpl implements EmployeeManager {
     @Override
     public void createEmployee(Employee emp) {
         mgr.persist(emp);
+    }
+    
+    @Override
+    public EmployeeDTO getOneEmployee(int employeeID) {
+        Employee employee = mgr.find(Employee.class, employeeID);
+        EmployeeDTO employeeDto = new EmployeeDTO(employee);
+        return employeeDto;
     }
 }

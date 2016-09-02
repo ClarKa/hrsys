@@ -18,17 +18,15 @@ public class DepartmentManagerImpl implements DepartmentManager {
 
     @Override
     public List<Department> getAllDepartment() {
-	List<Department> results = new ArrayList<>();
-	try {
-	    Query jpqlQuery = mgr.createQuery("SELECT d FROM Department d");
-	    results = jpqlQuery.getResultList();
-//        org.hibernate.Query hquery = jpqlQuery.unwrap(org.hibernate.Query.class);
-//        hquery.setCacheable(true);
-	    
-	    
-	} catch(Exception e) {
-	    e.printStackTrace();
-	}
+        List<Department> results = new ArrayList<>();
+        try {
+            Query jpqlQuery = mgr.createQuery("SELECT d FROM Department d");
+            results = jpqlQuery.getResultList();
+//          org.hibernate.Query hquery = jpqlQuery.unwrap(org.hibernate.Query.class);
+//          hquery.setCacheable(true);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
 //        List<Department> results = hquery.list();
 
         return results;
@@ -58,11 +56,9 @@ public class DepartmentManagerImpl implements DepartmentManager {
     
     @Override
     public void deleteDepartment(Department department) throws SQLException {
-	
     };
     
     @Override
     public void updateDepartment(Department department) throws SQLException {
-	
     };
 }

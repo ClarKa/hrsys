@@ -20,7 +20,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.jdbcAuthentication().dataSource(dataSource)
+//      auth.jdbcAuthentication().dataSource(dataSource)
 //				.usersByUsernameQuery("select user_name as username, password, CASE WHEN inactive_ind = 'N' THEN true ELSE false END as enable from user where user_name = ?")
 //				.authoritiesByUsernameQuery(
 //						"select u.user_name as username, c.value as role "
