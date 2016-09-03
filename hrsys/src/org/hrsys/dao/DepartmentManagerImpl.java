@@ -9,9 +9,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.hrsys.entity.*;
 
 @Repository
+@Transactional
 public class DepartmentManagerImpl implements DepartmentManager {
     @PersistenceContext
     private EntityManager mgr;

@@ -1,6 +1,5 @@
 package org.hrsys.webservices;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +12,15 @@ import org.hrsys.dao.DepartmentManager;
 import org.hrsys.dao.EmployeeManager;
 import org.hrsys.dto.EmployeeDTO;
 import org.hrsys.entity.Employee;
+import org.hrsys.facades.EmployeeInfoFacade;
 import org.hrsys.constants.CommonConstants;
 import org.hrsys.constants.ServicePaths;
 
 @RestController
 @RequestMapping(value = ServicePaths.GET_EMPLOYEE_PATH)
 public class EmployeeInfoServices {
+    private EmployeeInfoFacade employeeInfoFacade = new EmployeeInfoFacade();
+    
     @Autowired
     EmployeeManager employeeManager;
 
@@ -28,22 +30,18 @@ public class EmployeeInfoServices {
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     @PreAuthorize(CommonConstants.HAS_ROLE_ADMIN)
     public List<Employee> getAllEmployees() {
-        List<Employee> employees= new ArrayList<>();
-        employees = employeeManager.getAllEmployee();
-        return employees;
+        return employeeInfoFacade.getAllEmployees(employeeManager);
     }
 
     @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}", method = RequestMethod.GET, produces = "application/json")
     @PreAuthorize(CommonConstants.HAS_ROLE_AUTHENTICATED)
     public EmployeeDTO getOneEmployee(@PathVariable("employeeid") int employeeid) {
-        System.out.println(employeeid);
-        EmployeeDTO employeeDto = employeeManager.getOneEmployee(employeeid);
-        return employeeDto;
+        return employeeInfoFacade.getOneEmployee(employeeid, employeeManager);
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     @PreAuthorize(CommonConstants.HAS_ROLE_ADMIN)
     public EmployeeDTO createEmployee(EmployeeDTO employeeDto) {
-        return employeeDto;
+        return employeeInfoFacade.createEmployee(employeeDto, employeeManager);
     }
 }

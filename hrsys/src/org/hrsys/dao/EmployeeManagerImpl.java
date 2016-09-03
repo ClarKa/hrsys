@@ -15,7 +15,6 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.hrsys.dto.EmployeeDTO;
 import org.hrsys.entity.*;
 
 @Repository
@@ -28,7 +27,6 @@ public class EmployeeManagerImpl implements EmployeeManager {
     public List<Employee> getAllEmployee() {
         Query jpqlQuery = mgr.createQuery("select e from Employee e LEFT JOIN FETCH e.department");
         List<Employee> results = jpqlQuery.getResultList();
-
         return results;
     }
 
@@ -41,14 +39,13 @@ public class EmployeeManagerImpl implements EmployeeManager {
     }
 
     @Override
-    public void createEmployee(Employee emp) {
-        mgr.persist(emp);
+    public void createEmployee(Employee employee) throws SQLException{
+        mgr.persist(employee);
     }
     
     @Override
-    public EmployeeDTO getOneEmployee(int employeeID) {
+    public Employee getOneEmployee(int employeeID) {
         Employee employee = mgr.find(Employee.class, employeeID);
-        EmployeeDTO employeeDto = new EmployeeDTO(employee);
-        return employeeDto;
+        return employee;
     }
 }

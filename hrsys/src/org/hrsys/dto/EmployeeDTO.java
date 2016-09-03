@@ -10,6 +10,10 @@ public class EmployeeDTO {
     private int departmentID;
     private String error;
     
+    public EmployeeDTO() {
+        
+    }
+    
     public EmployeeDTO(Employee employee) {
         if (employee == null) {
             noteEmployeeNotExist();

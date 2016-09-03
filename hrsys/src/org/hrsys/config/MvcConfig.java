@@ -2,12 +2,14 @@ package org.hrsys.config;
 
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @EnableWebMvc
 @Configuration
+@EnableTransactionManagement
 @ComponentScan(basePackages = { "org.hrsys" })
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
