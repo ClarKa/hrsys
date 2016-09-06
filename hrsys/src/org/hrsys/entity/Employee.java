@@ -19,73 +19,75 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Employee implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
-    private int employeeID;
-    private String firstname;
-    private String lastname;
-    private String gender;
-    private Date birth;
-    private String SSN;
-    private String marriage;
-    private String nationality;
-    private String education;
-    private Date enrollmentDate;
-    private String email;
-    private String position;
-    private String phone;
-    private String address;
-    private String comment;
-    private Department department;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "em_employee_id", unique = true, nullable = false, insertable = true, updatable = true)
-    public int getEmployeeID()         { return employeeID; }
+    private int employeeID;
 
     @Column(name = "em_firstname", unique = false, nullable = false, insertable = true, updatable = true)
-    public String getFirstname()  { return firstname; }
+    private String firstname;
 
     @Column(name = "em_lastname", unique = false, nullable = false, insertable = true, updatable = true)
-    public String getLastname()   { return lastname; }
+    private String lastname;
 
     @Column(name = "em_gender", unique = false, nullable = true, insertable = true, updatable = true)
-    public String getGender()   { return gender; }
+    private String gender;
 
     @Column(name = "em_birth", unique = false, nullable = true, insertable = true, updatable = true)
-    public Date getBirth()   { return birth; }
+    private Date birth;
 
     @Column(name = "em_ssn", unique = true, nullable = true, insertable = true, updatable = true)
-    public String getSSN()   { return SSN; }
+    private String SSN;
 
     @Column(name = "em_marriage", unique = false, nullable = true, insertable = true, updatable = true)
-    public String getMarriage()  { return marriage; }
+    private String marriage;
 
     @Column(name = "em_nationality", unique = false, nullable = true, insertable = true, updatable = true)
-    public String getNationality()  { return nationality; }
+    private String nationality;
 
     @Column(name = "em_education", unique = false, nullable = true, insertable = true, updatable = true)
-    public String getEducation() { return education; }
+    private String education;
 
     @Column(name = "em_enrollment_date", unique = false, nullable = true, insertable = true, updatable = true)
-    public Date getEnrollmentDate()  { return enrollmentDate; }
+    private Date enrollmentDate;
 
     @Column(name = "em_email", unique = true, nullable = true, insertable = true, updatable = true)
-    public String getEmail()      { return email; }
+    private String email;
 
     @Column(name = "em_position", unique = false, nullable = true, insertable = true, updatable = true)
-    public String getPosition()   { return position; }
+    private String position;
 
     @Column(name = "em_phone", unique = true, nullable = true, insertable = true, updatable = true)
-    public String getPhone()  { return phone; }
+    private String phone;
 
     @Column(name = "em_address", unique = false, nullable = true, insertable = true, updatable = true)
-    public String getAddress()  { return address; }
+    private String address;
 
     @Column(name = "em_comment", unique = false, nullable = true, insertable = true, updatable = true)
-    private String getComment() { return comment; }
+    private String comment;
 
-    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     @JoinColumn(name = "em_department_id", unique = false, nullable = true, insertable = true, updatable = true)
     @JsonIgnore
+    private Department department;
+
+
+    public int getEmployeeID()         { return employeeID; }
+    public String getFirstname()  { return firstname; }
+    public String getLastname()   { return lastname; }
+    public String getGender()   { return gender; }
+    public Date getBirth()   { return birth; }
+    public String getSSN()   { return SSN; }
+    public String getMarriage()  { return marriage; }
+    public String getNationality()  { return nationality; }
+    public String getEducation() { return education; }
+    public Date getEnrollmentDate()  { return enrollmentDate; }
+    public String getEmail()      { return email; }
+    public String getPosition()   { return position; }
+    public String getPhone()  { return phone; }
+    public String getAddress()  { return address; }
+    private String getComment() { return comment; }
     public Department getDepartment() { return department; }
 
     public void setEmployeeID(int s)           { employeeID = s; }

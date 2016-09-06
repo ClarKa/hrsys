@@ -48,4 +48,16 @@ public class EmployeeManagerImpl implements EmployeeManager {
         Employee employee = mgr.find(Employee.class, employeeID);
         return employee;
     }
+    
+    @Override
+    public Employee deleteOneEmployee(int employeeID) {
+        Employee employee = mgr.find(Employee.class, employeeID);
+        
+        if (employee != null) {
+            mgr.remove(employee);
+            return employee;
+        } else {
+            return null;
+        }
+    }
 }

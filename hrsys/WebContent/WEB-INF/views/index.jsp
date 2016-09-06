@@ -4,9 +4,9 @@
 <jsp:include page="template_top.jsp" />
 <script>
 $(document).ready(function() {
- 	$(".bg-danger").hide();
-    $(".bg-success").hide()
-
+    $(".bg-danger").hide();
+    $(".bg-success").hide();
+	
 	$("#add_employee_modal_trigger").click(function() {
 		$.ajax({
 			type: "GET",
@@ -63,28 +63,28 @@ $(document).ready(function() {
 	      </div>
 
 	      <form id="add-employee-form" action="<c:url value='/rest/employee' />" class="form-horizontal" role="form">
-
+	       
 		      <div class="modal-body">
 		        <div class="form-group">
-		          <p class="bg-success text-center"> Add employee successfully. </p>
-		          <p class="bg-danger text-center"> Add employee failed. </p>
+		          <p class="bg-success text-center" style="padding: 5px"> Add employee successfully. </p>  
+		          <p class="bg-danger text-center" style="padding: 5px"> Add employee failed. </p>
 		        </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="firstname"> Firstname: </label>
                     <div class="col-sm-10">
-                        <input type="text" name="firstname" class="form-control" id="firstname"/>
+                        <input type="text" name="firstname" class="form-control" id="firstname" required/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="lastname"> Lastname: </label>
                     <div class="col-sm-10">
-                    	<input type="text" name="lastname" class="form-control"  id="lastname"/>
+                    	<input type="text" name="lastname" class="form-control"  id="lastname" required/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="email"> Email: </label>
                     <div class="col-sm-10">
-                    	<input type="email" name="email"  class="form-control" id="email"/>
+                    	<input type="email" name="email"  class="form-control" id="email" required/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -95,9 +95,9 @@ $(document).ready(function() {
 					</div>
                 </div>
 		      </div>
-
+		      
 		      <div class="modal-footer">
-	            <input type="submit" value="Save" class="btn btn-primary" />
+	            <input type="submit" value="Save" class="btn btn-primary" />    
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 		        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		      </div>

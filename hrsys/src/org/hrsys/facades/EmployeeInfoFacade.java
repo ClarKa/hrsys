@@ -1,9 +1,7 @@
 package org.hrsys.facades;
 
-import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.transaction.Transactional;
 
 import org.hrsys.dao.EmployeeManager;
 import org.hrsys.dto.EmployeeDTO;
@@ -18,9 +16,13 @@ public class EmployeeInfoFacade {
         return employeeDto;
     }
     
-    public List<Employee> getAllEmployees(EmployeeManager employeeManager) {
+    public List<EmployeeDTO> getAllEmployees(EmployeeManager employeeManager) {
         List<Employee> employees= employeeManager.getAllEmployee();
-        return employees;
+        List<EmployeeDTO> employeesDto = new ArrayList<>();
+        for (Employee employee : employees) {
+            employeesDto.add(new EmployeeDTO(employee));
+        }
+        return employeesDto;
     }
     
     public EmployeeDTO createEmployee(EmployeeDTO employeeDto, EmployeeManager employeeManager) {
@@ -38,5 +40,22 @@ public class EmployeeInfoFacade {
             employeeDto.setError(e.toString());
         }
         return employeeDto;
+    }
+
+    public EmployeeDTO deleteOneEmployee(int employeeID, EmployeeManager employeeManager) {
+        Employee employee;
+        EmployeeDTO employeeDto;
+        
+        try {
+            employee = employeeManager.deleteOneEmployee(employeeID);
+        } catch (Exception e) {
+            employeeDto = new EmployeeDTO();
+            employeeDto.setError(e.toString());
+            return employeeDto;
+        }
+        
+        employeeDto = new EmployeeDTO(employee);
+        return employeeDto;
+        
     }
 }

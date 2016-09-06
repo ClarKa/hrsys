@@ -10,4 +10,5 @@ public interface EmployeeManager {
     public List<Employee> getAvailableEmployee();
     public void createEmployee(Employee emp) throws SQLException;
     public Employee getOneEmployee(int employeeID); 
+    public Employee deleteOneEmployee(int employeeID) throws SQLException;
 }

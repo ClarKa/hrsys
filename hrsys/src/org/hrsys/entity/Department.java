@@ -18,20 +18,21 @@ import java.util.List;
 @Table(name = "department")
 public class Department implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
-    private int departmentID;
-    private String departmentName;
-    private List<Employee> departmentEmployees;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dp_department_id", unique = true, nullable = false, insertable = true, updatable = true)
-    public int getDepartmentID()       { return departmentID; }
+    private int departmentID;
 
     @Column(name = "dp_department_name", unique = true, nullable = false, insertable = true, updatable = true)
-    public String getDepartmentName()  { return departmentName; }
+    private String departmentName;
 
     @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "department")
     @JsonIgnore
+    private List<Employee> departmentEmployees;
+
+    public int getDepartmentID()       { return departmentID; }
+    public String getDepartmentName()  { return departmentName; }
     public List<Employee> getDepartmentEmployees()     { return departmentEmployees; }
 
     public void setDepartmentID(int s)       		     { departmentID = s; }

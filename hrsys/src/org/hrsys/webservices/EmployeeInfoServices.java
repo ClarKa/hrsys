@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.hrsys.dao.DepartmentManager;
 import org.hrsys.dao.EmployeeManager;
 import org.hrsys.dto.EmployeeDTO;
-import org.hrsys.entity.Employee;
 import org.hrsys.facades.EmployeeInfoFacade;
 import org.hrsys.constants.CommonConstants;
 import org.hrsys.constants.ServicePaths;
@@ -29,7 +28,7 @@ public class EmployeeInfoServices {
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     @PreAuthorize(CommonConstants.HAS_ROLE_ADMIN)
-    public List<Employee> getAllEmployees() {
+    public List<EmployeeDTO> getAllEmployees() {
         return employeeInfoFacade.getAllEmployees(employeeManager);
     }
 
@@ -43,5 +42,12 @@ public class EmployeeInfoServices {
     @PreAuthorize(CommonConstants.HAS_ROLE_ADMIN)
     public EmployeeDTO createEmployee(EmployeeDTO employeeDto) {
         return employeeInfoFacade.createEmployee(employeeDto, employeeManager);
+    }
+    
+    @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}", method = RequestMethod.DELETE, produces = "application/json")
+    @PreAuthorize(CommonConstants.HAS_ROLE_ADMIN)
+    public EmployeeDTO deleteOneEmployee(@PathVariable("employeeid") int employeeID) {
+        employeeInfoFacade.deleteOneEmployee(employeeID, employeeManager);
+        return new EmployeeDTO();
     }
 }

@@ -6,10 +6,12 @@ public class EmployeeDTO {
     private int employeeID;
     private String firstname;
     private String lastname;
+    private String gender;
     private String email;
     private int departmentID;
+    private String departmentName;
     private String error;
-    
+
     public EmployeeDTO() {
         
     }
@@ -19,10 +21,13 @@ public class EmployeeDTO {
             noteEmployeeNotExist();
             return;
         }
+        
+        this.employeeID = employee.getEmployeeID();
         this.firstname = employee.getFirstname();
         this.lastname = employee.getLastname();
         this.email = employee.getEmail();
         this.departmentID = employee.getDepartment().getDepartmentID();
+        this.departmentName = employee.getDepartment().getDepartmentName();
     }
     
     private void noteEmployeeNotExist() {
@@ -54,6 +59,14 @@ public class EmployeeDTO {
         this.lastname = lastname;
     }
     
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -68,6 +81,14 @@ public class EmployeeDTO {
 
     public void setDepartmentID(int departmentID) {
         this.departmentID = departmentID;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     public String getError() {
