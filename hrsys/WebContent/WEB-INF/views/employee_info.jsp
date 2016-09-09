@@ -15,31 +15,53 @@ td.delete-control {
     background: url('resources/delete.png') no-repeat center center;
     cursor: pointer;
 }
+
+#details-table td:nth-child(odd) {
+    font-style: italic;
+    font-weight: bold;
+}
+
+#details-table td:nth-child(even) {
+    text-align: center;
+}
+
 </style>
 
 <script>
 /* Formatting function for row details */
 function format ( d ) {
     // `d` is the original data object for the row
-    return '<table class="table table-hover" cellpadding="5" cellspacing="0" border="0" style="margin:10px;">'+
+    return '<table id="details-table" class="table" cellpadding="3" cellspacing="0" style="margin:10px;">'+
         '<tr>'+
-            '<td>Email</td>'+
-            '<td>'+d.email+'</td>'+
-            '<td>Email</td>'+
-            '<td>'+d.email+'</td>'+
+            '<td class="col-sm-2">Gender:</td>'+
+            '<td class="col-sm-4">'+d.gender+'</td>'+
+            '<td class="col-sm-2">Birthday:</td>'+
+            '<td class="col-sm-4">'+d.birth+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>Extension number:</td>'+
-            '<td>'+d.lastname+'</td>'+
-            '<td>Email</td>'+
-            '<td>'+d.email+'</td>'+
+            '<td class="col-sm-2">SSN:</td>'+
+            '<td class="col-sm-4">'+d.ssn+'</td>'+
+            '<td class="col-sm-2">Marriage:</td>'+
+            '<td class="col-sm-4">'+d.marriage+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>Extra info:</td>'+
-            '<td>'+d.email+'</td>'+
-            '<td>Email</td>'+
-            '<td>'+d.email+'</td>'+
+            '<td class="col-sm-2">Nationality:</td>'+
+            '<td class="col-sm-4">'+d.nationality+'</td>'+
+            '<td class="col-sm-2">Education:</td>'+
+            '<td class="col-sm-4">'+d.education+'</td>'+
         '</tr>'+
+        '<tr>'+
+	        '<td class="col-sm-2">Enrollment Date:</td>'+
+	        '<td class="col-sm-4">'+d.enrollmentDate+'</td>'+
+	        '<td class="col-sm-2">Position:</td>'+
+	        '<td class="col-sm-4">'+d.position+'</td>'+
+	    '</tr>'+
+	    '<tr>'+
+	        '<td>Phone:</td>'+
+	        '<td>'+d.phone+'</td>'+
+/* 	        '<td>Address:</td>'+
+	        '<td>'+d.address+'</td>'+ */
+	    '</tr>'+
     '</table>';
 }
 
@@ -115,8 +137,6 @@ $(document).ready(function() {
     	}).fail(function() {
     		alert("Ajax request failed.");
     	});
-    	
-    	console.log("rest/employee/employeeid/" + rowId);
     } );
 
 /*     $.ajax({

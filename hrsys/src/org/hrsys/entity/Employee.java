@@ -38,7 +38,7 @@ public class Employee implements java.io.Serializable {
     private Date birth;
 
     @Column(name = "em_ssn", unique = true, nullable = true, insertable = true, updatable = true)
-    private String SSN;
+    private String ssn;
 
     @Column(name = "em_marriage", unique = false, nullable = true, insertable = true, updatable = true)
     private String marriage;
@@ -78,7 +78,7 @@ public class Employee implements java.io.Serializable {
     public String getLastname()   { return lastname; }
     public String getGender()   { return gender; }
     public Date getBirth()   { return birth; }
-    public String getSSN()   { return SSN; }
+    public String getSsn()   { return ssn; }
     public String getMarriage()  { return marriage; }
     public String getNationality()  { return nationality; }
     public String getEducation() { return education; }
@@ -87,7 +87,7 @@ public class Employee implements java.io.Serializable {
     public String getPosition()   { return position; }
     public String getPhone()  { return phone; }
     public String getAddress()  { return address; }
-    private String getComment() { return comment; }
+    public String getComment() { return comment; }
     public Department getDepartment() { return department; }
 
     public void setEmployeeID(int s)           { employeeID = s; }
@@ -95,7 +95,7 @@ public class Employee implements java.io.Serializable {
     public void setLastname(String s)     { lastname = s.trim(); }
     public void setGender(String s)       { gender = s.trim(); }
     public void setBirth(Date s)          { birth = s; }
-    public void setSSN(String s)          { SSN = s; }
+    public void setSsn(String s)          { ssn = s; }
     public void setMarriage(String s)     { marriage = s; }
     public void setNationality(String s)  { nationality = s; }
     public void setEducation(String s)    { education = s; }

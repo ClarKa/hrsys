@@ -19,6 +19,7 @@ import org.hrsys.entity.*;
 
 @Repository
 @Transactional
+@SuppressWarnings("unchecked")
 public class EmployeeManagerImpl implements EmployeeManager {
     @PersistenceContext
     private EntityManager mgr;
@@ -50,14 +51,25 @@ public class EmployeeManagerImpl implements EmployeeManager {
     }
     
     @Override
-    public Employee deleteOneEmployee(int employeeID) {
+    public Employee deleteOneEmployee(int employeeID) throws SQLException{
         Employee employee = mgr.find(Employee.class, employeeID);
         
         if (employee != null) {
             mgr.remove(employee);
             return employee;
         } else {
-            return null;
+            throw new SQLException("No record found for employee id " + employeeID);
+        }
+    }
+    
+    @Override
+    public void updateOneEmployee(int employeeID, Employee employee) throws SQLException{
+        Employee currentEmployee = mgr.find(Employee.class, employeeID);
+        
+        if (currentEmployee != null) {
+            mgr.merge(employee);
+        } else {
+            throw new SQLException("No record found for employee id " + employeeID);
         }
     }
 }

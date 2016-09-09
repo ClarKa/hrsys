@@ -47,7 +47,12 @@ public class EmployeeInfoServices {
     @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}", method = RequestMethod.DELETE, produces = "application/json")
     @PreAuthorize(CommonConstants.HAS_ROLE_ADMIN)
     public EmployeeDTO deleteOneEmployee(@PathVariable("employeeid") int employeeID) {
-        employeeInfoFacade.deleteOneEmployee(employeeID, employeeManager);
+        return employeeInfoFacade.deleteOneEmployee(employeeID, employeeManager);
+    }
+    
+    @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}",method = RequestMethod.PUT, produces = "application/json")
+    @PreAuthorize(CommonConstants.HAS_ROLE_ADMIN)
+    public EmployeeDTO updateOneEmployee(@PathVariable("employeeid") int employeeID, EmployeeDTO employeeDto) {
         return new EmployeeDTO();
     }
 }

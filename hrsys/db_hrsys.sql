@@ -29,7 +29,7 @@ CREATE TABLE employee (
   em_lastname varchar(100) NOT NULL,
   em_gender varchar(11) DEFAULT NULL,
   em_birth date DEFAULT NULL,
-  em_ssn varchar(6) DEFAULT NULL UNIQUE,
+  em_ssn varchar(11) DEFAULT NULL UNIQUE,
   em_marriage varchar(20) DEFAULT NULL,
   em_nationality varchar(50) DEFAULT NULL,
   em_education varchar(20) DEFAULT NULL,
