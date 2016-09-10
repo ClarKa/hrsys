@@ -59,8 +59,8 @@ function format ( d ) {
 	    '<tr>'+
 	        '<td>Phone:</td>'+
 	        '<td>'+d.phone+'</td>'+
-/* 	        '<td>Address:</td>'+
-	        '<td>'+d.address+'</td>'+ */
+	        '<td></td>'+
+            '<td><a href="#" class="btn btn-warning" data-toggle="modal" data-target="#employee-modal" data-purpose="edit" data-employeeid=' + d.employeeID + '> Edit </a></td>'
 	    '</tr>'+
     '</table>';
 }
@@ -112,16 +112,16 @@ $(document).ready(function() {
             tr.addClass('shown');
         }
     } );
-    
+
     $('#employee-datatable-body').on('click', 'td.delete-control', function () {
     	var tr = $(this).closest('tr');
     	var row = table.row( tr );
     	var rowId = row.id();
-    	
+
         // include CSRF token.
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
-    	
+
     	$.ajax({
     		type: "DELETE",
     		url: "rest/employee/employeeid/" + rowId,
@@ -138,23 +138,6 @@ $(document).ready(function() {
     		alert("Ajax request failed.");
     	});
     } );
-
-/*     $.ajax({
-        type: "GET",
-        url:"rest/employee"
-    }).done(function(data) {
-        for (var key in data) {
-        	t.row.add( [
-        	            null,
-                        data[key].firstname + " " + data[key].lastname,
-                        data[key].departmentName
-        	        ] ).draw( false );
-        }
-    }).fail(function() {
-        alert("Ajax failed to fetch data");
-    }); */
-
-
 });
 </script>
 
@@ -164,17 +147,6 @@ $(document).ready(function() {
             <th></th>
             <th>Name</th>
             <th>Email</th>
-            <!-- <th>Gender</th>
-            <th>Birthday</th>
-            <th>SSN</th>
-            <th>Marriage</th>
-            <th>Nationality</th>
-            <th>Education</th>
-            <th>Enrollment</th>
-            <th>Email</th>
-            <th>Position</th>
-            <th>Phone</th>
-            <th>Address</th> -->
             <th>Department</th>
             <th></th>
         </tr>

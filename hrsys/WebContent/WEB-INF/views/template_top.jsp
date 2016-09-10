@@ -33,7 +33,7 @@
     		<div class="navbar-header">
       			<a class="navbar-brand" href="#">HR</a>
     		</div>
-    		
+
     		<div class="collapse navbar-collapse">
     		<sec:authorize access="hasRole('ADMIN')">
     			<ul class="nav navbar-nav">
@@ -42,13 +42,13 @@
 			          <ul class="dropdown-menu">
 			           	<li><a href="#">All Employee</a></li>
 			            <li role="separator" class="divider"></li>
-			            <!-- <li><a href="#" data-toggle="modal" data-target="#addEmployeeModal" id="add_employee_modal_trigger">Add Employee</a></li> -->
+			            <!-- <li><a href="#" data-toggle="modal" data-target="#employee-modal">Add Employee</a></li> -->
 			          </ul>
 		        	</li>
       				<li><a href="#" id="nav-admin-attendance">Attendance</a></li>
       				<li><a href="#" id="nav-admin-training">Training</a>
       				<li><a href="#" id="nav-admin-record">Record</a></li>
-      				<li><a href="#" data-toggle="modal" data-target="#addEmployeeModal" id="add_employee_modal_trigger">Add Employee</a></li>
+      				<li><a href="#" data-toggle="modal" data-target="#employee-modal" data-purpose="add">Add Employee</a></li>
       			</ul>
     		</sec:authorize>
     		<sec:authorize access="hasRole('USER')">
@@ -61,7 +61,7 @@
     			<form action="<c:url value='/perform_logout' />" method="post" id="logoutForm">
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				</form>
-				
+
 	    		<ul class="nav navbar-nav navbar-right">
 	    			<li><a href="<c:url value='/' />"><span class="glyphicon glyphicon-user"></span> <sec:authentication property="principal.username" /> </a>
 	      			<li><a href="javascript:formSubmit()"><span class="glyphicon glyphicon-log-out"></span> Log Out </a></li>

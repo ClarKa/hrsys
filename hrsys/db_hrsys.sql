@@ -34,7 +34,7 @@ CREATE TABLE employee (
   em_nationality varchar(50) DEFAULT NULL,
   em_education varchar(20) DEFAULT NULL,
   em_enrollment_date date DEFAULT NULL,
-  em_email varchar(20) DEFAULT NULL UNIQUE,
+  em_email varchar(50) DEFAULT NULL UNIQUE,
   em_position varchar(100) DEFAULT NULL,
   em_phone varchar(11) DEFAULT NULL UNIQUE,
   em_address varchar(200) DEFAULT NULL,
@@ -44,4 +44,4 @@ CREATE TABLE employee (
   CONSTRAINT FK_dep_emp FOREIGN KEY (em_department_id) REFERENCES department(dp_department_id)
   );
 
-INSERT INTO employee VALUES (null, 'Kaifu', 'Wang', 'male', '1991-10-08', '123456', 'married', 'China', 'master', '2016-03-03', 'kaifuww@gmail.com', 'Developer', '4129999999', 'pittsburgh', null, 03);
+INSERT INTO employee VALUES (null, 'Kaifu', 'Wang', 'Male', '1991-10-08', '123456', 'Married', 'China', 'Master', '2016-03-03', 'kaifuww@gmail.com', 'Developer', '4129999999', 'pittsburgh', null, 03);

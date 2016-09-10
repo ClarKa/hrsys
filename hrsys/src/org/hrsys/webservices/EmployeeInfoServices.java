@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,9 +51,10 @@ public class EmployeeInfoServices {
         return employeeInfoFacade.deleteOneEmployee(employeeID, employeeManager);
     }
     
-    @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}",method = RequestMethod.PUT, produces = "application/json")
+    @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}", method = RequestMethod.POST, produces = "application/json")
     @PreAuthorize(CommonConstants.HAS_ROLE_ADMIN)
-    public EmployeeDTO updateOneEmployee(@PathVariable("employeeid") int employeeID, EmployeeDTO employeeDto) {
-        return new EmployeeDTO();
+    public EmployeeDTO updateOneEmployee(EmployeeDTO employeeDto, @PathVariable("employeeid") int employeeID) {
+        System.out.println(employeeDto.getFirstname() + " " +employeeDto.getEmail());
+        return employeeInfoFacade.updateOneEmployee(employeeID, employeeDto, employeeManager);
     }
 }
