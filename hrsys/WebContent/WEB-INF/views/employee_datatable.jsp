@@ -25,6 +25,11 @@ td.delete-control {
     text-align: center;
 }
 
+#details-table {
+    width: 90% !important;
+    margin: auto !important;
+}
+
 </style>
 
 <script>
@@ -39,22 +44,22 @@ function format ( d ) {
             '<td class="col-sm-4">'+d.birth+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td class="col-sm-2">SSN:</td>'+
-            '<td class="col-sm-4">'+d.ssn+'</td>'+
-            '<td class="col-sm-2">Marriage:</td>'+
-            '<td class="col-sm-4">'+d.marriage+'</td>'+
+            '<td>SSN:</td>'+
+            '<td>'+d.ssn+'</td>'+
+            '<td>Marriage:</td>'+
+            '<td>'+d.marriage+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td class="col-sm-2">Nationality:</td>'+
-            '<td class="col-sm-4">'+d.nationality+'</td>'+
-            '<td class="col-sm-2">Education:</td>'+
-            '<td class="col-sm-4">'+d.education+'</td>'+
+            '<td>Nationality:</td>'+
+            '<td>'+d.nationality+'</td>'+
+            '<td>Education:</td>'+
+            '<td>'+d.education+'</td>'+
         '</tr>'+
         '<tr>'+
-	        '<td class="col-sm-2">Enrollment Date:</td>'+
-	        '<td class="col-sm-4">'+d.enrollmentDate+'</td>'+
-	        '<td class="col-sm-2">Position:</td>'+
-	        '<td class="col-sm-4">'+d.position+'</td>'+
+	        '<td>Enrollment Date:</td>'+
+	        '<td>'+d.enrollmentDate+'</td>'+
+	        '<td>Position:</td>'+
+	        '<td>'+d.position+'</td>'+
 	    '</tr>'+
 	    '<tr>'+
 	        '<td>Phone:</td>'+
