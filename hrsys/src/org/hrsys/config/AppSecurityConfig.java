@@ -38,7 +38,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 //				.antMatchers("/confidential/**").access("hasRole('ROLE_SUPERADMIN')").and().formLogin();
 		  http
 	        .authorizeRequests()
-	        .antMatchers("/", "/main").access("isAuthenticated()")
+	        .antMatchers("/").access("isAuthenticated()")
 	        .and()
 	        	.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password").loginProcessingUrl("/perform_login")
 	        .and()

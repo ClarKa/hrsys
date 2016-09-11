@@ -31,7 +31,7 @@
 	<nav class="navbar navbar-default nav-fixed-top">
 		<div class="container-fluid">
     		<div class="navbar-header">
-      			<a class="navbar-brand" href="#">HR</a>
+      			<a class="navbar-brand" href="<c:url value='/' />">HR</a>
     		</div>
 
     		<div class="collapse navbar-collapse">
@@ -40,7 +40,7 @@
       				<li class="dropdown">
 		          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Information <span class="caret"></span></a>
 			          <ul class="dropdown-menu">
-			           	<li><a href="#">All Employee</a></li>
+			           	<li><a href="<c:url value='/employee_info' />">All Employee</a></li>
 			            <li role="separator" class="divider"></li>
 			            <!-- <li><a href="#" data-toggle="modal" data-target="#employee-modal">Add Employee</a></li> -->
 			          </ul>

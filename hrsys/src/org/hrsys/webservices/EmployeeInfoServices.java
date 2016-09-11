@@ -54,7 +54,6 @@ public class EmployeeInfoServices {
     @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}", method = RequestMethod.POST, produces = "application/json")
     @PreAuthorize(CommonConstants.HAS_ROLE_ADMIN)
     public EmployeeDTO updateOneEmployee(EmployeeDTO employeeDto, @PathVariable("employeeid") int employeeID) {
-        System.out.println(employeeDto.getFirstname() + " " +employeeDto.getEmail());
         return employeeInfoFacade.updateOneEmployee(employeeID, employeeDto, employeeManager);
     }
 }

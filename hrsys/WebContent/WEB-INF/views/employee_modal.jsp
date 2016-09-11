@@ -1,30 +1,20 @@
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<jsp:include page="template_top.jsp" />
 <script src="resources/js/employee-modal.js"></script>
-<div class="container">
 
-	<sec:authorize access="hasRole('ADMIN')">
-    	<jsp:include page="employee_datatable.jsp" />
-	</sec:authorize>
+    <div class="modal fade" id="employee-modal" tabindex="-1" role="dialog" aria-labelledby="employee-modal-label">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="employee-modal-label">Add Employee</h4>
+          </div>
 
+          <form id="employee-modal-form" action="<c:url value='/rest/employee' />" class="form-horizontal" role="form">
 
-	<div class="modal fade" id="employee-modal" tabindex="-1" role="dialog" aria-labelledby="employee-modal-label">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="employee-modal-label">Add Employee</h4>
-	      </div>
-
-	      <form id="employee-modal-form" action="<c:url value='/rest/employee' />" class="form-horizontal" role="form">
-
-		      <div class="modal-body">
-		        <div class="form-group">
-		          <p class="bg-success text-center" style="padding: 5px"> Add employee successfully. </p>
-		          <p class="bg-danger text-center" style="padding: 5px"> Add employee failed. Please check your input. </p>
-		        </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <p class="bg-success text-center" style="padding: 5px"> Add employee successfully. </p>
+                  <p class="bg-danger text-center" style="padding: 5px"> Add employee failed. Please check your input. </p>
+                </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="firstname"> Name: </label>
                     <div class="col-sm-4">
@@ -37,7 +27,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="email"> Email: </label>
                     <div class="col-sm-8">
-                    	<input type="email" name="email"  class="form-control" id="email" required/>
+                        <input type="email" name="email"  class="form-control" id="email" required/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -49,13 +39,13 @@
                 </div>
 
                 <div class="form-group">
-                	<label class="control-label col-sm-2" for="gender"> Gender: </label>
-                	<div class="col-sm-8">
-	                	<select class="form-control" name="gender" id="gender">
-	                       <option value="Male"> Male </option>
-	                       <option value="Female"> Female </option>
-						</select>
-					</div>
+                    <label class="control-label col-sm-2" for="gender"> Gender: </label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="gender" id="gender">
+                           <option value="Male"> Male </option>
+                           <option value="Female"> Female </option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="birth"> Birthday: </label>
@@ -115,17 +105,14 @@
                         <input class="form-control" type="tel" maxlength="11" name="phone" id="phone">
                     </div>
                 </div>
+              </div>
 
-		      </div>
-
-		      <div class="modal-footer">
-	            <input type="submit" value="Save" class="btn btn-primary" />
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-		      </div>
-	      </form>
-	    </div>
-	  </div>
-	</div>
-
-</div>
+              <div class="modal-footer">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>

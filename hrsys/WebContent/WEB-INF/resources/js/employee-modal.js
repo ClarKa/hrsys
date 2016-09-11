@@ -46,7 +46,7 @@ $(document).ready(function() {
         		type: "GET",
         		url: url,
         	}).done(function(data) {
-        		if(data.employeeid == null || data.emloyeeid == '') {
+        		if(data.employeeID == null || data.emloyeeID == '') {
         			alert("Employee entry no long exists");
         			$("#employee-datatable").DataTable().ajax.reload();
         		}
