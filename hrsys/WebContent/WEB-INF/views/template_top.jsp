@@ -45,7 +45,7 @@
 			            <!-- <li><a href="#" data-toggle="modal" data-target="#employee-modal">Add Employee</a></li> -->
 			          </ul>
 		        	</li>
-      				<li><a href="#" id="nav-admin-attendance">Attendance</a></li>
+      				<li><a href="<c:url value='/attendance' />" id="nav-admin-attendance">Attendance</a></li>
       				<li><a href="#" id="nav-admin-training">Training</a>
       				<li><a href="#" id="nav-admin-record">Record</a></li>
       				<li><a href="#" data-toggle="modal" data-target="#employee-modal" data-purpose="add">Add Employee</a></li>
