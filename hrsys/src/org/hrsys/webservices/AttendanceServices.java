@@ -1,10 +1,13 @@
 package org.hrsys.webservices;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.hrsys.constants.CommonConstants;
 import org.hrsys.constants.ServicePaths;
 import org.hrsys.dao.AttendanceManager;
+import org.hrsys.dao.EmployeeManager;
+import org.hrsys.dto.AttendanceDTO;
 import org.hrsys.entity.Attendance;
 import org.hrsys.facades.AttendanceFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +23,20 @@ public class AttendanceServices {
     @Autowired
     AttendanceManager attendanceManager;
     
+    @Autowired
+    EmployeeManager employeeManager;
+    
     private AttendanceFacade attendanceFacade = new AttendanceFacade();
     
     @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}", method = RequestMethod.GET, produces = "application/json")
     @PreAuthorize(CommonConstants.HAS_ROLE_ADMIN)
-    public List<Attendance> getOneEmployeeAttendance(@PathVariable("employeeid") int employeeID) {
-        return attendanceFacade.getOneEmployeeAttendace(employeeID, attendanceManager);
+    public List<AttendanceDTO> getOneEmployeeAttendance(@PathVariable("employeeid") int employeeID) {
+        return attendanceFacade.getOneEmployeeAttendance(employeeID, attendanceManager, employeeManager);
+    }
+    
+    @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}" + "/{date}", method = RequestMethod.GET, produces = "application/json")
+    @PreAuthorize(CommonConstants.HAS_ROLE_ADMIN)
+    public AttendanceDTO getOneEmployeeAttendance(@PathVariable("employeeid") int employeeID, @PathVariable("date") Date date) {
+        return attendanceFacade.getAttendanceForDate(employeeID, date, attendanceManager, employeeManager);
     }
 }

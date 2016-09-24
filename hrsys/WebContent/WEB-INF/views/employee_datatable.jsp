@@ -1,18 +1,18 @@
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
-<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+<link rel="stylesheet" href="resources/DataTables-1.10.12/css/dataTables.bootstrap.min.css">
+<script src="resources/DataTables-1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="resources/DataTables-1.10.12/js/dataTables.bootstrap.min.js"></script>
 
 <style>
 td.details-control {
-    background: url('resources/details_open.png') no-repeat center center;
+    background: url('resources/img/details_open.png') no-repeat center center;
     cursor: pointer;
 }
 tr.shown td.details-control {
-    background: url('resources/details_close.png') no-repeat center center;
+    background: url('resources/img/details_close.png') no-repeat center center;
 }
 
 td.delete-control {
-    background: url('resources/delete.png') no-repeat center center;
+    background: url('resources/img/delete.png') no-repeat center center;
     cursor: pointer;
 }
 
