@@ -7,9 +7,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="resources/jquery/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
-<link href="resources/css/bootstrap-formhelpers.min.css" rel="stylesheet" media="screen">
+<link href="<c:url value='/resources/bootstrap/css/bootstrap.min.css' />" rel="stylesheet">
+<link href="<c:url value='/resources/jquery/jquery-ui-1.12.1.custom/jquery-ui.css' />" rel="stylesheet">
+<link href="<c:url value='/resources/css/bootstrap-formhelpers.min.css' />" rel="stylesheet" media="screen">
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="_csrf" content="${_csrf.token}"/>
@@ -18,10 +18,10 @@
 <title>Employee Management</title>
 </head>
 <body>
-<script src="resources/jquery/jquery-3.1.1.min.js"></script>
-<script src="resources/jquery/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
-<script src="resources/bootstrap/js/bootstrap.min.js"></script>
-<script src="resources/js/bootstrap-formhelpers.min.js"></script>
+<script src="<c:url value='/resources/jquery/jquery-3.1.1.min.js' />"></script>
+<script src="<c:url value='/resources/jquery/jquery-ui-1.12.1.custom/jquery-ui.js' />"></script>
+<script src="<c:url value='/resources/bootstrap/js/bootstrap.min.js' />"></script>
+<script src="<c:url value='/resources/js/bootstrap-formhelpers.min.js' />"></script>
 <script>
 	function formSubmit() {
 		document.getElementById("logoutForm").submit();
@@ -54,6 +54,7 @@
     		<sec:authorize access="hasRole('USER')">
     			<ul class="nav navbar-nav">
       				<li><a href="#" id="nav-user-info">Personal Information</a></li>
+      				<li><a href="<c:url value='/attendance' />" id="nav-admin-attendance">Attendance</a></li>
       				<li><a href="#" id="nav-user-bank">Bank Information</a></li>
       			</ul>
     		</sec:authorize>

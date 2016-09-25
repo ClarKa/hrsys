@@ -1,0 +1,25 @@
+package org.hrsys.helpers;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import org.hrsys.constants.CommonConstants;
+import org.springframework.security.access.prepost.PreAuthorize;
+
+public class MetaAnnotations {
+    @Target(ElementType.METHOD)
+    @Retention(RetentionPolicy.RUNTIME)
+    @PreAuthorize(CommonConstants.HAS_ROLE_ADMIN)
+    public @interface IsAdmin
+    {
+    }
+    
+    @Target(ElementType.METHOD)
+    @Retention(RetentionPolicy.RUNTIME)
+    @PreAuthorize(CommonConstants.HAS_ROLE_AUTHENTICATED)
+    public @interface IsAuthenticated
+    {
+    }
+}

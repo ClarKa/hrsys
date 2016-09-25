@@ -3,9 +3,8 @@
 
 <jsp:include page="template_top.jsp" />
 
-<!-- <link rel="stylesheet" type="text/css" href="resources/css/bootstrap-year-calendar.min.css">
-<script type="text/javascript" src="resources/js/bootstrap-year-calendar.min.js"></script> -->
 <script type="text/javascript">
+
 $.ajax({
         type: "GET",
         url:"rest/employee"
@@ -33,7 +32,7 @@ $(document).ready(function() {
 				$.ajax({
 				    type: "GET",
 				    url:"rest/attendance/employeeid/" + $( "#employeeID" ).val() + "/" + dateText
-				}).done(function(data) {	   
+				}).done(function(data) {
 					$( "#attendance-table-body" ).empty();
 			    	if (data.error != null ) {
 			    		var error = $( "<td colspan='5'></td>" ).text(data.error);
@@ -82,7 +81,8 @@ $(document).ready(function() {
             <br>
             <div id="calendar"></div>
         </div>
-       
+    </sec:authorize>
+    
         <div class="col-sm-9">
             <table class="table table-hover">
                 <thead>
@@ -99,9 +99,4 @@ $(document).ready(function() {
                 </tbody>
             </table>
         </div>
-
-    </sec:authorize>
-
- 
-
 </div>

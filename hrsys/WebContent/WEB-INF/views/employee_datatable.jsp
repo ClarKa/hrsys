@@ -1,6 +1,7 @@
-<link rel="stylesheet" href="resources/DataTables-1.10.12/css/dataTables.bootstrap.min.css">
-<script src="resources/DataTables-1.10.12/js/jquery.dataTables.min.js"></script>
-<script src="resources/DataTables-1.10.12/js/dataTables.bootstrap.min.js"></script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link href="<c:url value='/resources/DataTables-1.10.12/css/dataTables.bootstrap.min.css' />"  rel="stylesheet">
+<script src="<c:url value='/resources/DataTables-1.10.12/js/jquery.dataTables.min.js' />"></script>
+<script src="<c:url value='/resources/DataTables-1.10.12/js/dataTables.bootstrap.min.js' />"></script>
 
 <style>
 td.details-control {

@@ -1,4 +1,5 @@
-<script src="resources/js/employee-modal.js"></script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="<c:url value='/resources/js/employee-modal.js' />"></script>
 
     <div class="modal fade" id="employee-modal" tabindex="-1" role="dialog" aria-labelledby="employee-modal-label">
       <div class="modal-dialog" role="document">
