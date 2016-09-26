@@ -67,6 +67,7 @@ $(document).ready(function() {
         $(".bg-success").hide();
 
         $("#employee-modal").find("form")[0].reset();
+        $("#departmentID").children().remove();
     });
 
     // submit add employee action

@@ -53,7 +53,7 @@ CREATE TABLE department (
 -- ----------------------------
 -- Records of department
 -- ----------------------------
-INSERT INTO department VALUES (0, 'Undecided');
+INSERT INTO department VALUES (null, 'Undecided');
 INSERT INTO department VALUES (null, 'Admin Office');
 INSERT INTO department VALUES (null, 'Human Resource');
 INSERT INTO department VALUES (null, 'Technique');

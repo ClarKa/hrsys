@@ -12,17 +12,17 @@ public class MainActionController {
     @RequestMapping(value = ServicePaths.HOME_URL, method = RequestMethod.GET)
     @IsAuthenticated
     public String showWelcome() {
-        return "welcome";
+        return "template_top";
     }
-    
-    @RequestMapping(value = ServicePaths.EMPLOYEE_INFO_MANAGEMENT_URL, method = RequestMethod.GET)
+
+    @RequestMapping(value = ServicePaths.EMPLOYEE_INFO_URL, method = RequestMethod.GET)
     @IsAdmin
     public String showEmployeeInfoManagement() {
-        return "employee_info_management";
+        return "employee_info";
     }
-    
+
     @RequestMapping(value = ServicePaths.EMPLOYEE_ATTENDANCE_URL, method = RequestMethod.GET)
-    @IsAuthenticated 
+    @IsAuthenticated
     public String showAttendance() {
         return "attendance";
     }

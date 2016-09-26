@@ -2,7 +2,7 @@ package org.hrsys.constants;
 
 public class ServicePaths {
     public final static String HOME_URL = "/";
-    public final static String EMPLOYEE_INFO_MANAGEMENT_URL = "/employee_info";
+    public final static String EMPLOYEE_INFO_URL = "/employee_info";
     public final static String EMPLOYEE_ATTENDANCE_URL = "/attendance";
     public final static String LOGIN_URL = "/login";
     public final static String ACCESS_DENIED_URL = "/denied";
