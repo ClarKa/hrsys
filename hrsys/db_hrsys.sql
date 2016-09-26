@@ -1,6 +1,44 @@
+-- Version Info
+-- +-------------------------+------------------------------+
+-- | innodb_version          | 5.7.9                        |
+-- | protocol_version        | 10                           |
+-- | slave_type_conversions  |                              |
+-- | version                 | 5.7.9                        |
+-- | version_comment         | MySQL Community Server (GPL) |
+-- | version_compile_machine | x86_64                       |
+-- | version_compile_os      | osx10.9                      |
+-- +-------------------------+------------------------------+
+
+
 DROP DATABASE IF EXISTS HRSYS;
 CREATE DATABASE HRSYS;
 USE HRSYS;
+
+-- ----------------------------
+-- Spring Secrurity default database schema
+-- ----------------------------
+
+CREATE TABLE users(
+  username varchar(50) NOT NULL PRIMARY KEY,
+  password varchar(50) NOT NULL,
+  enabled boolean NOT NULL
+);
+
+INSERT INTO users VALUES ('a', '1', TRUE);
+INSERT INTO users VALUES ('b', '1', TRUE);
+INSERT INTO users VALUES ('c', '1', FALSE);
+
+CREATE TABLE authorities (
+  username varchar(50) NOT NULL,
+  authority varchar(50) NOT NULL,
+  CONSTRAINT fk_authorities_users FOREIGN KEY (username) REFERENCES users(username)
+);
+
+CREATE UNIQUE INDEX ix_auth_username ON authorities (username, authority);
+
+INSERT INTO authorities VALUES ('a', 'ROLE_USER');
+INSERT INTO authorities VALUES ('b', 'ROLE_ADMIN');
+INSERT INTO authorities VALUES ('c', 'ROLE_SUPERADMIN');
 
 -- ----------------------------
 -- Table structure for `department`
@@ -42,7 +80,7 @@ CREATE TABLE employee (
   em_comment text,
   em_department_id int DEFAULT NULL,
   PRIMARY KEY (em_employee_id),
-  CONSTRAINT FK_dep_emp FOREIGN KEY (em_department_id) REFERENCES department(dp_department_id) 
+  CONSTRAINT FK_dep_emp FOREIGN KEY (em_department_id) REFERENCES department(dp_department_id)
   ON DELETE SET NULL
   );
 
@@ -88,5 +126,3 @@ INSERT INTO attendance VALUES(1, DATE("2016-9-17"), TIME("08:20:00"), TIME("19:0
 INSERT INTO attendance VALUES(1, DATE("2016-9-18"), TIME("08:00:00"), TIME("19:00:00"), "Normal");
 INSERT INTO attendance VALUES(1, DATE("2016-9-19"), TIME("08:00:00"), TIME("19:00:00"), "Normal");
 INSERT INTO attendance VALUES(1, DATE("2016-9-20"), TIME("08:10:00"), TIME("12:00:00"), "Early Leave");
-
-

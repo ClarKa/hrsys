@@ -20,32 +20,32 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//      auth.jdbcAuthentication().dataSource(dataSource)
-//				.usersByUsernameQuery("select user_name as username, password, CASE WHEN inactive_ind = 'N' THEN true ELSE false END as enable from user where user_name = ?")
-//				.authoritiesByUsernameQuery(
-//						"select u.user_name as username, c.value as role "
-//						+ "from user u join user_role_assoc ura on u.user_id = ura.user_id "
-//						+ "inner join code c on c.id = ura.role_code_id where u.user_name = ?");
+        auth.jdbcAuthentication()
+                .dataSource(dataSource);
+//                .usersByUsernameQuery(
+//                        "select us_user_id, us_username as username, us_password as password, us_enabled as enabled from users where us_username = ?")
+//                .authoritiesByUsernameQuery(
+//                        "select u.us_username as username, r.rl_role_name as authority from users u join user_role_assoc ura on u.us_user_id = ura.ura_user_id join role r on r.rl_role_id = ura.ura_role_id where u.us_username=?");
 
-		auth.inMemoryAuthentication().withUser("a").password("1").roles("USER");
-		auth.inMemoryAuthentication().withUser("b").password("1").roles("ADMIN");
-		auth.inMemoryAuthentication().withUser("c").password("1").roles("SUPERADMIN");
-	}
+//        auth.inMemoryAuthentication().withUser("aa").password("1").roles("USER");
+//        auth.inMemoryAuthentication().withUser("bb").password("1").roles("ADMIN");
+//        auth.inMemoryAuthentication().withUser("cc").password("1").roles("SUPERADMIN");
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//		http.authorizeRequests().antMatchers("/protected/**").access("hasRole('ROLE_ADMIN')")
-//				.antMatchers("/confidential/**").access("hasRole('ROLE_SUPERADMIN')").and().formLogin();
-		  http
-	        .authorizeRequests()
-	        .antMatchers("/").access("isAuthenticated()")
-	        .and()
-	        	.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password").loginProcessingUrl("/perform_login")
-	        .and()
-	        	.logout().logoutSuccessUrl("/login?logout").logoutUrl("/perform_logout")
-	        .and()
-	        	.exceptionHandling().accessDeniedPage("/denied");
+        // http.authorizeRequests().antMatchers("/protected/**").access("hasRole('ROLE_ADMIN')")
+        // .antMatchers("/confidential/**").access("hasRole('ROLE_SUPERADMIN')").and().formLogin();
+        http.authorizeRequests().antMatchers("/").access("isAuthenticated()")
+                .and()
+                .formLogin().loginPage("/login")
+                .usernameParameter("username").passwordParameter("password")
+                .loginProcessingUrl("/perform_login")
+                .and()
+                .logout().logoutSuccessUrl("/login?logout").logoutUrl("/perform_logout")
+                .and()
+                .exceptionHandling().accessDeniedPage("/denied");
 
-	}
+    }
 
 }
