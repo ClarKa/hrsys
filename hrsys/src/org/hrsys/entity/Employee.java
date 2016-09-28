@@ -2,6 +2,7 @@ package org.hrsys.entity;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -71,6 +73,9 @@ public class Employee implements java.io.Serializable {
     @JoinColumn(name = "em_department_id", unique = false, nullable = true, insertable = true, updatable = true)
     @JsonIgnore
     private Department department;
+    
+    @OneToOne(cascade = { CascadeType.ALL }, optional = true, fetch = FetchType.EAGER, mappedBy = "employee")
+    private User user;
 
 
     public int getEmployeeID()         { return employeeID; }
@@ -106,4 +111,16 @@ public class Employee implements java.io.Serializable {
     public void setAddress(String s)      { address = s; }
     public void setComment(String s)      { comment = s; }
     public void setDepartment(Department d)        { department = d; }
+    /**
+     * @return the user
+     */
+    public User getUser() {
+        return user;
+    }
+    /**
+     * @param user the user to set
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

@@ -1,11 +1,11 @@
 function toggleFailAlert() {
-    $(".bg-danger").show();
-    $(".bg-success").hide();
+    $(".alert-danger").show();
+    $(".alert-success").hide();
 }
 
 function toggleSuccessAlert() {
-    $(".bg-danger").hide();
-    $(".bg-success").show()
+    $(".alert-danger").hide();
+    $(".alert-success").show()
 }
 
 $(document).ready(function() {
@@ -14,8 +14,8 @@ $(document).ready(function() {
     var employeeId;
 
     // employee modal setup
-    $(".bg-danger").hide();
-    $(".bg-success").hide();
+    $(".alert-danger").hide();
+    $(".alert-success").hide();
 
     $("#employee-modal").on("show.bs.modal", function(e) {
         var button = $(e.relatedTarget);
@@ -63,8 +63,8 @@ $(document).ready(function() {
 
     // clear modal after closing
     $("#employee-modal").on("hidden.bs.modal", function(e){
-        $(".bg-danger").hide();
-        $(".bg-success").hide();
+        $(".alert-danger").hide();
+        $(".alert-success").hide();
 
         $("#employee-modal").find("form")[0].reset();
         $("#departmentID").children().remove();

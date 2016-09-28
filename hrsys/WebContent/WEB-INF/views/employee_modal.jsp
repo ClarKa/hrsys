@@ -10,11 +10,14 @@
           </div>
 
           <form id="employee-modal-form" action="<c:url value='/rest/employee' />" class="form-horizontal" role="form">
-
               <div class="modal-body">
                 <div class="form-group">
-                  <p class="bg-success text-center" style="padding: 5px"> Add employee successfully. </p>
-                  <p class="bg-danger text-center" style="padding: 5px"> Add employee failed. Please check your input. </p>
+                  <div class="alert alert-danger">
+                      <strong>Warning!</strong> Fail to add employee.
+                  </div>
+                  <div class="alert alert-success">
+                      <strong>Success!</strong> Add employee successfully.
+                  </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="firstname"> Name: </label>

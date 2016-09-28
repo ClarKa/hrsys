@@ -21,24 +21,27 @@ USE HRSYS;
 CREATE TABLE users(
   username varchar(50) NOT NULL PRIMARY KEY,
   password varchar(50) NOT NULL,
-  enabled boolean NOT NULL
+  enabled boolean NOT NULL,
+  us_employee_id INT DEFAULT NULL,
+  us_role_id INT DEFAULT 1
 );
 
-INSERT INTO users VALUES ('a', '1', TRUE);
-INSERT INTO users VALUES ('b', '1', TRUE);
-INSERT INTO users VALUES ('c', '1', FALSE);
+INSERT INTO users VALUES ('a', '1', TRUE, 1, 1);
+INSERT INTO users VALUES ('b', '1', TRUE, 2, 2);
+INSERT INTO users VALUES ('c', '1', TRUE, null, 2);
 
-CREATE TABLE authorities (
-  username varchar(50) NOT NULL,
-  authority varchar(50) NOT NULL,
-  CONSTRAINT fk_authorities_users FOREIGN KEY (username) REFERENCES users(username)
+CREATE TABLE roles (
+  rl_role_id INT PRIMARY KEY,
+  -- username VARCHAR(50) NOT NULL,
+  rl_role_name VARCHAR(50) NOT NULL UNIQUE
+  -- CONSTRAINT fk_authorities_users FOREIGN KEY (username) REFERENCES users(username)
 );
 
-CREATE UNIQUE INDEX ix_auth_username ON authorities (username, authority);
+-- CREATE UNIQUE INDEX ix_auth_username ON authorities (username, authority);
 
-INSERT INTO authorities VALUES ('a', 'ROLE_USER');
-INSERT INTO authorities VALUES ('b', 'ROLE_ADMIN');
-INSERT INTO authorities VALUES ('c', 'ROLE_SUPERADMIN');
+INSERT INTO roles VALUES (1, 'ROLE_USER');
+INSERT INTO roles VALUES (2, 'ROLE_ADMIN');
+INSERT INTO roles VALUES (3, 'ROLE_SUPERADMIN');
 
 -- ----------------------------
 -- Table structure for `department`

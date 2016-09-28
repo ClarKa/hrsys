@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.hrsys.entity.Attendance;
+import org.hrsys.helpers.AttendancePK;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,10 +37,14 @@ public class AttendanceManagerImpl implements AttendanceManager {
     public List<Attendance> getAttendanceForDate(int employeeID, Date date) {
         List<Attendance> results = new ArrayList<>();
         try {
-            Query jpqlQuery = mgr.createQuery("SELECT a FROM Attendance a WHERE a.employeeID = :employeeID and a.date = :date")
-                    .setParameter("employeeID", employeeID)
-                    .setParameter("date", date);
-            results = jpqlQuery.getResultList();
+            AttendancePK attendancePK = new AttendancePK();
+            attendancePK.setEmployeeID(employeeID);
+            attendancePK.setDate(date);
+            mgr.find(AttendancePK.class, attendancePK);
+//            Query jpqlQuery = mgr.createQuery("SELECT a FROM Attendance a WHERE a.employeeID = :employeeID and a.date = :date")
+//                    .setParameter("employeeID", employeeID)
+//                    .setParameter("date", date);
+//            results = jpqlQuery.getResultList();
         } catch(Exception e) {
             e.printStackTrace();
         }

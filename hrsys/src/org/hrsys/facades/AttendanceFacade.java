@@ -7,11 +7,21 @@ import java.util.List;
 import org.hrsys.dao.AttendanceManager;
 import org.hrsys.dao.EmployeeManager;
 import org.hrsys.dto.AttendanceDTO;
+import org.hrsys.dto.UserDTO;
 import org.hrsys.entity.Attendance;
 import org.hrsys.entity.Employee;
+import org.hrsys.enums.Role;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public class AttendanceFacade {
     public List<AttendanceDTO> getOneEmployeeAttendance(int employeeID, AttendanceManager attendanceManager, EmployeeManager employeeManager) {
+        UserDTO userDto = (UserDTO) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+        String roleText = userDto.getAuthorities().toArray()[0].toString();
+        if (!roleText.equals(Role.ADMIN.getDescription()) && employeeID != userDto.getEmployee().getEmployeeID()) {
+            return new ArrayList<AttendanceDTO>();
+        } 
+        
         List<Attendance> attendanceList = attendanceManager.getOneEmployeeAttendance(employeeID);
         List<AttendanceDTO> attendanceDtoList = new ArrayList<AttendanceDTO>();
         

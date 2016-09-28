@@ -58,13 +58,12 @@
 			</sec:authorize>
 			<sec:authorize access="hasRole('USER')">
 				<ul class="nav navbar-nav">
-					<li><a href="#" id="nav-user-info">Personal Information</a></li>
-					<li><a href="<c:url value='/attendance' />"
-						id="nav-admin-attendance">Attendance</a></li>
+					<li class="active"><a data-toggle="tab" href="#welcome"> Welcome </a></li>
+					<li><a data-toggle="tab" href="#employee-info"> My Info </a></li>
+					<li><a data-toggle="tab" href="#attendance"> Attendance </a></li>
 					<li><a href="#" id="nav-user-bank">Bank Information</a></li>
 				</ul>
 			</sec:authorize>
-			<%-- <sec:authorize access="isAuthenticated()"> --%>
 				<form action="<c:url value='/perform_logout' />" method="post"
 					id="logoutForm">
 					<input type="hidden" name="${_csrf.parameterName}"
@@ -75,24 +74,23 @@
 							class="glyphicon glyphicon-user"></span> <sec:authentication property="principal.username" /> </a>
 					<li><a href="javascript:formSubmit()"><span class="glyphicon glyphicon-log-out"></span> Log Out </a></li>
 				</ul>
-			<%-- </sec:authorize> --%>
 		</div>
 		</sec:authorize>
 	</div>
 	</nav>
 
-    <sec:authorize access="isAuthenticated()">
+	<sec:authorize access="isAuthenticated()">
 	<div class="tab-content">
 		<div id="welcome" class="tab-pane fade in active">
-		<jsp:include page="welcome.jsp" />
+			<jsp:include page="welcome.jsp" />
 		</div>
-		
+
 		<div id="employee-info" class="tab-pane fade">
-		<jsp:include page="employee_info.jsp" />
+			<jsp:include page="employee_info.jsp" />
 		</div>
-		
+
 		<div id="attendance" class="tab-pane fade">
-		<jsp:include page="attendance.jsp" />
+			<jsp:include page="attendance.jsp" />
 		</div>
 	</div>
 	</sec:authorize>
