@@ -15,13 +15,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public class AttendanceFacade {
     public List<AttendanceDTO> getOneEmployeeAttendance(int employeeID, AttendanceManager attendanceManager, EmployeeManager employeeManager) {
-        UserDTO userDto = (UserDTO) SecurityContextHolder.getContext()
-                .getAuthentication().getPrincipal();
-        String roleText = userDto.getAuthorities().toArray()[0].toString();
-        if (!roleText.equals(Role.ADMIN.getDescription()) && employeeID != userDto.getEmployee().getEmployeeID()) {
-            return new ArrayList<AttendanceDTO>();
-        } 
-        
         List<Attendance> attendanceList = attendanceManager.getOneEmployeeAttendance(employeeID);
         List<AttendanceDTO> attendanceDtoList = new ArrayList<AttendanceDTO>();
         
@@ -35,13 +28,13 @@ public class AttendanceFacade {
     
     public AttendanceDTO getAttendanceForDate(int employeeID, Date date, AttendanceManager attendanceManager, EmployeeManager employeeManager) {
         Employee employee = employeeManager.getOneEmployee(employeeID);
-        List<Attendance> attendance = attendanceManager.getAttendanceForDate(employeeID, date);
-        if (attendance == null || attendance.isEmpty()) {
+        Attendance attendance = attendanceManager.getAttendanceForDate(employeeID, date);
+        if (attendance == null) {
             AttendanceDTO attendanceForDate = new AttendanceDTO();
             attendanceForDate.setError("No record found for date " + date);
             return attendanceForDate;
         } else {
-            return new AttendanceDTO(attendance.get(0), employee);
+            return new AttendanceDTO(attendance, employee);
         }
     }
 }

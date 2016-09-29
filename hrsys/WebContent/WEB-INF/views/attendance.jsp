@@ -5,7 +5,7 @@
 
 <sec:authorize access="hasRole('ADMIN')" var="isAdmin" />
 <sec:authorize access="hasRole('USER')" var="isUser" />
-<sec:authentication property="principal.username" var="username"/>
+<sec:authentication property="principal.employee.employeeID" var="employeeId"/>
 
 <script>
 $(document).ready(function() {
@@ -24,7 +24,16 @@ $(document).ready(function() {
 	        alert("Ajax failed to fetch data");
 	    });
 	} else {
-		console.log("${username}");
+		$.ajax({
+            type: "GET",
+            url:"rest/employee/employeeid/" + "${employeeId}"
+        }).done(function(data) {
+            var option = $("<option></option>").text(data.firstname + " " + data.lastname);
+            option.val(data.employeeID);
+            $("#employeeID").append(option);
+        }).fail(function() {
+            alert("Ajax failed to fetch data");
+        });
 	}
     
     // initialize calendar
@@ -66,7 +75,6 @@ $(document).ready(function() {
             type: "GET",
             url:"rest/employee/employeeid/" + $( this ).val()
         }).done(function(data) {
-            console.log(data);
             $( "#calendar" ).datepicker( "option", "minDate", data.enrollmentDate);
         }).fail(function() {
             alert("Ajax failed to fetch data");

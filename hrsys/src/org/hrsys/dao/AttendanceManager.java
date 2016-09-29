@@ -7,5 +7,5 @@ import org.hrsys.entity.Attendance;
 
 public interface AttendanceManager {
     public List<Attendance> getOneEmployeeAttendance(int employeeID);
-    public List<Attendance> getAttendanceForDate(int employeeID, Date date);
+    public Attendance getAttendanceForDate(int employeeID, Date date);
 }

@@ -22,8 +22,9 @@ public class EmployeeDTO {
     private String phone;
     private String address;
     private String comment;
-
     private String error;
+    private String username;
+    private String role;
 
     public EmployeeDTO() {
 
@@ -52,6 +53,14 @@ public class EmployeeDTO {
         this.phone = employee.getPhone();
         this.address = employee.getAddress();
         this.comment = employee.getComment();
+        
+        if (employee.getUser() == null) {
+            this.username = "Not yet assigned";
+            this.role = "Not yet assigned";
+        } else {
+            this.username = employee.getUser().getUsername();
+            this.role = employee.getUser().getRole().getRoleName();
+        }
     }
 
     private void noteEmployeeNotExist() {
@@ -200,5 +209,33 @@ public class EmployeeDTO {
 
     public void setError(String error) {
         this.error = error;
+    }
+
+    /**
+     * @return the username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * @return the role
+     */
+    public String getRole() {
+        return role;
+    }
+
+    /**
+     * @param role the role to set
+     */
+    public void setRole(String role) {
+        this.role = role;
     }
 }

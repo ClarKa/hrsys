@@ -34,13 +34,13 @@ public class AttendanceManagerImpl implements AttendanceManager {
     }
     
     @Override
-    public List<Attendance> getAttendanceForDate(int employeeID, Date date) {
-        List<Attendance> results = new ArrayList<>();
+    public Attendance getAttendanceForDate(int employeeID, Date date) {
+        Attendance result = new Attendance();
         try {
             AttendancePK attendancePK = new AttendancePK();
             attendancePK.setEmployeeID(employeeID);
             attendancePK.setDate(date);
-            mgr.find(AttendancePK.class, attendancePK);
+            result = mgr.find(Attendance.class, attendancePK);
 //            Query jpqlQuery = mgr.createQuery("SELECT a FROM Attendance a WHERE a.employeeID = :employeeID and a.date = :date")
 //                    .setParameter("employeeID", employeeID)
 //                    .setParameter("date", date);
@@ -49,6 +49,6 @@ public class AttendanceManagerImpl implements AttendanceManager {
             e.printStackTrace();
         }
 
-        return results;
+        return result;
     }
 }

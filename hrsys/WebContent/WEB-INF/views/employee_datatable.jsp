@@ -62,11 +62,20 @@ function format ( d ) {
 	        '<td>Position:</td>'+
 	        '<td>'+d.position+'</td>'+
 	    '</tr>'+
-	    '<tr>'+
-	        '<td>Phone:</td>'+
+		'<tr>'+
+	        '<td>Phone Number:</td>'+
 	        '<td>'+d.phone+'</td>'+
 	        '<td></td>'+
-            '<td><a href="#" class="btn btn-warning" data-toggle="modal" data-target="#employee-modal" data-purpose="edit" data-employeeid=' + d.employeeID + '> Edit </a></td>'
+            '<td></td>'+
+	    '</tr>'+
+        '<tr>'+
+	        '<td>Account Username:</td>'+
+	        '<td>'+d.username+'</td>'+
+	        '<td>Account Authority:</td>'+
+            '<td>'+d.role+'</td>'+
+	     '</tr>'+
+	    '<tr>'+
+	        '<td colspan=4 class="text-center"><a href="#" class="btn btn-warning" data-toggle="modal" data-target="#employee-modal" data-purpose="edit" data-employeeid=' + d.employeeID + '> Edit </a></td>'+
 	    '</tr>'+
     '</table>';
 }
