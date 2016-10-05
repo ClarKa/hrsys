@@ -88,8 +88,8 @@ CREATE TABLE employee (
   ON DELETE SET NULL
   );
 
-INSERT INTO employee VALUES (null, 'Kaifu', 'Wang', 'Male', '1991-10-08', '123-45-4446', 'Married', 'China', 'Master', '2014-03-03', 'kaifuww@gmail.com', 'Developer', '4129999999', 'pittsburgh', null, 03);
-INSERT INTO employee VALUES (null, 'Kevin', 'Zhang', 'Male', '1991-10-08', '123-45-5556', 'Married', 'China', 'Master', '2016-03-03', 'kaifuw@gmail.com', 'Developer', '4129999899', 'pittsburgh', null, 02);
+INSERT INTO employee VALUES (null, 'Kaifu', 'Wang', 'Male', '1991-10-08', '123-45-4446', 'Married', 'CN', 'Master', '2014-03-03', 'kaifuww@gmail.com', 'Developer', '4129999999', 'pittsburgh', null, 03);
+INSERT INTO employee VALUES (null, 'Kevin', 'Zhang', 'Male', '1991-10-08', '123-45-5556', 'Married', 'CN', 'Master', '2016-03-03', 'kaifuw@gmail.com', 'Developer', '4129999899', 'pittsburgh', null, 02);
 
 
 -- ----------------------------
