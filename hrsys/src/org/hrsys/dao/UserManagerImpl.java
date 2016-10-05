@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.hrsys.entity.User;
+import org.hrsys.entity.CustomUser;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,13 +16,13 @@ public class UserManagerImpl implements UserManager {
     private EntityManager mgr;
 
     @Override
-    public void createUser(User user) throws SQLException {
+    public void createUser(CustomUser user) throws SQLException {
 
     }
 
     @Override
-    public User getOneUser(String username) {
-        return mgr.find(User.class, username);
+    public CustomUser getOneUser(String username) {
+        return mgr.find(CustomUser.class, username);
     }
 
 }

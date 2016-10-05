@@ -29,6 +29,7 @@ CREATE TABLE users(
 INSERT INTO users VALUES ('a', '1', TRUE, 1, 1);
 INSERT INTO users VALUES ('b', '1', TRUE, 2, 2);
 INSERT INTO users VALUES ('c', '1', TRUE, null, 2);
+INSERT INTO users VALUES ('d', '1', TRUE, null, 1);
 
 CREATE TABLE roles (
   rl_role_id INT PRIMARY KEY,
@@ -98,9 +99,9 @@ DROP TABLE IF EXISTS attendance;
 CREATE TABLE attendance (
   at_employee_id INT NOT NULL,
   at_date date NOT NULL,
-  at_in_time time default null,
-  at_out_time time default null,
-  at_comment varchar(200) default null,
+  at_in_time time DEFAULT NULL,
+  at_out_time time DEFAULT NULL,
+  at_comment varchar(200) DEFAULT NULL,
   PRIMARY KEY (at_employee_id, at_date),
   CONSTRAINT FK_att_emp FOREIGN KEY (at_employee_id) REFERENCES employee (em_employee_id)
   ON DELETE CASCADE

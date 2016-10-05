@@ -75,7 +75,7 @@ public class Employee implements java.io.Serializable {
     private Department department;
     
     @OneToOne(cascade = { CascadeType.ALL }, optional = true, fetch = FetchType.EAGER, mappedBy = "employee")
-    private User user;
+    private CustomUser user;
 
 
     public int getEmployeeID()         { return employeeID; }
@@ -114,13 +114,13 @@ public class Employee implements java.io.Serializable {
     /**
      * @return the user
      */
-    public User getUser() {
+    public CustomUser getUser() {
         return user;
     }
     /**
      * @param user the user to set
      */
-    public void setUser(User user) {
+    public void setUser(CustomUser user) {
         this.user = user;
     }
 }

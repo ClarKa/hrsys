@@ -1,13 +1,17 @@
 package org.hrsys.dao;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javassist.NotFoundException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.hrsys.constants.CommonConstants;
 import org.hrsys.entity.Attendance;
 import org.hrsys.helpers.AttendancePK;
 import org.springframework.stereotype.Repository;
@@ -18,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AttendanceManagerImpl implements AttendanceManager {
     @PersistenceContext
     private EntityManager mgr;
-    
+
     @Override
     public List<Attendance> getOneEmployeeAttendance(int employeeID) {
         List<Attendance> results = new ArrayList<>();
@@ -32,7 +36,7 @@ public class AttendanceManagerImpl implements AttendanceManager {
 
         return results;
     }
-    
+
     @Override
     public Attendance getAttendanceForDate(int employeeID, Date date) {
         Attendance result = new Attendance();
@@ -50,5 +54,33 @@ public class AttendanceManagerImpl implements AttendanceManager {
         }
 
         return result;
+    }
+
+    @Override
+    public void createAttendanceForDate(Attendance attendance) throws SQLException {
+        mgr.persist(attendance);
+    }
+
+    @Override
+    public void updateAttendanceForDate(Attendance attendance, int toUpdate) throws SQLException {        
+        AttendancePK attendancePK = new AttendancePK();
+        attendancePK.setEmployeeID(attendance.getEmployeeID());
+        attendancePK.setDate(attendance.getDate());
+        Attendance result = mgr.find(Attendance.class, attendancePK);
+
+        if (result == null) {
+            throw new SQLException("record not found!");
+        }
+        
+        switch (toUpdate) {
+            case CommonConstants.ATTENDANCE_SET_IN_TIME_CODE:
+                result.setInTime(attendance.getInTime());
+            case CommonConstants.ATTENDANCE_SET_OUT_TIME_CODE:
+                result.setOutTime(attendance.getOutTime());
+            case CommonConstants.ATTENDANCE_SET_COMMENT_CODE:
+                result.setComment(attendance.getComment());
+            default:
+                ;
+         }
     }
 }

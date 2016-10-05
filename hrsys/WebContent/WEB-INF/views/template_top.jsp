@@ -11,6 +11,7 @@
 <link href="<c:url value='/resources/bootstrap/css/bootstrap.min.css' />" rel="stylesheet">
 <link href="<c:url value='/resources/jquery/jquery-ui-1.12.1.custom/jquery-ui.css' />" rel="stylesheet">
 <link href="<c:url value='/resources/css/bootstrap-formhelpers.min.css' />" rel="stylesheet" media="screen">
+<link href="<c:url value='/resources/css/dashboard.css' />" rel="stylesheet">
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="_csrf" content="${_csrf.token}" />
@@ -29,7 +30,7 @@
 		}
 	</script>
 
-	<nav class="navbar navbar-default nav-fixed-top">
+	<nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="<c:url value='/' />">HR</a>
@@ -37,8 +38,8 @@
         
         <sec:authorize access="isAuthenticated()">
 		<div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
 			<sec:authorize access="hasRole('ADMIN')">
-				<ul class="nav navbar-nav">
 					<%-- <li class="dropdown">
 		          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Information <span class="caret"></span></a>
 			          <ul class="dropdown-menu">
@@ -54,16 +55,14 @@
 					<li class="active"><a data-toggle="tab" href="#welcome"> Welcome </a></li>
 					<li><a data-toggle="tab" href="#employee-info"> Employee Info </a></li>
 					<li><a data-toggle="tab" href="#attendance"> Attendance </a></li>
-				</ul>
 			</sec:authorize>
 			<sec:authorize access="hasRole('USER')">
-				<ul class="nav navbar-nav">
 					<li class="active"><a data-toggle="tab" href="#welcome"> Welcome </a></li>
 					<li><a data-toggle="tab" href="#employee-info"> My Info </a></li>
 					<li><a data-toggle="tab" href="#attendance"> Attendance </a></li>
 					<li><a href="#" id="nav-user-bank">Bank Information</a></li>
-				</ul>
 			</sec:authorize>
+            </ul>
 				<form action="<c:url value='/perform_logout' />" method="post"
 					id="logoutForm">
 					<input type="hidden" name="${_csrf.parameterName}"

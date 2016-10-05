@@ -16,7 +16,7 @@ import org.hrsys.dao.EmployeeManager;
 import org.hrsys.dao.UserManager;
 import org.hrsys.dto.EmployeeDTO;
 import org.hrsys.dto.UserDTO;
-import org.hrsys.entity.User;
+import org.hrsys.entity.CustomUser;
 
 @Component
 public class UserDetailServiceImpl implements UserDetailsService {
@@ -29,7 +29,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username)
              throws UsernameNotFoundException, DataAccessException {
         
-        User user = userManager.getOneUser(username);
+        CustomUser user = userManager.getOneUser(username);
         EmployeeDTO employeeDto = new EmployeeDTO(user.getEmployee());
         List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
         authList.add(new SimpleGrantedAuthority(user.getRole().getRoleName()));

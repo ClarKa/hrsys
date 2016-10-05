@@ -12,18 +12,22 @@ public class UserDTO extends User {
      */
     private static final long serialVersionUID = -3531439484732724601L;
     
-    private final EmployeeDTO employee;
+    private final int employeeID;
+    private final String firstname;
+    private final String lastname;
 
     public UserDTO(String username, String password, boolean enabled,
         boolean accountNonExpired, boolean credentialsNonExpired,
         boolean accountNonLocked,
         Collection authorities,
-        EmployeeDTO employee) {
+        EmployeeDTO employeeDto) {
 
             super(username, password, enabled, accountNonExpired,
                credentialsNonExpired, accountNonLocked, authorities);
 
-            this.employee = employee;
+            this.employeeID = employeeDto.getEmployeeID();
+            this.firstname = employeeDto.getFirstname();
+            this.lastname = employeeDto.getLastname();
     }
 
     public static long getSerialversionuid() {
@@ -31,9 +35,23 @@ public class UserDTO extends User {
     }
 
     /**
-     * @return the employee
+     * @return the employeeID
      */
-    public EmployeeDTO getEmployee() {
-        return employee;
+    public int getEmployeeID() {
+        return employeeID;
+    }
+
+    /**
+     * @return the firstname
+     */
+    public String getFirstname() {
+        return firstname;
+    }
+
+    /**
+     * @return the lastname
+     */
+    public String getLastname() {
+        return lastname;
     }
 }

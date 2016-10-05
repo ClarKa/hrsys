@@ -22,4 +22,11 @@ public class MetaAnnotations {
     public @interface IsAuthenticated
     {
     }
+    
+    @Target(ElementType.METHOD)
+    @Retention(RetentionPolicy.RUNTIME)
+    @PreAuthorize(CommonConstants.EMPLOYEE_ID_MATCH_OR_HAS_ROLE_ADMIN)
+    public @interface EmployeeIdMatchOrIsAdmin
+    {
+    }
 }

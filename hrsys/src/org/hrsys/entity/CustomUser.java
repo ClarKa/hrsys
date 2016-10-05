@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class CustomUser {
     @Id
     @Column(name = "username", unique = true, nullable = false, insertable = true, updatable = true)
     private String username;
