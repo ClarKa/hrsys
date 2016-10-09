@@ -29,6 +29,9 @@ public class Attendance {
     @Column(name = "at_out_time", unique = false, nullable = true, insertable = true, updatable = true)
     private Time outTime;
     
+    @Column(name = "at_status", unique = false, nullable = true, insertable = true, updatable = true)
+    private String status;
+    
     @Column(name = "at_comment", unique = false, nullable = true, insertable = true, updatable = true)
     private String comment;
 
@@ -86,6 +89,20 @@ public class Attendance {
      */
     public void setOutTime(Time outTime) {
         this.outTime = outTime;
+    }
+
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     /**

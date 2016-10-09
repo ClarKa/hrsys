@@ -70,8 +70,9 @@ $(document).ready(function() {
                         var date = $( "<td></td>" ).text(data.date);
                         var inTime = $( "<td></td>" ).text(data.inTime);
                         var outTime = $( "<td></td>" ).text(data.outTime);
+                        var status = $( "<td></td>" ).text(data.status);
                         var comment = $( "<td></td>" ).text(data.comment);
-                        var row  = $( "<tr></tr>" ).append(name, date, inTime, outTime, comment);
+                        var row  = $( "<tr></tr>" ).append(name, date, inTime, outTime, status, comment);
                         $( "#attendance-table-body" ).append(row);
                     }
                 }).fail(function() {
@@ -151,6 +152,7 @@ function initializeCalendarForUser(data) {
     					<th>Date</th>
     					<th>In Time</th>
     					<th>Out Time</th>
+    					<th>Status</th>
     					<th>Comment</th>
     				</tr>
     			</thead>

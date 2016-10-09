@@ -2,8 +2,13 @@ package org.hrsys.webservices;
 
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.executable.ValidateOnExecution;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +18,7 @@ import org.hrsys.dao.DepartmentManager;
 import org.hrsys.dao.EmployeeManager;
 import org.hrsys.dto.EmployeeDTO;
 import org.hrsys.facades.EmployeeInfoFacade;
+import org.hrsys.helpers.MetaAnnotations.EmployeeIdMatchOrIsAdmin;
 import org.hrsys.helpers.MetaAnnotations.IsAdmin;
 import org.hrsys.helpers.MetaAnnotations.IsAuthenticated;
 import org.hrsys.constants.CommonConstants;
@@ -36,14 +42,14 @@ public class EmployeeInfoServices {
     }
 
     @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}", method = RequestMethod.GET, produces = "application/json")
-    @IsAuthenticated
+    @EmployeeIdMatchOrIsAdmin
     public EmployeeDTO getOneEmployee(@PathVariable("employeeid") int employeeid) {
         return employeeInfoFacade.getOneEmployee(employeeid, employeeManager);
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     @IsAdmin
-    public EmployeeDTO createEmployee(EmployeeDTO employeeDto) {
+    public EmployeeDTO createEmployee(@Valid EmployeeDTO employeeDto) {
         return employeeInfoFacade.createEmployee(employeeDto, employeeManager);
     }
     
@@ -55,7 +61,11 @@ public class EmployeeInfoServices {
     
     @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}", method = RequestMethod.POST, produces = "application/json")
     @IsAdmin
-    public EmployeeDTO updateOneEmployee(EmployeeDTO employeeDto, @PathVariable("employeeid") int employeeID) {
+    public EmployeeDTO updateOneEmployee(@Valid EmployeeDTO employeeDto, BindingResult result, @PathVariable("employeeid") int employeeID) {
+        if (result.hasErrors()) {
+            employeeDto.setError(result.getAllErrors().get(0).getDefaultMessage());
+            return employeeDto;
+        }
         return employeeInfoFacade.updateOneEmployee(employeeID, employeeDto, employeeManager);
     }
 }

@@ -2,13 +2,26 @@ package org.hrsys.dto;
 
 import java.sql.Date;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+import org.hrsys.constants.ValidationConstants;
 import org.hrsys.entity.Employee;
 
 public class EmployeeDTO {
     private int employeeID;
+    
+    @Pattern(regexp=ValidationConstants.PURE_WORD, message=ValidationConstants.INVALID_EMPLOYEE_NAME)
     private String firstname;
+    
+    @Pattern(regexp=ValidationConstants.PURE_WORD, message=ValidationConstants.INVALID_EMPLOYEE_NAME)
     private String lastname;
+    
+    @Pattern(regexp=ValidationConstants.GENDER, message=ValidationConstants.INVALID_GENDER)
     private String gender;
+    
+    @Email(message=ValidationConstants.INVALID_EMAIL)
     private String email;
     private int departmentID;
     private String departmentName;
@@ -18,7 +31,12 @@ public class EmployeeDTO {
     private String nationality;
     private String education;
     private Date enrollmentDate;
+    
+    @Pattern(regexp=ValidationConstants.PURE_WORD, message=ValidationConstants.INVALID_POSITION)
     private String position;
+    
+    @Pattern(regexp=ValidationConstants.PHONE, message=ValidationConstants.INVALID_PHONE)
+    @Size(max=11,min=10, message=ValidationConstants.INVALID_PHONE_LENGTH)
     private String phone;
     private String address;
     private String comment;

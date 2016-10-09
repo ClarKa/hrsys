@@ -16,6 +16,7 @@ public class AttendanceDTO {
     private Date date;
     private Time inTime;
     private Time outTime;
+    private String status;
     private String comment;
     private Date enrollmentDate;
     private String error;
@@ -30,6 +31,7 @@ public class AttendanceDTO {
         this.date = attendance.getDate();
         this.inTime = attendance.getInTime();
         this.outTime = attendance.getOutTime();
+        this.status = attendance.getStatus();
         this.comment = attendance.getComment();
         this.enrollmentDate = employee.getEnrollmentDate();
     }
@@ -96,6 +98,20 @@ public class AttendanceDTO {
     public void setOutTime(Time outTime) {
         this.outTime = outTime;
     }
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     /**
      * @return the comment
      */

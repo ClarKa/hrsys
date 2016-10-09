@@ -70,7 +70,7 @@ $(document).ready(function() {
         $("#departmentID").children().remove();
     });
 
-    // submit add employee action
+    // submit add/edit employee action
     $( "#employee-modal-form" ).submit(function( event ) {
       event.preventDefault();
 
@@ -95,6 +95,7 @@ $(document).ready(function() {
                $("#employee-datatable").DataTable().ajax.reload();
                $('#employee-modal').modal('hide');
            } else {
+        	   $(".alert-danger").text(error);
                toggleFailAlert();
            }
       }).fail(function(data) {

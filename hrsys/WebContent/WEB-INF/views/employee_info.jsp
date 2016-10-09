@@ -8,14 +8,18 @@
 
 <div class="container">
 	<sec:authorize access="hasRole('ADMIN')">
-		<div>
-			<button class="btn btn-default" data-toggle="modal"
-				data-target="#employee-modal" data-purpose="add">Add
-				Employee</button>
-			<button class="btn btn-default">Add User account</button>
-		</div>
-		<hr>
-		<jsp:include page="employee_datatable.jsp" />
-		<jsp:include page="employee_modal.jsp" />
+	<div>
+		<button class="btn btn-default" data-toggle="modal"
+			data-target="#employee-modal" data-purpose="add">Add
+			Employee</button>
+		<button class="btn btn-default">Add User account</button>
+	</div>
+	<hr>
+	<jsp:include page="employee_datatable.jsp" />
+	<jsp:include page="employee_modal.jsp" />
+	</sec:authorize>
+
+	<sec:authorize access="hasRole('USER')">
+	<jsp:include page="user_employee_info.jsp" />
 	</sec:authorize>
 </div>
