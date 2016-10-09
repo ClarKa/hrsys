@@ -11,7 +11,6 @@ import org.hrsys.dao.EmployeeManager;
 import org.hrsys.dto.AttendanceDTO;
 import org.hrsys.entity.Attendance;
 import org.hrsys.entity.Employee;
-import org.springframework.ui.ModelMap;
 
 public class AttendanceFacade {
     public List<AttendanceDTO> getOneEmployeeAttendance(int employeeID,

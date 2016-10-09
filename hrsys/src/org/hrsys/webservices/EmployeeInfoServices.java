@@ -3,14 +3,10 @@ package org.hrsys.webservices;
 import java.util.List;
 
 import javax.validation.Valid;
-import javax.validation.executable.ValidateOnExecution;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,8 +16,6 @@ import org.hrsys.dto.EmployeeDTO;
 import org.hrsys.facades.EmployeeInfoFacade;
 import org.hrsys.helpers.MetaAnnotations.EmployeeIdMatchOrIsAdmin;
 import org.hrsys.helpers.MetaAnnotations.IsAdmin;
-import org.hrsys.helpers.MetaAnnotations.IsAuthenticated;
-import org.hrsys.constants.CommonConstants;
 import org.hrsys.constants.ServicePaths;
 
 @RestController

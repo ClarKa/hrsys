@@ -2,8 +2,6 @@ package org.hrsys.dto;
 
 import java.util.Collection;
 
-import org.hrsys.entity.Employee;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 public class UserDTO extends User {
