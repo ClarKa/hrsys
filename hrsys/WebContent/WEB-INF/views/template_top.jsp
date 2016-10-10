@@ -40,39 +40,26 @@
 		<div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
 			<sec:authorize access="hasRole('ADMIN')">
-					<%-- <li class="dropdown">
-		          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Information <span class="caret"></span></a>
-			          <ul class="dropdown-menu">
-			           	<li><a href="<c:url value='/employee_info' />">All Employee</a></li>
-			            <li role="separator" class="divider"></li>
-			            <!-- <li><a href="#" data-toggle="modal" data-target="#employee-modal">Add Employee</a></li> -->
-			          </ul>
-		        	</li>
-      				<li><a href="<c:url value='/attendance' />" id="nav-admin-attendance">Attendance</a></li>
-      				<li><a href="#" id="nav-admin-training">Training</a>
-      				<li><a href="#" id="nav-admin-record">Record</a></li>
-      				<li><a href="#" data-toggle="modal" data-target="#employee-modal" data-purpose="add">Add Employee</a></li> --%>
-					<li class="active"><a data-toggle="tab" href="#welcome"> Welcome </a></li>
-					<li><a data-toggle="tab" href="#employee-info"> Employee Info </a></li>
-					<li><a data-toggle="tab" href="#attendance"> Attendance </a></li>
+				<li class="active"><a data-toggle="tab" href="#welcome"> Welcome </a></li>
+				<li><a data-toggle="tab" href="#employee-info"> Employee Info </a></li>
+				<li><a data-toggle="tab" href="#attendance"> Attendance </a></li>
+				<li><a data-toggle="tab" href="#training"> Training </a></li>
 			</sec:authorize>
 			<sec:authorize access="hasRole('USER')">
-					<li class="active"><a data-toggle="tab" href="#welcome"> Welcome </a></li>
-					<li><a data-toggle="tab" href="#employee-info"> My Info </a></li>
-					<li><a data-toggle="tab" href="#attendance"> Attendance </a></li>
-					<li><a href="#" id="nav-user-bank">Bank Information</a></li>
+				<li class="active"><a data-toggle="tab" href="#welcome"> Welcome </a></li>
+				<li><a data-toggle="tab" href="#employee-info"> My Info </a></li>
+				<li><a data-toggle="tab" href="#attendance"> Attendance </a></li>
+				<li><a data-toggle="tab" href="#training"> Training </a></li>
+				<li><a href="#" id="nav-user-bank">Bank Information</a></li>
 			</sec:authorize>
             </ul>
-				<form action="<c:url value='/perform_logout' />" method="post"
-					id="logoutForm">
-					<input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}" />
-				</form>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="<c:url value='/' />"><span
-							class="glyphicon glyphicon-user"></span> <sec:authentication property="principal.username" /> </a>
-					<li><a href="javascript:formSubmit()"><span class="glyphicon glyphicon-log-out"></span> Log Out </a></li>
-				</ul>
+			<form action="<c:url value='/perform_logout' />" method="post" id="logoutForm">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			</form>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="<c:url value='/' />"><span class="glyphicon glyphicon-user"></span> <sec:authentication property="principal.username" /> </a>
+				<li><a href="javascript:formSubmit()"><span class="glyphicon glyphicon-log-out"></span> Log Out </a></li>
+			</ul>
 		</div>
 		</sec:authorize>
 	</div>
@@ -91,5 +78,9 @@
 		<div id="attendance" class="tab-pane fade">
 			<jsp:include page="attendance.jsp" />
 		</div>
+		
+		<div id="training" class="tab-pane fade">
+            <jsp:include page="training.jsp" />
+        </div>
 	</div>
 	</sec:authorize>

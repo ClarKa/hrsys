@@ -37,8 +37,8 @@ public class EmployeeInfoServices {
 
     @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}", method = RequestMethod.GET, produces = "application/json")
     @EmployeeIdMatchOrIsAdmin
-    public EmployeeDTO getOneEmployee(@PathVariable("employeeid") int employeeid) {
-        return employeeInfoFacade.getOneEmployee(employeeid, employeeManager);
+    public EmployeeDTO getOneEmployee(@PathVariable("employeeid") int employeeID) {
+        return employeeInfoFacade.getOneEmployee(employeeID, employeeManager);
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")

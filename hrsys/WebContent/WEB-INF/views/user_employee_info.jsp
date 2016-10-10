@@ -19,7 +19,7 @@
 </script>
 
 <div class="panel panel-default">
-	<div class="panel-heading">My Infomation</div>
+	<div class="panel-heading">My Information</div>
 	<div class="panel-body">
 		<table id="user-employee-table" class="table table-hover">
 			<tr>
@@ -31,7 +31,7 @@
 			<tr>
 				<th>Email</th>
 				<td id="myinfo-email"></td>
-				<th></th>
+				<th>Department</th>
 				<td id="myinfo-departmentName"></td>
 			</tr>
 			<tr>
@@ -55,7 +55,7 @@
 			<tr>
 				<th>Enrollment Date</th>
 				<td id="myinfo-enrollmentDate"></td>
-				<th>Potisition</th>
+				<th>Position</th>
 				<td id="myinfo-position"></td>
 			</tr>
 			<tr>

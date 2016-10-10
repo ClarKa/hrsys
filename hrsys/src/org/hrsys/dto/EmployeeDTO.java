@@ -5,6 +5,7 @@ import java.sql.Date;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.lang3.text.WordUtils;
 import org.hibernate.validator.constraints.Email;
 import org.hrsys.constants.ValidationConstants;
 import org.hrsys.entity.Employee;
@@ -98,7 +99,7 @@ public class EmployeeDTO {
     }
 
     public void setFirstname(String firstname) {
-        this.firstname = firstname;
+        this.firstname = WordUtils.capitalize(firstname);
     }
 
     public String getLastname() {
@@ -106,7 +107,7 @@ public class EmployeeDTO {
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        this.lastname = WordUtils.capitalize(lastname);
     }
 
     public String getGender() {
