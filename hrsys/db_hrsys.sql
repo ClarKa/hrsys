@@ -132,3 +132,31 @@ INSERT INTO attendance VALUES(1, DATE("2016-9-17"), TIME("08:20:00"), TIME("19:0
 INSERT INTO attendance VALUES(1, DATE("2016-9-18"), TIME("08:00:00"), TIME("19:00:00"), "Normal", "");
 INSERT INTO attendance VALUES(1, DATE("2016-9-19"), TIME("08:00:00"), TIME("19:00:00"), "Normal", "");
 INSERT INTO attendance VALUES(1, DATE("2016-9-20"), TIME("08:10:00"), TIME("12:00:00"), "Early Leave", "Im the boss too");
+
+-- ----------------------------
+-- Table structure for `Training`
+-- ----------------------------
+DROP TABLE IF EXISTS Training;
+CREATE TABLE training (
+  tr_employee_id INT NOT NULL,
+  tr_date date NOT NULL,
+  tr_hour INT NOT NULL DEFAULT 0,
+  tr_approved boolean NOT NULL DEFAULT FALSE,
+  PRIMARY KEY (tr_employee_id, tr_date),
+  CONSTRAINT FK_tr_emp FOREIGN KEY (tr_employee_id) REFERENCES employee (em_employee_id)
+  ON DELETE CASCADE
+  );
+
+INSERT INTO training VALUES(1, DATE("2016-10-11"), 8, false);
+INSERT INTO training VALUES(1, DATE("2016-10-12"), 8, false);
+INSERT INTO training VALUES(1, DATE("2016-10-13"), 8, false);
+INSERT INTO training VALUES(1, DATE("2016-10-1"), 8, true);
+INSERT INTO training VALUES(1, DATE("2016-10-2"), 8, true);
+INSERT INTO training VALUES(1, DATE("2016-10-3"), 8, false);
+INSERT INTO training VALUES(1, DATE("2016-10-4"), 8, true);
+INSERT INTO training VALUES(2, DATE("2016-9-11"), 8, false);
+INSERT INTO training VALUES(2, DATE("2016-9-12"), 8, false);
+INSERT INTO training VALUES(2, DATE("2016-9-13"), 8, false);
+INSERT INTO training VALUES(2, DATE("2016-9-1"), 8, true);
+INSERT INTO training VALUES(2, DATE("2016-9-2"), 8, true);
+INSERT INTO training VALUES(2, DATE("2016-9-3"), 8, false);

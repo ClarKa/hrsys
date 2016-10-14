@@ -22,6 +22,7 @@ $(document).ready(function() {
 	        	var option;
 	            if (data[key].employeeID == "${employeeId}") {
 	            	option = $("<option selected></option>").text(data[key].firstname + " " + data[key].lastname + " (me) ");
+	            	initializeAttendanceCalendarForUser(data[key]);
                 } else {
                 	option = $("<option></option>").text(data[key].firstname + " " + data[key].lastname);
                 }
@@ -41,7 +42,7 @@ $(document).ready(function() {
             option.val(data.employeeID);
             $("#employeeID").append(option);
             
-            initializeCalendarForUser(data);
+            initializeAttendanceCalendarForUser(data);
         }).fail(function() {
             alert("Ajax failed to fetch data");
         });
@@ -87,7 +88,7 @@ $(document).ready(function() {
             type: "GET",
             url: "rest/employee/employeeid/" + $( this ).val()
         }).done(function(data) {
-            initializeCalendarForUser(data);
+            initializeAttendanceCalendarForUser(data);
         }).fail(function() {
             alert("Ajax failed to fetch data");
         });
@@ -115,7 +116,7 @@ $(document).ready(function() {
     })
 });
 
-function initializeCalendarForUser(data) {
+function initializeAttendanceCalendarForUser(data) {
 	$( "#calendar" ).datepicker( "option", "minDate", data.enrollmentDate);
 }
 

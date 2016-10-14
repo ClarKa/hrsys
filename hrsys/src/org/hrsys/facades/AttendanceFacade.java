@@ -14,7 +14,8 @@ import org.hrsys.entity.Employee;
 
 public class AttendanceFacade {
     public List<AttendanceDTO> getOneEmployeeAttendance(int employeeID,
-            AttendanceManager attendanceManager, EmployeeManager employeeManager) {
+            AttendanceManager attendanceManager,
+            EmployeeManager employeeManager) {
         List<Attendance> attendanceList = attendanceManager
                 .getOneEmployeeAttendance(employeeID);
         List<AttendanceDTO> attendanceDtoList = new ArrayList<AttendanceDTO>();
@@ -28,10 +29,11 @@ public class AttendanceFacade {
     }
 
     public AttendanceDTO getAttendanceForDate(int employeeID, Date date,
-            AttendanceManager attendanceManager, EmployeeManager employeeManager) {
+            AttendanceManager attendanceManager,
+            EmployeeManager employeeManager) {
         Employee employee = employeeManager.getOneEmployee(employeeID);
-        Attendance attendance = attendanceManager.getAttendanceForDate(
-                employeeID, date);
+        Attendance attendance = attendanceManager
+                .getAttendanceForDate(employeeID, date);
         if (attendance == null) {
             AttendanceDTO attendanceForDate = new AttendanceDTO();
             attendanceForDate.setError("No record found for date " + date);
@@ -42,27 +44,29 @@ public class AttendanceFacade {
     }
 
     public AttendanceDTO createAttendance(int employeeID,
-            AttendanceManager attendanceManager, EmployeeManager employeeManager) {
+            AttendanceManager attendanceManager,
+            EmployeeManager employeeManager) {
         if (employeeID == 0) {
-            AttendanceDTO attendanceDto =  new AttendanceDTO();
-            attendanceDto.setError("No employee is currently connected to this user account.");
+            AttendanceDTO attendanceDto = new AttendanceDTO();
+            attendanceDto.setError(
+                    "No employee is currently connected to this user account.");
         }
-        
+
         Date date = new Date(System.currentTimeMillis());
         Time time = new Time(System.currentTimeMillis());
 
-        Attendance attendance = attendanceManager.getAttendanceForDate(
-                employeeID, date);
+        Attendance attendance = attendanceManager
+                .getAttendanceForDate(employeeID, date);
         Employee employee = employeeManager.getOneEmployee(employeeID);
         AttendanceDTO attendanceDto = null;
-        
+
         if (attendance == null) {
             Attendance newAttendance = new Attendance();
             newAttendance.setEmployeeID(employeeID);
             newAttendance.setDate(date);
             newAttendance.setInTime(time);
             attendanceDto = new AttendanceDTO(newAttendance, employee);
-            
+
             try {
                 attendanceManager.createAttendanceForDate(newAttendance);
             } catch (Exception e) {
@@ -76,9 +80,10 @@ public class AttendanceFacade {
                 newAttendance.setDate(date);
                 newAttendance.setOutTime(time);
                 attendanceDto = new AttendanceDTO(newAttendance, employee);
-                
+
                 try {
-                    attendanceManager.updateAttendanceForDate(newAttendance, CommonConstants.ATTENDANCE_SET_OUT_TIME_CODE);
+                    attendanceManager.updateAttendanceForDate(newAttendance,
+                            CommonConstants.ATTENDANCE_SET_OUT_TIME_CODE);
                 } catch (Exception e) {
                     attendanceDto.setError(e.getMessage());
                 }

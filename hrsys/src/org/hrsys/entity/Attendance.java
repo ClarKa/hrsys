@@ -18,20 +18,20 @@ public class Attendance {
     @Id
     @Column(name = "at_employee_id", unique = true, nullable = false, insertable = true, updatable = true)
     private int employeeID;
-    
+
     @Id
     @Column(name = "at_date", unique = true, nullable = false, insertable = true, updatable = true)
     private Date date;
-    
+
     @Column(name = "at_in_time", unique = false, nullable = true, insertable = true, updatable = true)
     private Time inTime;
-    
+
     @Column(name = "at_out_time", unique = false, nullable = true, insertable = true, updatable = true)
     private Time outTime;
-    
+
     @Column(name = "at_status", unique = false, nullable = true, insertable = true, updatable = true)
     private String status;
-    
+
     @Column(name = "at_comment", unique = false, nullable = true, insertable = true, updatable = true)
     private String comment;
 
@@ -43,7 +43,8 @@ public class Attendance {
     }
 
     /**
-     * @param employeeID the employeeID to set
+     * @param employeeID
+     *            the employeeID to set
      */
     public void setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
@@ -57,7 +58,8 @@ public class Attendance {
     }
 
     /**
-     * @param date the date to set
+     * @param date
+     *            the date to set
      */
     public void setDate(Date date) {
         this.date = date;
@@ -71,7 +73,8 @@ public class Attendance {
     }
 
     /**
-     * @param inTime the inTime to set
+     * @param inTime
+     *            the inTime to set
      */
     public void setInTime(Time inTime) {
         this.inTime = inTime;
@@ -85,7 +88,8 @@ public class Attendance {
     }
 
     /**
-     * @param outTime the outTime to set
+     * @param outTime
+     *            the outTime to set
      */
     public void setOutTime(Time outTime) {
         this.outTime = outTime;
@@ -99,7 +103,8 @@ public class Attendance {
     }
 
     /**
-     * @param status the status to set
+     * @param status
+     *            the status to set
      */
     public void setStatus(String status) {
         this.status = status;
@@ -113,7 +118,8 @@ public class Attendance {
     }
 
     /**
-     * @param comment the comment to set
+     * @param comment
+     *            the comment to set
      */
     public void setComment(String comment) {
         this.comment = comment;

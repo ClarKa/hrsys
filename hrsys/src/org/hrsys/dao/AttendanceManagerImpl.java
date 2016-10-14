@@ -21,6 +21,7 @@ public class AttendanceManagerImpl implements AttendanceManager {
     @PersistenceContext
     private EntityManager mgr;
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Attendance> getOneEmployeeAttendance(int employeeID) {
         List<Attendance> results = new ArrayList<>();

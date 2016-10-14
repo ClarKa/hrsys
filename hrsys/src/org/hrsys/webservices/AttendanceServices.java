@@ -38,8 +38,8 @@ public class AttendanceServices {
                 attendanceManager, employeeManager);
     }
 
-    @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH
-            + "/{employeeid}" + "/{date}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}"
+            + "/{date}", method = RequestMethod.GET, produces = "application/json")
     @EmployeeIdMatchOrIsAdmin
     public AttendanceDTO getOneEmployeeAttendance(
             @PathVariable("employeeid") int employeeID,
@@ -53,7 +53,8 @@ public class AttendanceServices {
     @EmployeeIdMatchOrIsAdmin
     public AttendanceDTO createAttendance(
             @PathVariable("employeeid") int employeeID) {
-        return attendanceFacade.createAttendance(employeeID, attendanceManager, employeeManager);
+        return attendanceFacade.createAttendance(employeeID, attendanceManager,
+                employeeManager);
     }
 
     public boolean isAuthorized(int employeeID) {
