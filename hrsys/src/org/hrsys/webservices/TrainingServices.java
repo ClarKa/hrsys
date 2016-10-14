@@ -29,8 +29,8 @@ public class TrainingServices {
             + "/{employeeid}", method = RequestMethod.GET, produces = "application/json")
     @EmployeeIdMatchOrIsAdmin
     public List<TrainingDTO> getOneEmployeeTrainingRecord(
-            @PathVariable("employeeid") int employeeId) {
-        return trainingFacade.getOneEmployeeTrainingRecord(employeeId,
+            @PathVariable("employeeid") int employeeID) {
+        return trainingFacade.getOneEmployeeTrainingRecord(employeeID,
                 trainingManager, employeeManager);
     }
 }
