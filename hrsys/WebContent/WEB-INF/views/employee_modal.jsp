@@ -54,7 +54,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="birth"> Birthday: </label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="text" name="birth" id="birth" required/>
+                        <input class="form-control" type="text" name="birth" id="birth" required readonly/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -94,7 +94,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="enrollmentDate"> Enrollment Date: </label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="text" name="enrollmentDate" id="enrollmentDate" required/>
+                        <input class="form-control" type="text" name="enrollmentDate" id="enrollmentDate" required readonly/>
                     </div>
                 </div>
                 <div class="form-group">

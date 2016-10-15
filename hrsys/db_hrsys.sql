@@ -160,3 +160,4 @@ INSERT INTO training VALUES(2, DATE("2016-9-13"), 8, false);
 INSERT INTO training VALUES(2, DATE("2016-9-1"), 8, true);
 INSERT INTO training VALUES(2, DATE("2016-9-2"), 8, true);
 INSERT INTO training VALUES(2, DATE("2016-9-3"), 8, false);
+INSERT INTO training VALUES(3, DATE("2016-10-3"), 5, false);

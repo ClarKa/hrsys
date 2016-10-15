@@ -2,12 +2,10 @@ package org.hrsys.dto;
 
 import java.sql.Date;
 
-import org.hrsys.entity.Employee;
 import org.hrsys.entity.Training;
 
 public class TrainingDTO {
     private int     employeeID;
-    private String  name;
     private Date    date;
     private int     hour;
     private boolean approved;
@@ -16,9 +14,8 @@ public class TrainingDTO {
     public TrainingDTO() {
     }
 
-    public TrainingDTO(Training training, Employee employee) {
+    public TrainingDTO(Training training) {
         this.employeeID = training.getEmployeeID();
-        this.name = employee.getFirstname() + " " + employee.getLastname();
         this.date = training.getDate();
         this.hour = training.getHour();
         this.approved = training.getApproved();
@@ -37,21 +34,6 @@ public class TrainingDTO {
      */
     public void setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
-    }
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name
-     *            the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**

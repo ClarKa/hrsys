@@ -3,6 +3,7 @@ package org.hrsys.facades;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.hrsys.dao.EmployeeManager;
 import org.hrsys.dto.EmployeeDTO;
 import org.hrsys.entity.Department;
@@ -31,7 +32,7 @@ public class EmployeeInfoFacade {
         try {
             employeeManager.createEmployee(employee);
         } catch (Exception e) {
-            employeeDto.setError(e.getMessage());
+            employeeDto.setError(ExceptionUtils.getRootCause(e).getLocalizedMessage());
         }
         return employeeDto;
     }
@@ -44,7 +45,7 @@ public class EmployeeInfoFacade {
             employee = employeeManager.deleteOneEmployee(employeeID);
         } catch (Exception e) {
             employeeDto = new EmployeeDTO();
-            employeeDto.setError(e.getMessage());
+            employeeDto.setError(ExceptionUtils.getRootCause(e).getLocalizedMessage());
             return employeeDto;
         }
 
@@ -60,7 +61,7 @@ public class EmployeeInfoFacade {
         try {
             employeeManager.updateOneEmployee(employeeID, employee);
         } catch (Exception e) {
-            employeeDto.setError(e.getMessage());
+            employeeDto.setError(ExceptionUtils.getRootCause(e).getLocalizedMessage());
         }
 
         return employeeDto;

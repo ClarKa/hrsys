@@ -33,4 +33,13 @@ public class TrainingServices {
         return trainingFacade.getOneEmployeeTrainingRecord(employeeID,
                 trainingManager, employeeManager);
     }
+
+    @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH
+            + "/{employeeid}", method = RequestMethod.POST, produces = "application/json")
+    @EmployeeIdMatchOrIsAdmin
+    public TrainingDTO createTrainingRecordForDate(TrainingDTO trainingDto,
+            @PathVariable("employeeid") int employeeID) {
+        
+        return trainingFacade.createTrainingRecordForDate(trainingDto, employeeID, trainingManager);
+    }
 }

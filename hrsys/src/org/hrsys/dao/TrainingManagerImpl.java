@@ -42,8 +42,7 @@ public class TrainingManagerImpl implements TrainingManager {
 
     @Override
     public void createTrainingRecordForDate(Training training) throws SQLException {
-        // TODO Auto-generated method stub
-
+        mgr.persist(training);
     }
 
     @Override

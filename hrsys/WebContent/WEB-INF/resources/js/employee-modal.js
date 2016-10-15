@@ -100,23 +100,16 @@ $(document).ready(function() {
            }
       }).fail(function(data) {
           toggleFailAlert();
-          console.log(data);
       });
     });
 
     // datepicker setup
-    $( "#birth" ).datepicker({
+    $( "#birth, #enrollmentDate" ).datepicker({
         changeMonth: true,
         changeYear: true,
         maxDate: "+0D",
+        dateFormat: "yy-mm-dd"
       });
-    $( "#birth" ).datepicker("option", "dateFormat", "yy-mm-dd" );
-
-    $( "#enrollmentDate" ).datepicker({
-        changeMonth: true,
-        changeYear: true
-      });
-    $( "#enrollmentDate" ).datepicker("option", "dateFormat", "yy-mm-dd" );
 
     // format ssn input
     $('#ssn').keyup(function() {
