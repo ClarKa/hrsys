@@ -13,6 +13,7 @@
 <link href="<c:url value='/resources/css/bootstrap-formhelpers.min.css' />" rel="stylesheet" media="screen">
 <link href="<c:url value='/resources/css/dashboard.css' />" rel="stylesheet">
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="_csrf" content="${_csrf.token}" />
 <!-- default header name is X-CSRF-TOKEN -->
@@ -28,6 +29,9 @@
 		function formSubmit() {
 			document.getElementById("logoutForm").submit();
 		}
+		// include CSRF token.
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
 	</script>
 
 	<nav class="navbar navbar-default navbar-fixed-top">
@@ -35,7 +39,7 @@
 		<div class="navbar-header">
 			<a class="navbar-brand" href="<c:url value='/' />">HR</a>
 		</div>
-        
+
         <sec:authorize access="isAuthenticated()">
 		<div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -78,7 +82,7 @@
 		<div id="attendance" class="tab-pane fade">
 			<jsp:include page="attendance.jsp" />
 		</div>
-		
+
 		<div id="training" class="tab-pane fade">
             <jsp:include page="training.jsp" />
         </div>

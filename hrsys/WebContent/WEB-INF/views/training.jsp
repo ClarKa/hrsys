@@ -6,22 +6,22 @@
 <sec:authentication property="principal.employeeID" var="employeeId"/>
 
 <style>
-.approved-training {
-	box-shadow: rgb(156, 183, 3) 0px -4px 0px 0px inset;
-}
-
 .event-tooltip-content:not (:last-child ) {
 	border-bottom: 1px solid #ddd;
 	padding-bottom: 5px;
 	margin-bottom: 5px;
 }
 
-.event-tooltip-content .event-title {
+.event-tooltip-content .event-approved {
 	font-size: 18px;
 }
 
 .event-tooltip-content .event-hour {
 	font-size: 12px;
+}
+
+#training-calendar {
+	overflow-y: hidden !important;
 }
 </style>
 <link href="<c:url value='/resources/css/bootstrap-year-calendar.min.css' />" rel="stylesheet">
@@ -30,7 +30,105 @@
 var selectedEmployee;
 
 $(document).ready(function() {
-	// employee select list setup
+	initializeTrainingEmployeeSelectList();
+
+    $("#training-employee-list").on("change", function() {
+        $.ajax({
+            type: "GET",
+            url: "rest/employee/employeeid/" + $( this ).val()
+        }).done(function(data) {
+            initializeTrainingCalendarForUser(data);
+        }).fail(function() {
+            alert("Ajax failed to fetch data");
+        });
+    });
+
+    //training modal setup
+    $("#training-modal input[name='date']").datepicker({dateFormat: "yy-mm-dd"});
+
+    // calendar setup
+    $("#training-calendar").calendar({
+        mouseOnDay: function(e) {
+        	content = "";
+        	if (e.events.length > 0) {
+	        	content += '<div class="event-tooltip-content">'
+	                + '<div class="event-approved" style="color:' + e.events[0].color + '">' + (e.events[0].approved ? "Approved" : "Unapproved" ) + '</div>'
+	                + '<div class="event-hour">' + e.events[0].hour + ' hours </div>'
+	                + '</div>';
+
+	        	$(e.element).popover({
+	                trigger: 'manual',
+	                container: 'body',
+	                html:true,
+	                content: content
+	            });
+
+	            $(e.element).popover('show');
+        	}
+        },
+        mouseOutDay: function(e) {
+            if(e.events.length > 0) {
+                $(e.element).popover('hide');
+            }
+        },
+        clickDay: function(e) {
+        	var event = e.events[0];
+            $("#training-modal input[name='date']").datepicker( "setDate", e.date );
+            $("#training-modal input[name='date']").datepicker( "option", {minDate: e.date, maxDate: e.date} );
+            $("#training-modal input[name='hour']").val( event ? event.hour : '');
+
+
+           	if (event) {
+               $("#training-modal .label").text(event.approved ? "Approved" : "Unapproved");
+               $("#training-modal .label").attr("class", event.approved ? "label label-success" : "label label-primary" );
+               $("#training-modal input[name='hour']").prop("readonly", event.approved ? true : false);
+               $("#training-modal input[type='submit']").prop("disabled", event.approved ? true : false);
+            } else {
+               $("#training-modal .label").text("No record");
+               $("#training-modal .label").attr("class", "label label-warning" );
+               $("#training-modal input[name='hour']").prop("readonly", false);
+               $("#training-modal input[type='submit']").prop("disabled", false);
+            }
+
+            if (selectedEmployee.employeeID != "${employeeId}") {
+            	$("#training-modal input[name='hour']").prop("readonly", true);
+               $("#training-modal input[type='submit']").prop("disabled", true);
+            }
+
+            $("#training-modal").modal();
+        },
+        maxDate: new Date(),
+        dataSource: []
+        });
+
+    // handle add training record form
+    $( "#training-modal-form" ).submit(function( event ) {
+        event.preventDefault();
+
+        var $form = $( this );
+
+        $.ajax({
+             type: "POST",
+             url: "rest/training/employeeid/" + selectedEmployee.employeeID,
+             data: $form.serialize(),
+             beforeSend: function(xhr) {
+                 xhr.setRequestHeader(header, token);
+             }
+        }).done(function(data) {
+             if (data.error == null) {
+                 $('#training-modal').modal('hide');
+                 initializeTrainingCalendarForUser(selectedEmployee);
+             } else {
+                 alert(data.error);
+             }
+        }).fail(function(data) {
+            alert("Add training time record failed.");
+        });
+      });
+});
+
+// employee select list setup
+function initializeTrainingEmployeeSelectList() {
     if ("${isAdmin}" == "true") {
         $.ajax({
             type: "GET",
@@ -65,98 +163,7 @@ $(document).ready(function() {
             alert("Ajax failed to fetch data");
         });
     }
-
-    $("#training-employee-list").on("change", function() {
-        $.ajax({
-            type: "GET",
-            url: "rest/employee/employeeid/" + $( this ).val()
-        }).done(function(data) {
-            initializeTrainingCalendarForUser(data);
-        }).fail(function() {
-            alert("Ajax failed to fetch data");
-        });
-    });
-    
-    //training modal setup
-    $("#training-modal input[name='date']").datepicker({dateFormat: "yy-mm-dd"});
-    
-    // calendar setup
-    $("#training-calendar").calendar({
-        enableContextMenu: true,
-        mouseOnDay: function(e) {
-        	content = "";
-        	if (e.events.length > 0) {
-	        	content += '<div class="event-tooltip-content">'
-	                + '<div class="event-approved" style="color:' + e.events[0].color + '">' + (e.events[0].approved ? "Approved" : "Unapproved" ) + '</div>'
-	                + '<div class="event-hour" style="color:' + e.events[0].color + '">' + e.events[0].hour + ' hours </div>'
-	                + '</div>';
-
-	        	$(e.element).popover({
-	                trigger: 'manual',
-	                container: 'body',
-	                html:true,
-	                content: content
-	            });
-
-	            $(e.element).popover('show');
-        	}
-        },
-        mouseOutDay: function(e) {
-            if(e.events.length > 0) {
-                $(e.element).popover('hide');
-            }
-        },
-        clickDay: function(e) {
-        	var event = e.events[0];
-            $("#training-modal input[name='date']").datepicker( "setDate", e.date );
-            $("#training-modal input[name='date']").datepicker( "option", {minDate: e.date, maxDate: e.date} );
-            $("#training-modal input[name='hour']").val( event ? event.hour : '');
-            
-            if (event) {
-                $("#training-modal .label").text(event.approved ? "Approved" : "Unapproved");
-                $("#training-modal .label").attr("class", event.approved ? "label label-success" : "label label-primary" );
-                $("#training-modal input[name='hour']").prop("readonly", event.approved ? true : false);
-            } else {
-            	$("#training-modal .label").text("No record");
-                $("#training-modal .label").attr("class", "label label-warning" );
-                $("#training-modal input[name='hour']").prop("readonly", false);
-            }
-            
-            $("#training-modal").modal();
-        },
-        maxDate: new Date(),
-        dataSource: []
-        });
-
-    // handle add training record form
-    $( "#training-modal-form" ).submit(function( event ) {
-        event.preventDefault();
-
-        var $form = $( this );
-
-        // include CSRF token.
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
-
-        $.ajax({
-             type: "POST",
-             url: "rest/training/employeeid/" + selectedEmployee.employeeID,
-             data: $form.serialize(),
-             beforeSend: function(xhr) {
-                 xhr.setRequestHeader(header, token);
-             }
-        }).done(function(data) {
-             if (data.error == null) {
-                 $('#training-modal').modal('hide');
-                 addTrainingRecord([data]);
-             } else {
-                 alert(data.error);
-             }
-        }).fail(function(data) {
-            alert(data);
-        });
-      });
-});
+}
 
 function initializeTrainingCalendarForUser(employee) {
 	selectedEmployee = employee;
@@ -198,6 +205,32 @@ function addTrainingRecord(data) {
     $('#training-calendar').data('calendar').setDataSource(dataSource);
 }
 </script>
+
+<sec:authorize access="hasRole('ADMIN')">
+<!-- Admin Action -->
+<script>
+// Approve all training record.
+$(document).ready(function() {
+	$("#training-approve-button").click(function() {
+		 $.ajax({
+             type: "POST",
+             url: "rest/training",
+             data: {"action": "approve all", "employeeId": selectedEmployee.employeeID},
+             beforeSend: function(xhr) {
+                 xhr.setRequestHeader(header, token);
+             }
+        }).done(function(data) {
+            alert(data.length + " records have been approved.");
+        	initializeTrainingCalendarForUser(selectedEmployee);
+        }).fail(function(data) {
+            alert("approve all training record for " + selectedEmployee.firstname + " " + selectedEmployee.lastname + " failed");
+        });
+    });
+});
+</script>
+<!-- Admin Action -->
+</sec:authorize>
+
 <div class="container">
 	<div class="panel panel-default">
 		<div class="panel-heading">My Training Time</div>
@@ -205,9 +238,31 @@ function addTrainingRecord(data) {
 			<select class="form-control" name="employeeID" id="training-employee-list">
 				<option selected disabled>Select an employee</option>
 			</select>
+			<br>
+			<sec:authorize access="hasRole('ADMIN')">
+			<p>
+			<button class="btn btn-success" id="training-approve-button"> Approve All Record </button>
+
+			<a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+			  Link with href
+			</a>
+
+			</p>
+
+			<div class="collapse" id="collapseExample">
+			  <div class="well">
+			    ...
+			  </div>
+			</div>
+			</sec:authorize>
 		</div>
-		<hr>
-		<div id="training-calendar"></div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">Calendar</div>
+		<div class="panel-body">
+			<div id="training-calendar" class="calendar"></div>
+		</div>
 	</div>
 
 	<div class="modal fade" tabindex="-1" role="dialog" id="training-modal">
@@ -244,5 +299,3 @@ function addTrainingRecord(data) {
 		</div>
 	</div>
 </div>
-
-

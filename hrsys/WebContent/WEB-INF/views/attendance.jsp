@@ -9,16 +9,12 @@
 
 <script>
 $(document).ready(function() {
-    // include CSRF token.
-    var token = $("meta[name='_csrf']").attr("content");
-    var header = $("meta[name='_csrf_header']").attr("content");
-
 	if ("${isAdmin}" == "true") {
 	    $.ajax({
 	        type: "GET",
 	        url: "rest/employee"
 	    }).done(function(data) {
-	        for (var key in data) { 
+	        for (var key in data) {
 	        	var option;
 	            if (data[key].employeeID == "${employeeId}") {
 	            	option = $("<option selected></option>").text(data[key].firstname + " " + data[key].lastname + " (me) ");
@@ -26,7 +22,7 @@ $(document).ready(function() {
                 } else {
                 	option = $("<option></option>").text(data[key].firstname + " " + data[key].lastname);
                 }
-	            
+
 	            option.val(data[key].employeeID);
 	            $("#employeeID").append(option);
 	        }
@@ -41,7 +37,7 @@ $(document).ready(function() {
             var option = $("<option selected></option>").text(data.firstname + " " + data.lastname + " (me) ");
             option.val(data.employeeID);
             $("#employeeID").append(option);
-            
+
             initializeAttendanceCalendarForUser(data);
         }).fail(function() {
             alert("Ajax failed to fetch data");
@@ -105,9 +101,9 @@ $(document).ready(function() {
             }
         }).done(function(data) {
         	if (data.error == null) {
-        		
+
         	} else  {
-        		
+
         	}
         	console.log(data);
         }).fail(function() {
@@ -127,7 +123,7 @@ function initializeAttendanceCalendarForUser(data) {
 		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 		<strong>Tip!</strong> Select an employee and choose a date to see the attendance record.
 	</div>
-    
+
 	<div class="row">
 		<div class="col-sm-4">
 		    <select class="form-control" name="employeeID" id="employeeID">

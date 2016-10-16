@@ -29,4 +29,11 @@ public class MetaAnnotations {
     public @interface EmployeeIdMatchOrIsAdmin
     {
     }
+    
+    @Target(ElementType.METHOD)
+    @Retention(RetentionPolicy.RUNTIME)
+    @PreAuthorize(CommonConstants.EMPLOYEE_ID_MATCH)
+    public @interface EmployeeIdMatch
+    {
+    }
 }

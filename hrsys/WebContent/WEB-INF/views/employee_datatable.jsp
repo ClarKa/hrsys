@@ -133,10 +133,6 @@ $(document).ready(function() {
     	var row = table.row( tr );
     	var rowId = row.id();
 
-        // include CSRF token.
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
-
     	$.ajax({
     		type: "DELETE",
     		url: "rest/employee/employeeid/" + rowId,

@@ -2,11 +2,18 @@ package org.hrsys.dto;
 
 import java.sql.Date;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
+import org.hrsys.constants.ValidationConstants;
 import org.hrsys.entity.Training;
 
 public class TrainingDTO {
     private int     employeeID;
     private Date    date;
+    
+    @Max(value=8, message=ValidationConstants.INVALID_TRAINING_HOUR)
+    @Min(value=0, message=ValidationConstants.INVALID_TRAINING_HOUR)
     private int     hour;
     private boolean approved;
     private String  error;

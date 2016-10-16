@@ -50,7 +50,7 @@ $(document).ready(function() {
         			alert("Employee entry no long exists");
         			$("#employee-datatable").DataTable().ajax.reload();
         		}
-        		
+
         		$.each(data, function(key, value){
                     $("#"+key).val(value);
                 });
@@ -74,12 +74,7 @@ $(document).ready(function() {
     $( "#employee-modal-form" ).submit(function( event ) {
       event.preventDefault();
 
-      var $form = $( this ),
-      	term = $form.find( "input[name='Save']" ).val();
-
-      // include CSRF token.
-      var token = $("meta[name='_csrf']").attr("content");
-      var header = $("meta[name='_csrf_header']").attr("content");
+      var $form = $( this );
 
       $.ajax({
            type: "POST",

@@ -8,7 +8,9 @@ import org.hrsys.entity.Training;
 
 public interface TrainingManager {
     public List<Training> getOneEmployeeTrainingRecord(int employeeId);
-    public Training getTrainingRecordForDate(int employeeID, Date date);
+    public Training getTrainingRecordForDate(int employeeId, Date date);
     public void createTrainingRecordForDate(Training training) throws SQLException;
     public void updateTrainingRecordForDate(Training training) throws SQLException;
+    public List<Training> approveAllTrainingRecordsForEmployee(int employeeId);
+    public Training approveTrainingRecordsForDate(int employeeId, Date date) throws SQLException;
 }
