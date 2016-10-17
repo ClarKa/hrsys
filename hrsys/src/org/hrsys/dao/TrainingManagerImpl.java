@@ -100,7 +100,7 @@ public class TrainingManagerImpl implements TrainingManager {
         } else {
             result.setApproved(true);
         }
-        return null;
+        return result;
     }
 
     @Override

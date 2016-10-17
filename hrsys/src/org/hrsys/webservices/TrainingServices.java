@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.hrsys.constants.CommonConstants;
 import org.hrsys.constants.ServicePaths;
 import org.hrsys.dao.EmployeeManager;
 import org.hrsys.dao.TrainingManager;
@@ -42,22 +41,22 @@ public class TrainingServices {
     }
 
     @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH
-            + "/{employeeid}", method = RequestMethod.POST, produces = "application/json")
+            + "/{employeeid}" + "/{recorddate}", method = RequestMethod.POST, produces = "application/json")
     @EmployeeIdMatch
     public TrainingDTO handleTrainingRecordForDate(@Valid TrainingDTO trainingDto,
-            BindingResult result, @PathVariable("employeeid") int employeeID) {
+            BindingResult result, @PathVariable("employeeid") int employeeID,  @PathVariable("recorddate") Date recordDate) {
         if (result.hasErrors()) {
             trainingDto.setError(result.getAllErrors().get(0).getDefaultMessage());
             return trainingDto;
         }
         return trainingFacade.handleTrainingRecordForDate(trainingDto,
-                employeeID, trainingManager);
+                employeeID, recordDate, trainingManager);
     }
     
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     @IsAdmin
-    public List<TrainingDTO> approveTrainingRecordForEmployee(String action, int employeeId, Date date) {
-        if (action.equals(CommonConstants.APPROVE_ALL_TRAINING_RECORDS_ACTION)) {
+    public List<TrainingDTO> approveTrainingRecordForEmployee(int employeeId, Date date) {
+        if (date == null) {
             return trainingFacade.approveAllTrainingRecordForEmployee(employeeId, trainingManager);
         } else {
             return trainingFacade.approveTrainingRecordForDate(employeeId, date, trainingManager);

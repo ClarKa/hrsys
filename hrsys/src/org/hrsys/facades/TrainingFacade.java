@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.hrsys.dao.EmployeeManager;
 import org.hrsys.dao.TrainingManager;
 import org.hrsys.dto.TrainingDTO;
@@ -12,7 +11,8 @@ import org.hrsys.entity.Training;
 
 public class TrainingFacade {
     public List<TrainingDTO> getOneEmployeeTrainingRecord(int employeeId,
-            TrainingManager trainingManager, EmployeeManager employeeManager, Boolean approved) {
+            TrainingManager trainingManager, EmployeeManager employeeManager,
+            Boolean approved) {
         if (approved == null) {
             List<Training> trainings = trainingManager
                     .getOneEmployeeTrainingRecord(employeeId);
@@ -25,7 +25,8 @@ public class TrainingFacade {
             return trainingDtos;
         } else {
             List<Training> trainings = trainingManager
-                    .getOneEmployeeTrainingRecordByApproved(employeeId, approved);
+                    .getOneEmployeeTrainingRecordByApproved(employeeId,
+                            approved);
             List<TrainingDTO> trainingDtos = new ArrayList<TrainingDTO>();
 
             for (Training training : trainings) {
@@ -34,16 +35,15 @@ public class TrainingFacade {
 
             return trainingDtos;
         }
-        
-        
+
     }
 
     public TrainingDTO handleTrainingRecordForDate(TrainingDTO trainingDto,
-            int employeeId, TrainingManager trainingManager) {
+            int employeeId, Date date, TrainingManager trainingManager) {
         trainingDto.setEmployeeID(employeeId);
 
         if (trainingManager.getTrainingRecordForDate(employeeId,
-                trainingDto.getDate()) == null) {
+                date) == null) {
             trainingDto = createTrainingRecordForDate(trainingDto,
                     trainingManager);
         } else {
@@ -59,10 +59,9 @@ public class TrainingFacade {
 
         try {
             trainingManager.createTrainingRecordForDate(training);
-        } catch (Exception e) {
-
-            String error = ExceptionUtils.getRootCause(e).getLocalizedMessage();
-            trainingDto.setError(error);
+        } catch (Exception e) {;
+            trainingDto.setError(e.getMessage());
+            return trainingDto;
         }
 
         return trainingDto;
@@ -75,9 +74,10 @@ public class TrainingFacade {
         try {
             trainingManager.updateTrainingRecordForDate(training);
         } catch (Exception e) {
-            String error = ExceptionUtils.getRootCause(e).getLocalizedMessage();
-            trainingDto.setError(error);
+            trainingDto.setError(e.getMessage());
+            return trainingDto;
         }
+        
         return trainingDto;
     }
 
@@ -100,7 +100,7 @@ public class TrainingFacade {
     public List<TrainingDTO> approveTrainingRecordForDate(int employeeId,
             Date date, TrainingManager trainingManager) {
         List<TrainingDTO> trainingDtos = new ArrayList<TrainingDTO>();
-
+        
         try {
             Training result = trainingManager
                     .approveTrainingRecordsForDate(employeeId, date);

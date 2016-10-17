@@ -54,16 +54,18 @@ $(document).ready(function() {
                $("#training-modal .label").attr("class", event.approved ? "label label-success" : "label label-primary" );
                $("#training-modal input[name='hour']").prop("readonly", event.approved ? true : false);
                $("#training-modal input[type='submit']").prop("disabled", event.approved ? true : false);
+               $("#training-approve-one-button").prop("disabled", event.approved ? true : false);
             } else {
                $("#training-modal .label").text("No record");
                $("#training-modal .label").attr("class", "label label-warning" );
                $("#training-modal input[name='hour']").prop("readonly", false);
                $("#training-modal input[type='submit']").prop("disabled", false);
+               $("#training-approve-one-button").prop("disabled", true);
             }
 
             if (selectedEmployee.employeeID != userEmployeeId) {
             	$("#training-modal input[name='hour']").prop("readonly", true);
-               $("#training-modal input[type='submit']").prop("disabled", true);
+                $("#training-modal input[type='submit']").prop("disabled", true);
             }
 
             $("#training-modal").modal();
@@ -80,7 +82,7 @@ $(document).ready(function() {
 
         $.ajax({
              type: "POST",
-             url: trainingUrl + getOneEmployeeUrl + selectedEmployee.employeeID,
+             url: trainingUrl + getOneEmployeeUrl + selectedEmployee.employeeID + "/" + $("#training-modal input[name='date']").val(),
              data: $form.serialize(),
              beforeSend: function(xhr) {
                  xhr.setRequestHeader(header, token);
@@ -99,7 +101,6 @@ $(document).ready(function() {
 
     $("#training-calendar-filter-collapse .btn-group").click(function(e) {
         var approved = $(e.target).data("approved");
-        console.log(approved);
 
         $('#training-calendar').data('calendar').setDataSource("[]");
         $.ajax({
