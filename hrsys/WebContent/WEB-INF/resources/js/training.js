@@ -1,4 +1,5 @@
 var selectedEmployee;
+var filterDays;
 
 $(document).ready(function() {
 	initializeTrainingEmployeeSelectList();
@@ -43,6 +44,9 @@ $(document).ready(function() {
             }
         },
         clickDay: function(e) {
+            if (filterDays && e.events[0] == null) {
+                return;
+            }
         	var event = e.events[0];
             $("#training-modal input[name='date']").datepicker( "setDate", e.date );
             $("#training-modal input[name='date']").datepicker( "option", {minDate: e.date, maxDate: e.date} );
@@ -99,8 +103,15 @@ $(document).ready(function() {
         });
       });
 
+    // handle calendar filter
     $("#training-calendar-filter-collapse .btn-group").click(function(e) {
         var approved = $(e.target).data("approved");
+
+        if (approved === "") {
+            filterDays = false;
+        } else {
+            filterDays = true;
+        }
 
         $('#training-calendar').data('calendar').setDataSource("[]");
         $.ajax({

@@ -29,44 +29,7 @@
 
 <sec:authorize access="hasRole('ADMIN')">
 <!-- Admin Action -->
-<script>
-// Approve all training record.
-$(document).ready(function() {
-	$("#training-approve-all-button").click(function() {
-		 $.ajax({
-             type: "POST",
-             url: trainingUrl,
-             data: {"employeeId": selectedEmployee.employeeID},
-             beforeSend: function(xhr) {
-                 xhr.setRequestHeader(header, token);
-             }
-        }).done(function(data) {
-            alert(data.length + " records have been approved.");
-        	initializeTrainingCalendarForUser(selectedEmployee);
-        }).fail(function(data) {
-            alert("approve all training record for " + selectedEmployee.firstname + " " + selectedEmployee.lastname + " failed");
-        });
-    });
-    var approveButton = $("<button type='button' class='btn btn-success pull-left' data-dismiss='modal' id='training-approve-one-button'> Approve </button>");
-    $("#training-modal .modal-footer").append(approveButton);
-
-    $("#training-approve-one-button").click(function() {
-         $.ajax({
-             type: "POST",
-             url: trainingUrl,
-             data: {"employeeId": selectedEmployee.employeeID, "date": $("#training-modal input[name='date']").val()},
-             beforeSend: function(xhr) {
-                 xhr.setRequestHeader(header, token);
-             }
-        }).done(function(data) {
-        	alert(data.length + " records have been approved.");
-            initializeTrainingCalendarForUser(selectedEmployee);
-        }).fail(function(data) {
-            alert("approve all training record for " + selectedEmployee.firstname + " " + selectedEmployee.lastname + " failed");
-        });
-    });
-});
-</script>
+<script src="<c:url value='/resources/js/training_admin.js' />"></script>
 <!-- End Admin Action -->
 </sec:authorize>
 
