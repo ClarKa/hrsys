@@ -26,7 +26,9 @@ public class TrainingManagerImpl implements TrainingManager {
     public List<Training> getOneEmployeeTrainingRecord(int employeeId) {
         List<Training> results = new ArrayList<>();
         try {
-            Query jpqlQuery = mgr.createQuery("SELECT t FROM Training t WHERE t.employeeID = :employeeID")
+            Query jpqlQuery = mgr
+                    .createQuery(
+                            "SELECT t FROM Training t WHERE t.employeeID = :employeeID")
                     .setParameter("employeeID", employeeId);
             results = jpqlQuery.getResultList();
         } catch (Exception e) {
@@ -48,31 +50,36 @@ public class TrainingManagerImpl implements TrainingManager {
     }
 
     @Override
-    public void createTrainingRecordForDate(Training training) throws SQLException {
+    public void createTrainingRecordForDate(Training training)
+            throws SQLException {
         mgr.persist(training);
     }
 
     @Override
-    public void updateTrainingRecordForDate(Training training) throws SQLException {
+    public void updateTrainingRecordForDate(Training training)
+            throws SQLException {
         TrainingPK trainingPK = new TrainingPK();
         trainingPK.setEmployeeID(training.getEmployeeID());
         trainingPK.setDate(training.getDate());
         Training result = mgr.find(Training.class, trainingPK);
-        
+
         if (result.getApproved()) {
-            throw new SQLException(CommonConstants.CANNOT_UPDATE_APPROVED_TRAINING_RECORDS);
+            throw new SQLException(
+                    CommonConstants.CANNOT_UPDATE_APPROVED_TRAINING_RECORDS);
         } else {
             result.setHour(training.getHour());
         }
     }
-    
+
     @Override
     public List<Training> approveAllTrainingRecordsForEmployee(int employeeId) {
         List<Training> results = new ArrayList<>();
-        Query jpqlQuery = mgr.createQuery("SELECT t FROM Training t WHERE t.employeeID = :employeeID AND t.approved = false")
+        Query jpqlQuery = mgr
+                .createQuery(
+                        "SELECT t FROM Training t WHERE t.employeeID = :employeeID AND t.approved = false")
                 .setParameter("employeeID", employeeId);
         results = jpqlQuery.getResultList();
-        for (Training training : results ) {
+        for (Training training : results) {
             training.setApproved(true);
         }
 
@@ -80,18 +87,34 @@ public class TrainingManagerImpl implements TrainingManager {
     }
 
     @Override
-    public Training approveTrainingRecordsForDate(int employeeId, Date date) throws SQLException{
+    public Training approveTrainingRecordsForDate(int employeeId, Date date)
+            throws SQLException {
         TrainingPK trainingPK = new TrainingPK();
         trainingPK.setEmployeeID(employeeId);
         trainingPK.setDate(date);
         Training result = mgr.find(Training.class, trainingPK);
-        
+
         if (result.getApproved()) {
-            throw new SQLException(CommonConstants.CANNOT_UPDATE_APPROVED_TRAINING_RECORDS);
+            throw new SQLException(
+                    CommonConstants.CANNOT_UPDATE_APPROVED_TRAINING_RECORDS);
         } else {
             result.setApproved(true);
         }
         return null;
+    }
+
+    @Override
+    public List<Training> getOneEmployeeTrainingRecordByApproved(int employeeId,
+            boolean approved) {
+        List<Training> results = new ArrayList<>();
+        Query jpqlQuery = mgr
+                .createQuery(
+                        "SELECT t FROM Training t WHERE t.employeeID = :employeeID and t.approved = :approved")
+                .setParameter("employeeID", employeeId)
+                .setParameter("approved", approved);
+        results = jpqlQuery.getResultList();
+
+        return results;
     }
 
 }

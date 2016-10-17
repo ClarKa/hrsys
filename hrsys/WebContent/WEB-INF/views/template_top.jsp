@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -25,6 +24,11 @@
 	<script src="<c:url value='/resources/jquery/jquery-ui-1.12.1.custom/jquery-ui.js' />"></script>
 	<script src="<c:url value='/resources/bootstrap/js/bootstrap.min.js' />"></script>
 	<script src="<c:url value='/resources/js/bootstrap-formhelpers.min.js' />"></script>
+
+	<sec:authorize access="isAuthenticated()">
+	<sec:authorize access="hasRole('ADMIN')" var="isAdmin" />
+	<sec:authorize access="hasRole('USER')" var="isUser" />
+	<sec:authentication property="principal.employeeID" var="employeeId" />
 	<script>
 		function formSubmit() {
 			document.getElementById("logoutForm").submit();
@@ -32,7 +36,17 @@
 		// include CSRF token.
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
+
+		// global vars
+		var employeeInfoUrl = "<c:url value='${employeeInfoUrl}' />";
+		var departmentUrl = "<c:url value='${departmentUrl}' />";
+		var attendanceUrl = "<c:url value='${attendanceUrl}' />";
+		var trainingUrl = "<c:url value='${trainingUrl}' />";
+		var getOneEmployeeUrl = "${getOneEmployeeUrl}" + "/";
+		var isAdmin = "${isAdmin}";
+		var userEmployeeId = "${employeeId}";
 	</script>
+	</sec:authorize>
 
 	<nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container-fluid">

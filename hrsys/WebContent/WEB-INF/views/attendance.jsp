@@ -16,7 +16,7 @@ $(document).ready(function() {
 	    }).done(function(data) {
 	        for (var key in data) {
 	        	var option;
-	            if (data[key].employeeID == "${employeeId}") {
+	            if (data[key].employeeID == userEmployeeId) {
 	            	option = $("<option selected></option>").text(data[key].firstname + " " + data[key].lastname + " (me) ");
 	            	initializeAttendanceCalendarForUser(data[key]);
                 } else {
@@ -32,7 +32,7 @@ $(document).ready(function() {
 	} else {
 		$.ajax({
             type: "GET",
-            url: "rest/employee/employeeid/" + "${employeeId}"
+            url: "rest/employee/employeeid/" + userEmployeeId
         }).done(function(data) {
             var option = $("<option selected></option>").text(data.firstname + " " + data.lastname + " (me) ");
             option.val(data.employeeID);
@@ -95,7 +95,7 @@ $(document).ready(function() {
     $("#punch").click(function() {
         $.ajax({
             type: "POST",
-            url: "rest/attendance/employeeid/" + "${employeeId}",
+            url: "rest/attendance/employeeid/" + userEmployeeId,
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
             }

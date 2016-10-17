@@ -1,7 +1,6 @@
 package org.hrsys.facades;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,16 +12,30 @@ import org.hrsys.entity.Training;
 
 public class TrainingFacade {
     public List<TrainingDTO> getOneEmployeeTrainingRecord(int employeeId,
-            TrainingManager trainingManager, EmployeeManager employeeManager) {
-        List<Training> trainings = trainingManager
-                .getOneEmployeeTrainingRecord(employeeId);
-        List<TrainingDTO> trainingDtos = new ArrayList<TrainingDTO>();
+            TrainingManager trainingManager, EmployeeManager employeeManager, Boolean approved) {
+        if (approved == null) {
+            List<Training> trainings = trainingManager
+                    .getOneEmployeeTrainingRecord(employeeId);
+            List<TrainingDTO> trainingDtos = new ArrayList<TrainingDTO>();
 
-        for (Training training : trainings) {
-            trainingDtos.add(new TrainingDTO(training));
+            for (Training training : trainings) {
+                trainingDtos.add(new TrainingDTO(training));
+            }
+
+            return trainingDtos;
+        } else {
+            List<Training> trainings = trainingManager
+                    .getOneEmployeeTrainingRecordByApproved(employeeId, approved);
+            List<TrainingDTO> trainingDtos = new ArrayList<TrainingDTO>();
+
+            for (Training training : trainings) {
+                trainingDtos.add(new TrainingDTO(training));
+            }
+
+            return trainingDtos;
         }
-
-        return trainingDtos;
+        
+        
     }
 
     public TrainingDTO handleTrainingRecordForDate(TrainingDTO trainingDto,

@@ -36,9 +36,9 @@ public class TrainingServices {
             + "/{employeeid}", method = RequestMethod.GET, produces = "application/json")
     @EmployeeIdMatchOrIsAdmin
     public List<TrainingDTO> getOneEmployeeTrainingRecord(
-            @PathVariable("employeeid") int employeeID) {
+            @PathVariable("employeeid") int employeeID, Boolean approved) {
         return trainingFacade.getOneEmployeeTrainingRecord(employeeID,
-                trainingManager, employeeManager);
+                trainingManager, employeeManager, approved);
     }
 
     @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH

@@ -4,6 +4,7 @@ import org.hrsys.constants.ServicePaths;
 import org.hrsys.helpers.MetaAnnotations.IsAdmin;
 import org.hrsys.helpers.MetaAnnotations.IsAuthenticated;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -11,7 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MainActionController {
     @RequestMapping(value = ServicePaths.HOME_URL, method = RequestMethod.GET)
     @IsAuthenticated
-    public String showWelcome() {
+    public String showWelcome(ModelMap modelMap) {
+        modelMap.addAttribute("employeeInfoUrl", ServicePaths.GET_EMPLOYEE_PATH);
+        modelMap.addAttribute("departmentUrl", ServicePaths.GET_DEPARTMENT_PATH);
+        modelMap.addAttribute("attendanceUrl", ServicePaths.GET_ATTENDANCE_PATH);
+        modelMap.addAttribute("trainingUrl", ServicePaths.GET_TRAINING_RECORD_PATH);
+        modelMap.addAttribute("getOneEmployeeUrl", ServicePaths.GET_ONE_EMPLOYEE_PATH);
         return "template_top";
     }
 
