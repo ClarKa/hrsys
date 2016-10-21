@@ -18,6 +18,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
     @PersistenceContext
     private EntityManager mgr;
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Department> getAllDepartment() {
         List<Department> results = new ArrayList<>();

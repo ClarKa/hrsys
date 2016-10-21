@@ -19,8 +19,8 @@ $(document).ready(function() {
 
     $("#employee-modal").on("show.bs.modal", function(e) {
         var button = $(e.relatedTarget);
-        purpose = button.data('purpose');
-        url = "rest/employee";
+        var purpose = button.data('purpose');
+        var url = "rest/employee";
 
     	// populate department list
         $.ajax({

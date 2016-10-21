@@ -9,41 +9,6 @@
 
 <script>
 $(document).ready(function() {
-	if ("${isAdmin}" == "true") {
-	    $.ajax({
-	        type: "GET",
-	        url: "rest/employee"
-	    }).done(function(data) {
-	        for (var key in data) {
-	        	var option;
-	            if (data[key].employeeID == userEmployeeId) {
-	            	option = $("<option selected></option>").text(data[key].firstname + " " + data[key].lastname + " (me) ");
-	            	initializeAttendanceCalendarForUser(data[key]);
-                } else {
-                	option = $("<option></option>").text(data[key].firstname + " " + data[key].lastname);
-                }
-
-	            option.val(data[key].employeeID);
-	            $("#employeeID").append(option);
-	        }
-	    }).fail(function() {
-	        alert("Ajax failed to fetch data");
-	    });
-	} else {
-		$.ajax({
-            type: "GET",
-            url: "rest/employee/employeeid/" + userEmployeeId
-        }).done(function(data) {
-            var option = $("<option selected></option>").text(data.firstname + " " + data.lastname + " (me) ");
-            option.val(data.employeeID);
-            $("#employeeID").append(option);
-
-            initializeAttendanceCalendarForUser(data);
-        }).fail(function() {
-            alert("Ajax failed to fetch data");
-        });
-	}
-
     // initialize calendar
     $( "#calendar" ).datepicker({
       showButtonPanel: true,
@@ -111,6 +76,21 @@ $(document).ready(function() {
         });
     })
 });
+
+function initializeAttendanceEmployeeSelectList(data) {
+    for (var key in data) {
+        var option;
+        if (data[key].employeeID == userEmployeeId) {
+            option = $("<option selected></option>").text(data[key].firstname + " " + data[key].lastname + " (me) ");
+            initializeAttendanceCalendarForUser(data[key]);
+        } else {
+            option = $("<option></option>").text(data[key].firstname + " " + data[key].lastname);
+        }
+
+        option.val(data[key].employeeID);
+        $("#employeeID").append(option);
+    }
+}
 
 function initializeAttendanceCalendarForUser(data) {
 	$( "#calendar" ).datepicker( "option", "minDate", data.enrollmentDate);

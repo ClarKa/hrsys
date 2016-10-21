@@ -12,4 +12,6 @@ public class ValidationConstants {
     public static final String INVALID_PHONE = "Phone number must be pure number.";
     public static final String INVALID_PHONE_LENGTH = "Phone number must have a length of 11 or 10.";
     public static final String INVALID_TRAINING_HOUR = "Valid training hour must be 0 to 8 hours per day.";
+    public static final String INVALID_BANK_NICKNAME = "Bank nickname cannot contain special characters.";
+    public static final String INVALID_PERCENT = "Valid percent must be 0 to 100.";
 }

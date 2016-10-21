@@ -12,4 +12,6 @@ public class ServicePaths {
     public final static String GET_ONE_DEPARTMENT_PATH = "/departmentid";
     public final static String GET_ATTENDANCE_PATH = "/rest/attendance";
     public final static String GET_TRAINING_RECORD_PATH = "/rest/training";
+    public final static String GET_BANK_INFO_PATH = "/rest/bank";
+    public final static String GET_ALL_REST_URLS_PATH = "/rest/urls";
 }

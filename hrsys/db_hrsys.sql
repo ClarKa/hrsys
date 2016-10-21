@@ -161,3 +161,69 @@ INSERT INTO training VALUES(2, DATE("2016-9-1"), 8, true);
 INSERT INTO training VALUES(2, DATE("2016-9-2"), 8, true);
 INSERT INTO training VALUES(2, DATE("2016-9-3"), 8, false);
 INSERT INTO training VALUES(3, DATE("2016-10-3"), 5, false);
+
+-- ----------------------------
+-- Table structure for `bank`
+-- ----------------------------
+DROP TABLE IF EXISTS bank;
+CREATE TABLE bank (
+  bk_employee_id INT NOT NULL,
+  bk_nickname VARCHAR(20) NOT NULL,
+  bk_account_type VARCHAR(10) NOT NULL,
+  bk_routing_number INT(9) NOT NULL,
+  bk_account_number VARCHAR(50) NOT NULL,
+  bk_percent SMALLINT DEFAULT 0,
+  PRIMARY KEY (bk_employee_id, bk_nickname),
+  CONSTRAINT FK_bk_emp FOREIGN KEY (bk_employee_id) REFERENCES employee (em_employee_id)
+  ON DELETE CASCADE
+  );
+
+INSERT INTO bank VALUES(1, "PNC", "CHECKING", "1234567", "1234567788", 100);
+INSERT INTO bank VALUES(2, "PNC", "CHECKING", "1234567", "1234567788", 90);
+INSERT INTO bank VALUES(2, "Chase", "SAVING", "1234567", "1234567788", 10);
+INSERT INTO bank VALUES(3, "PNC", "CHECKING", "1234567", "1234567788", 100);
+
+DROP TRIGGER IF EXISTS check_percent_insert;
+DROP TRIGGER IF EXISTS check_percent_update;
+DELIMITER $$
+
+CREATE TRIGGER check_percent_insert
+  BEFORE INSERT
+  ON bank
+  FOR EACH ROW
+BEGIN
+  IF NEW.bk_percent<0 OR NEW.bk_percent>100 THEN
+    SIGNAL sqlstate '45000' set message_text = 'Invalid percent value!';
+  END IF;
+END$$
+
+CREATE TRIGGER check_percent_update
+  BEFORE UPDATE
+  ON bank
+  FOR EACH ROW
+BEGIN
+  IF NEW.bk_percent<0 OR NEW.bk_percent>100 THEN
+    SIGNAL sqlstate '45000' set message_text = 'Invalid percent value!';
+  END IF;
+END$$
+
+DELIMITER ;
+
+-- -- ----------------------------
+-- -- Table structure for `active_bank`
+-- -- ----------------------------
+-- DROP TABLE IF EXISTS active_bank;
+-- CREATE TABLE active_bank (
+--   acbk_employee_id INT NOT NULL,
+--   acbk_nickname VARCHAR(20),
+--   acbk_percent INT,
+--   PRIMARY KEY (acbk_employee_id, acbk_nickname),
+--   CONSTRAINT FK_acbk_emp FOREIGN KEY (acbk_employee_id, acbk_nickname) REFERENCES bank (bk_employee_id, bk_nickname)
+--   ON DELETE CASCADE
+--   ON UPDATE CASCADE
+--   );
+
+-- INSERT INTO active_bank VALUES(1, "PNC", 100);
+-- INSERT INTO active_bank VALUES(2, "PNC", 40);
+-- INSERT INTO active_bank VALUES(2, "Chase", 60);
+-- INSERT INTO active_bank VALUES(3, "PNC", 100);

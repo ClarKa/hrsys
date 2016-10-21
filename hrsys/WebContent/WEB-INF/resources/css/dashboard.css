@@ -1,3 +1,67 @@
-body { 
-	padding-top: 70px; 
+body {
+	padding-top: 70px;
 }
+
+.panel {
+    font-weight: 400;
+    font-family: franklin-gothic-urw,Helvetica,Arial,sans-serif;
+}
+
+.panel-heading {
+    font-size: 16px;
+}
+
+.panel-heading-icon a {
+    padding: 9px;
+    color: #337ab7;
+}
+
+.panel-heading-icon a:hover, .panel-body-icon a:hover{
+	text-decoration: none;
+    cursor: pointer;
+    color: #67babe;
+    background-color: #e1f1f2;
+    -webkit-transition: background-color 1s; /* Safari 3.1 to 6.0 */
+    transition: background-color 1s;
+}
+
+.panel-body-icon a {
+    padding: 7px;
+    color: #337ab7;
+    font-weight: bold;
+}
+
+.panel-heading-icon {
+    text-align: right;
+}
+
+.panel-heading, .panel-body {
+    padding: 16px 24px;
+}
+
+.panel-body-row{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.panel-body-row-2 {
+    margin-bottom:10px;
+}
+
+.label-text {
+    font-weight: bold;
+}
+
+.label-text-2{
+    color: #777;
+}
+
+.content-text {
+    color: #444;
+}
+
+.delete-confirm {
+	padding: 20px;
+	margin: 30px auto;
+}
+
