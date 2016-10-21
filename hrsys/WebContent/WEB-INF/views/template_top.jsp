@@ -15,8 +15,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="_csrf" content="${_csrf.token}" />
-<!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}" />
+
 <title>Employee Management</title>
 </head>
 <body>
@@ -26,26 +26,51 @@
 	<script src="<c:url value='/resources/js/bootstrap-formhelpers.min.js' />"></script>
 
 	<sec:authorize access="isAuthenticated()">
-	<sec:authorize access="hasRole('ADMIN')" var="isAdmin" />
-	<sec:authorize access="hasRole('USER')" var="isUser" />
-	<sec:authentication property="principal.employeeID" var="employeeId" />
-	<script>
-		function formSubmit() {
-			document.getElementById("logoutForm").submit();
-		}
-		// include CSRF token.
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
+		<sec:authorize access="hasRole('ADMIN')" var="isAdmin" />
+		<sec:authorize access="hasRole('USER')" var="isUser" />
+		<sec:authentication property="principal.employeeID" var="employeeId" />
+		<script>
+			// include CSRF token.
+			token = $("meta[name='_csrf']").attr("content");
+			header = $("meta[name='_csrf_header']").attr("content");
 
-		// global vars
-		var employeeInfoUrl = "<c:url value='${employeeInfoUrl}' />";
-		var departmentUrl = "<c:url value='${departmentUrl}' />";
-		var attendanceUrl = "<c:url value='${attendanceUrl}' />";
-		var trainingUrl = "<c:url value='${trainingUrl}' />";
-		var getOneEmployeeUrl = "${getOneEmployeeUrl}" + "/";
-		var isAdmin = "${isAdmin}";
-		var userEmployeeId = "${employeeId}";
-	</script>
+			var employeeInfoUrl = "<c:url value='${urls.employeeInfoUrl}' />";
+			var departmentUrl = "<c:url value='${urls.departmentUrl}' />";
+			var attendanceUrl = "<c:url value='${urls.attendanceUrl}' />";
+			var trainingUrl = "<c:url value='${urls.trainingUrl}' />";
+			var bankInfoUrl = "<c:url value='${urls.bankInfoUrl}' />"
+			var getOneEmployeeUrl = "${urls.oneEmployeeUrl}" + "/";
+			var isAdmin = "${isAdmin}";
+			var userEmployeeId = "${employeeId}";
+
+			$(document).ready(function() {
+				if (isAdmin == "true") {
+			        $.ajax({
+			            type: "GET",
+			            url: employeeInfoUrl
+			        }).done(function(data) {
+			        	initializeTrainingEmployeeSelectList(data);
+			        	initializeAttendanceEmployeeSelectList(data);
+			        }).fail(function() {
+			            alert("Ajax failed to fetch data");
+			        });
+				} else {
+					$.ajax({
+		                type: "GET",
+		                url: employeeInfoUrl + getOneEmployeeUrl + userEmployeeId
+		            }).done(function(data) {
+		                initializeTrainingCalendarForUser(data);
+		                initializeAttendanceEmployeeSelectList([data]);
+		            }).fail(function() {
+		                alert("Ajax failed to fetch data");
+		            });
+				}
+			});
+
+			function formSubmit() {
+				$("#logoutForm").submit();
+			}
+		</script>
 	</sec:authorize>
 
 	<nav class="navbar navbar-default navbar-fixed-top">
@@ -62,13 +87,14 @@
 				<li><a data-toggle="tab" href="#employee-info"> Employee Info </a></li>
 				<li><a data-toggle="tab" href="#attendance"> Attendance </a></li>
 				<li><a data-toggle="tab" href="#training"> Training </a></li>
+				<li><a data-toggle="tab" href="#banking"> Banking </a></li>
 			</sec:authorize>
 			<sec:authorize access="hasRole('USER')">
 				<li class="active"><a data-toggle="tab" href="#welcome"> Welcome </a></li>
-				<li><a data-toggle="tab" href="#employee-info"> My Info </a></li>
+				<li><a data-toggle="tab" href="#employee-info"> Personal Info </a></li>
 				<li><a data-toggle="tab" href="#attendance"> Attendance </a></li>
 				<li><a data-toggle="tab" href="#training"> Training </a></li>
-				<li><a href="#" id="nav-user-bank">Bank Information</a></li>
+				<li><a data-toggle="tab" href="#banking"> Bank Info </a></li>
 			</sec:authorize>
             </ul>
 			<form action="<c:url value='/perform_logout' />" method="post" id="logoutForm">
@@ -99,6 +125,10 @@
 
 		<div id="training" class="tab-pane fade">
             <jsp:include page="training.jsp" />
+        </div>
+
+        <div id="banking" class="tab-pane fade">
+            <jsp:include page="banking.jsp" />
         </div>
 	</div>
 	</sec:authorize>

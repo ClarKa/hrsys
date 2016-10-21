@@ -4,15 +4,13 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hrsys.dao.EmployeeManager;
 import org.hrsys.dao.TrainingManager;
 import org.hrsys.dto.TrainingDTO;
 import org.hrsys.entity.Training;
 
 public class TrainingFacade {
     public List<TrainingDTO> getOneEmployeeTrainingRecord(int employeeId,
-            TrainingManager trainingManager, EmployeeManager employeeManager,
-            Boolean approved) {
+            TrainingManager trainingManager, Boolean approved) {
         if (approved == null) {
             List<Training> trainings = trainingManager
                     .getOneEmployeeTrainingRecord(employeeId);
@@ -59,7 +57,7 @@ public class TrainingFacade {
 
         try {
             trainingManager.createTrainingRecordForDate(training);
-        } catch (Exception e) {;
+        } catch (Exception e) {
             trainingDto.setError(e.getMessage());
             return trainingDto;
         }
@@ -77,7 +75,7 @@ public class TrainingFacade {
             trainingDto.setError(e.getMessage());
             return trainingDto;
         }
-        
+
         return trainingDto;
     }
 
@@ -100,7 +98,7 @@ public class TrainingFacade {
     public List<TrainingDTO> approveTrainingRecordForDate(int employeeId,
             Date date, TrainingManager trainingManager) {
         List<TrainingDTO> trainingDtos = new ArrayList<TrainingDTO>();
-        
+
         try {
             Training result = trainingManager
                     .approveTrainingRecordsForDate(employeeId, date);

@@ -35,13 +35,17 @@
 
 <div class="container">
 	<div class="panel panel-default">
-		<div class="panel-heading">My Training Time</div>
+		<div class="panel-heading">Training Records</div>
 		<div class="panel-body">
+
+			<sec:authorize access="hasRole('ADMIN')">
 			<p>
 				<select class="form-control" name="employeeID" id="training-employee-list">
 					<option selected disabled>Select an employee</option>
 				</select>
 			</p>
+			</sec:authorize>
+
 			<p>
 				<a class="btn btn-default" role="button" data-toggle="collapse" href="#training-records-collapse" aria-expanded="false"
 					aria-controls="training-records-collapse"> Show Statistics </a>

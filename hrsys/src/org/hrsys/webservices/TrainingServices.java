@@ -6,7 +6,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.hrsys.constants.ServicePaths;
-import org.hrsys.dao.EmployeeManager;
 import org.hrsys.dao.TrainingManager;
 import org.hrsys.dto.TrainingDTO;
 import org.hrsys.facades.TrainingFacade;
@@ -26,9 +25,6 @@ public class TrainingServices {
     @Autowired
     TrainingManager trainingManager;
 
-    @Autowired
-    EmployeeManager employeeManager;
-
     private TrainingFacade trainingFacade = new TrainingFacade();
 
     @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH
@@ -37,7 +33,7 @@ public class TrainingServices {
     public List<TrainingDTO> getOneEmployeeTrainingRecord(
             @PathVariable("employeeid") int employeeID, Boolean approved) {
         return trainingFacade.getOneEmployeeTrainingRecord(employeeID,
-                trainingManager, employeeManager, approved);
+                trainingManager, approved);
     }
 
     @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH

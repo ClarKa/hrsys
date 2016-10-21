@@ -1,9 +1,7 @@
-var selectedEmployee;
-var filterDays;
+var trSelectedEmployee;
+var trFilterDays;
 
 $(document).ready(function() {
-	initializeTrainingEmployeeSelectList();
-
     $("#training-employee-list").on("change", function() {
         $.ajax({
             type: "GET",
@@ -44,7 +42,7 @@ $(document).ready(function() {
             }
         },
         clickDay: function(e) {
-            if (filterDays && e.events[0] == null) {
+            if (trFilterDays && e.events[0] == null) {
                 return;
             }
         	var event = e.events[0];
@@ -67,7 +65,7 @@ $(document).ready(function() {
                $("#training-approve-one-button").prop("disabled", true);
             }
 
-            if (selectedEmployee.employeeID != userEmployeeId) {
+            if (trSelectedEmployee.employeeID != userEmployeeId) {
             	$("#training-modal input[name='hour']").prop("readonly", true);
                 $("#training-modal input[type='submit']").prop("disabled", true);
             }
@@ -86,7 +84,7 @@ $(document).ready(function() {
 
         $.ajax({
              type: "POST",
-             url: trainingUrl + getOneEmployeeUrl + selectedEmployee.employeeID + "/" + $("#training-modal input[name='date']").val(),
+             url: trainingUrl + getOneEmployeeUrl + trSelectedEmployee.employeeID + "/" + $("#training-modal input[name='date']").val(),
              data: $form.serialize(),
              beforeSend: function(xhr) {
                  xhr.setRequestHeader(header, token);
@@ -94,7 +92,7 @@ $(document).ready(function() {
         }).done(function(data) {
              if (data.error == null) {
                  $('#training-modal').modal('hide');
-                 initializeTrainingCalendarForUser(selectedEmployee);
+                 initializeTrainingCalendarForUser(trSelectedEmployee);
              } else {
                  alert(data.error);
              }
@@ -108,15 +106,15 @@ $(document).ready(function() {
         var approved = $(e.target).data("approved");
 
         if (approved === "") {
-            filterDays = false;
+            trFilterDays = false;
         } else {
-            filterDays = true;
+            trFilterDays = true;
         }
 
         $('#training-calendar').data('calendar').setDataSource("[]");
         $.ajax({
                 type : "GET",
-                url : trainingUrl + getOneEmployeeUrl + selectedEmployee.employeeID,
+                url : trainingUrl + getOneEmployeeUrl + trSelectedEmployee.employeeID,
                 data:  {"approved": approved}
             }).done(function(data) {
                 addTrainingRecord(data);
@@ -133,7 +131,7 @@ $(document).ready(function() {
 function updateTrainingStat() {
     $.ajax({
         type: "GET",
-        url: trainingUrl + getOneEmployeeUrl + selectedEmployee.employeeID
+        url: trainingUrl + getOneEmployeeUrl + trSelectedEmployee.employeeID
     }).done(function(data) {
         var stat = {totalDays:0, totalHours:0, approvedDays:0, approvedHours:0, unapprovedDays:0, unapprovedHours:0};
 
@@ -157,51 +155,15 @@ function updateTrainingStat() {
         $("#training-records-collapse .well").append(total, approved, unapproved);
 
     }).fail(function(data) {
-        alert("get record for " + selectedEmployee.firstname + " " + selectedEmployee.lastname + " failed");
+        alert("get record for " + trSelectedEmployee.firstname + " " + trSelectedEmployee.lastname + " failed");
     });
 }
 
-// employee select list setup
-function initializeTrainingEmployeeSelectList() {
-    if (isAdmin == "true") {
-        $.ajax({
-            type: "GET",
-            url: employeeInfoUrl
-        }).done(function(data) {
-            for (var key in data) {
-                var option;
-                if (data[key].employeeID == userEmployeeId) {
-                    option = $("<option selected></option>").text(data[key].firstname + " " + data[key].lastname + " (me) ");
-                    initializeTrainingCalendarForUser(data[key]);
-                } else {
-                    option = $("<option></option>").text(data[key].firstname + " " + data[key].lastname);
-                }
-
-                option.val(data[key].employeeID);
-                $("#training-employee-list").append(option);
-            }
-        }).fail(function() {
-            alert("Ajax failed to fetch data");
-        });
-    } else {
-        $.ajax({
-            type: "GET",
-            url: employeeInfoUrl + getOneEmployeeUrl + userEmployeeId
-        }).done(function(data) {
-            var option = $("<option selected></option>").text(data.firstname + " " + data.lastname + " (me) ");
-            option.val(data.employeeID);
-            $("#training-employee-list").append(option);
-
-            initializeTrainingCalendarForUser(data);
-        }).fail(function() {
-            alert("Ajax failed to fetch data");
-        });
-    }
-}
-
 function initializeTrainingCalendarForUser(employee) {
-	selectedEmployee = employee;
+	trSelectedEmployee = employee;
     var enrollmentDate = new Date(employee.enrollmentDate);
+
+    updateTrainingStat();
 
     $("#training-calendar").data("calendar").setMinDate(enrollmentDate);
     $('#training-calendar').data('calendar').setDataSource("[]");
