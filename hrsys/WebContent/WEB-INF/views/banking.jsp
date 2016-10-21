@@ -19,7 +19,7 @@
 					<div class="col-sm-9 content-text" id="payment-method-display">Direct Deposit</div>
 				</div>
 				<div class="row panel-body-row">
-					<div class="col-sm-3 label-text">Paycheck Account</div>
+					<div class="col-sm-3 label-text">Paycheck Distribution</div>
 					<div class="col-sm-9 content-text" id="paycheck-distribution-display">PNC</div>
 				</div>
 			</div>
@@ -38,10 +38,9 @@
 				</div>
 				<hr>
 				<div class="form-group">
-					<label class="control-label col-sm-3" for="accountType"> Paycheck Account </label>
+					<label class="control-label col-sm-3" for="accountType"> Paycheck Distribution </label>
 					<div class="col-sm-7">
 						<select name="paycheck-account" class="form-control">
-							<option value="">PNC</option>
 						</select>
 					</div>
 				</div>

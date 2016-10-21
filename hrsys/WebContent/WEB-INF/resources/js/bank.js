@@ -31,11 +31,14 @@ $(document).ready(function() {
         type : "GET",
         url : bankInfoUrl + "/" + userEmployeeId,
     }).done(function(data) {
-    	console.log(data);
-        $.each(data, function(key, value) {
-			var newAccount = $.parseHTML(formatBankAccount(value));
+        $.each(data, function(key, account) {
+			var newAccount = $.parseHTML(formatBankAccount(account));
 			$("#bank-account-panel .panel-body").prepend(newAccount);
-			$(".edit-bank-account-icon", newAccount).data(value);
+			$(".edit-bank-account-icon", newAccount).data(account);
+
+			var option = $("<option></option>");
+			option.val(account.accountId).text(account.nickname);
+			$("#edit-paychecks-form select").append(option);
 		});
     }).fail(function(data) {
         alert("Get bank accounts failed.");
@@ -63,4 +66,8 @@ $(document).ready(function() {
     	$("#edit-paychecks-form").toggleClass("hide");
     	$("#paychecks-display").toggleClass("hide");
     });
+
+    $("input [name='payment-method']").click(function(e) {
+    	console.log(e.target);
+    })
 });

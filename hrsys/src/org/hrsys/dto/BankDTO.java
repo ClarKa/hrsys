@@ -10,6 +10,7 @@ import org.hrsys.enums.AccountType;
 
 public class BankDTO {
     private int         employeeId;
+    private int         accountId;
     @Pattern(regexp = ValidationConstants.PURE_WORD, message = ValidationConstants.INVALID_BANK_NICKNAME)
     private String      nickname;
     private AccountType accountType;
@@ -26,6 +27,7 @@ public class BankDTO {
 
     public BankDTO(Bank bank) {
         employeeId = bank.getEmployeeId();
+        accountId = bank.getAccountId();
         nickname = bank.getNickname();
         accountType = bank.getAccountType();
         routingNumber = bank.getRoutingNumber();
@@ -45,6 +47,20 @@ public class BankDTO {
      */
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
+    }
+
+    /**
+     * @return the accountId
+     */
+    public int getAccountId() {
+        return accountId;
+    }
+
+    /**
+     * @param accountId the accountId to set
+     */
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 
     /**

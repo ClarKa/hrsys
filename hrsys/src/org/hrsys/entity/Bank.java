@@ -20,6 +20,9 @@ public class Bank {
     private int employeeId;
     
     @Id
+    @Column(name = "bk_id", unique = true, nullable = false, insertable = true, updatable = true)
+    private int accountId;
+    
     @Column(name = "bk_nickname", unique = true, nullable = false, insertable = true, updatable = true)
     private String nickname;
     
@@ -48,6 +51,20 @@ public class Bank {
      */
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
+    }
+
+    /**
+     * @return the accountId
+     */
+    public int getAccountId() {
+        return accountId;
+    }
+
+    /**
+     * @param accountId the accountId to set
+     */
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 
     /**

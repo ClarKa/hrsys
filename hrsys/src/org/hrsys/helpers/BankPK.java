@@ -6,7 +6,7 @@ public class BankPK implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer employeeId;
-    private String nickname;
+    private Integer accountId;
 
     public BankPK() {
     }
@@ -20,7 +20,7 @@ public class BankPK implements Serializable {
                 return false;
             }
 
-            if (!bankPK.getNickname().equals(nickname)) {
+            if (!bankPK.getAccountId().equals(accountId)) {
                 return false;
             }
 
@@ -32,7 +32,7 @@ public class BankPK implements Serializable {
 
     @Override
     public int hashCode() {
-        return employeeId.hashCode() + nickname.hashCode();
+        return employeeId.hashCode() + accountId.hashCode();
     }
 
     /**
@@ -51,16 +51,16 @@ public class BankPK implements Serializable {
     }
 
     /**
-     * @return the nickname
+     * @return the accountId
      */
-    public String getNickname() {
-        return nickname;
+    public Integer getAccountId() {
+        return accountId;
     }
 
     /**
-     * @param nickname the nickname to set
+     * @param accountId the accountId to set
      */
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 }

@@ -168,32 +168,32 @@ INSERT INTO training VALUES(3, DATE("2016-10-3"), 5, false);
 DROP TABLE IF EXISTS bank;
 CREATE TABLE bank (
   bk_employee_id INT NOT NULL,
+  bk_id INT NOT NULL,
   bk_nickname VARCHAR(20) NOT NULL,
   bk_account_type VARCHAR(10) NOT NULL,
   bk_routing_number INT(9) NOT NULL,
   bk_account_number VARCHAR(50) NOT NULL,
   bk_percent SMALLINT DEFAULT 0,
-  PRIMARY KEY (bk_employee_id, bk_nickname),
+  PRIMARY KEY (bk_employee_id, bk_id),
   CONSTRAINT FK_bk_emp FOREIGN KEY (bk_employee_id) REFERENCES employee (em_employee_id)
   ON DELETE CASCADE
   );
 
-INSERT INTO bank VALUES(1, "PNC", "CHECKING", "1234567", "1234567788", 100);
-INSERT INTO bank VALUES(2, "PNC", "CHECKING", "1234567", "1234567788", 90);
-INSERT INTO bank VALUES(2, "Chase", "SAVING", "1234567", "1234567788", 10);
-INSERT INTO bank VALUES(3, "PNC", "CHECKING", "1234567", "1234567788", 100);
-
-DROP TRIGGER IF EXISTS check_percent_insert;
+DROP TRIGGER IF EXISTS check_insert;
 DROP TRIGGER IF EXISTS check_percent_update;
 DELIMITER $$
 
-CREATE TRIGGER check_percent_insert
+CREATE TRIGGER check_insert
   BEFORE INSERT
   ON bank
   FOR EACH ROW
 BEGIN
   IF NEW.bk_percent<0 OR NEW.bk_percent>100 THEN
     SIGNAL sqlstate '45000' set message_text = 'Invalid percent value!';
+  END IF;
+
+  IF IFNULL(NEW.bk_id, 0) = 0 THEN
+    SET NEW.bk_id = (SELECT COUNT(1) FROM bank b WHERE b.bk_employee_id = NEW.bk_employee_id) + 1;
   END IF;
 END$$
 
@@ -209,21 +209,10 @@ END$$
 
 DELIMITER ;
 
--- -- ----------------------------
--- -- Table structure for `active_bank`
--- -- ----------------------------
--- DROP TABLE IF EXISTS active_bank;
--- CREATE TABLE active_bank (
---   acbk_employee_id INT NOT NULL,
---   acbk_nickname VARCHAR(20),
---   acbk_percent INT,
---   PRIMARY KEY (acbk_employee_id, acbk_nickname),
---   CONSTRAINT FK_acbk_emp FOREIGN KEY (acbk_employee_id, acbk_nickname) REFERENCES bank (bk_employee_id, bk_nickname)
---   ON DELETE CASCADE
---   ON UPDATE CASCADE
---   );
 
--- INSERT INTO active_bank VALUES(1, "PNC", 100);
--- INSERT INTO active_bank VALUES(2, "PNC", 40);
--- INSERT INTO active_bank VALUES(2, "Chase", 60);
--- INSERT INTO active_bank VALUES(3, "PNC", 100);
+INSERT INTO bank VALUES(1, NULL, "PNC", "CHECKING", "1234567", "1234567788", 100);
+INSERT INTO bank VALUES(2, NULL, "PNC", "CHECKING", "1234567", "1234567788", 90);
+INSERT INTO bank VALUES(2, NULL, "Chase", "SAVING", "1234567", "1234567788", 10);
+INSERT INTO bank VALUES(3, NULL, "PNC", "CHECKING", "1234567", "1234567788", 100);
+-- UPDATE bank SET bk_percent = 101 WHERE bk_employee_id = 1;
+-- UPDATE bank SET bk_percent = -1 WHERE bk_employee_id = 1;
