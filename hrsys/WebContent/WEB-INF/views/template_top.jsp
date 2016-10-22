@@ -38,7 +38,8 @@
 			var departmentUrl = "<c:url value='${urls.departmentUrl}' />";
 			var attendanceUrl = "<c:url value='${urls.attendanceUrl}' />";
 			var trainingUrl = "<c:url value='${urls.trainingUrl}' />";
-			var bankInfoUrl = "<c:url value='${urls.bankInfoUrl}' />"
+			var bankInfoUrl = "<c:url value='${urls.bankInfoUrl}' />";
+			var paychecksUrl = "<c:url value='${urls.paychecksUrl}' />";
 			var getOneEmployeeUrl = "${urls.oneEmployeeUrl}" + "/";
 			var isAdmin = "${isAdmin}";
 			var userEmployeeId = "${employeeId}";

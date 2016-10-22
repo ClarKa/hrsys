@@ -16,11 +16,28 @@
 			<div id="paychecks-display">
 				<div class="row panel-body-row">
 					<div class="col-sm-3 label-text">Payment Method</div>
-					<div class="col-sm-9 content-text" id="payment-method-display">Direct Deposit</div>
+					<div class="col-sm-9 content-text" id="payment-method-display"></div>
 				</div>
 				<div class="row panel-body-row">
 					<div class="col-sm-3 label-text">Paycheck Distribution</div>
-					<div class="col-sm-9 content-text" id="paycheck-distribution-display">PNC</div>
+					<div class="col-sm-9 content-text" id="paycheck-distribution-display">
+					</div>
+				</div>
+				<div class="row panel-body-row">
+					<div class="col-sm-4" id="slider">
+
+					</div>
+					<div class="col-sm-3">
+						<p id="slider-value"></p>
+					</div>
+				</div>
+				<div class="row panel-body-row">
+					<div class="col-sm-4" id="slider2">
+
+					</div>
+					<div class="col-sm-3">
+						<p id="slider2-value"></p>
+					</div>
 				</div>
 			</div>
 
@@ -36,8 +53,8 @@
 						</label>
 					</div>
 				</div>
-				<hr>
-				<div class="form-group">
+				<br>
+				<div class="form-group" id="edit-paycheck-distribution">
 					<label class="control-label col-sm-3" for="accountType"> Paycheck Distribution </label>
 					<div class="col-sm-7">
 						<select name="paycheck-account" class="form-control">

@@ -32,6 +32,7 @@ public class BankDTO {
         accountType = bank.getAccountType();
         routingNumber = bank.getRoutingNumber();
         accountNumber = bank.getAccountNumber();
+        percent = bank.getPercent();
     }
 
     /**
@@ -90,7 +91,7 @@ public class BankDTO {
      *            the accountType to set
      */
     public void setAccountType(char accountType) {
-        this.accountType = AccountType.getAccountTypeById(accountType);
+        this.accountType = AccountType.byId(accountType);
     }
 
     /**

@@ -6,7 +6,7 @@ function formatBankAccount(data) {
 			+			'<div class="col-sm-9">'
 			+				'<div class="row panel-body-row-2">'
 			+					'<div class="col-sm-4 label-text-2">AccountType</div>'
-			+					'<div class="col-sm-8 content-text">'+ data.accountType.description + '</div>'
+			+					'<div class="col-sm-8 content-text">' + data.accountType.description + '</div>'
 			+				'</div>'
 			+				'<div class="row panel-body-row-2">'
 			+					'<div class="col-sm-4 label-text-2">Routing Number</div>'
@@ -26,6 +26,13 @@ function formatBankAccount(data) {
 			+'</div>'
 }
 
+function formatPaycheckDistribution(data) {
+	return '<div class="row panel-body-row-2">'
+			+	'<div class="col-sm-4 label-text-2">' + data.nickname + ' ( ' + data.accountNumber + ' )' + '</div>'
+			+	'<div class="col-sm-8 content-text">' + data.percent + '%</div>'
+			+'</div>'
+}
+
 $(document).ready(function() {
 	$.ajax({
         type : "GET",
@@ -36,6 +43,11 @@ $(document).ready(function() {
 			$("#bank-account-panel .panel-body").prepend(newAccount);
 			$(".edit-bank-account-icon", newAccount).data(account);
 
+			if (account.percent > 0) {
+				var node = $.parseHTML(formatPaycheckDistribution(account));
+				$("#paycheck-distribution-display").append(node);
+			}
+
 			var option = $("<option></option>");
 			option.val(account.accountId).text(account.nickname);
 			$("#edit-paychecks-form select").append(option);
@@ -43,6 +55,40 @@ $(document).ready(function() {
     }).fail(function(data) {
         alert("Get bank accounts failed.");
     });
+
+	$.ajax({
+        type : "GET",
+        url : paychecksUrl + "/" + userEmployeeId,
+    }).done(function(data) {
+    	$("#payment-method-display").text(data.paymentMethod.description)
+    }).fail(function(data) {
+        alert("Get paychecks failed.");
+    });
+
+    var handle = $( "#slider-value" );
+    $( "#slider" ).slider({
+      create: function() {
+        handle.text( $( this ).slider( "value" ) + "%");
+      },
+      slide: function( event, ui ) {
+        handle.text( ui.value + "%");
+        handle2.text( 100-ui.value + "%");
+        $( "#slider2" ).slider("value", 100-ui.value);
+      }
+    });
+
+    var handle2 = $( "#slider2-value" );
+    $( "#slider2" ).slider({
+      create: function() {
+        handle2.text( $( this ).slider( "value" ) + "%");
+      },
+      slide: function( event, ui ) {
+        handle2.text( ui.value + "%");
+        handle.text( 100-ui.value + "%");
+        $( "#slider" ).slider("value", 100-ui.value);
+      }
+    });
+
 
 	var $modal = $("#bank-modal");
 	$modal.on("show.bs.modal", function(e) {
@@ -67,7 +113,12 @@ $(document).ready(function() {
     	$("#paychecks-display").toggleClass("hide");
     });
 
-    $("input [name='payment-method']").click(function(e) {
-    	console.log(e.target);
+    $("input[type='radio'][name='payment-method']").change(function(e) {
+    	if ($(e.target).val() == "PC") {
+    		$("#edit-paycheck-distribution").hide();
+    	} else {
+    		$("#edit-paycheck-distribution").show();
+    	}
+
     })
 });

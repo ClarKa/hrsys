@@ -28,7 +28,7 @@ CREATE TABLE users(
 
 INSERT INTO users VALUES ('a', '1', TRUE, 1, 1);
 INSERT INTO users VALUES ('b', '1', TRUE, 2, 2);
-INSERT INTO users VALUES ('c', '1', TRUE, null, 2);
+INSERT INTO users VALUES ('c', '1', TRUE, 3, 1);
 INSERT INTO users VALUES ('d', '1', TRUE, null, 1);
 
 CREATE TABLE roles (
@@ -179,31 +179,45 @@ CREATE TABLE bank (
   ON DELETE CASCADE
   );
 
-DROP TRIGGER IF EXISTS check_insert;
-DROP TRIGGER IF EXISTS check_percent_update;
+DROP TRIGGER IF EXISTS check_bank_insert;
+DROP TRIGGER IF EXISTS check_bank_update;
 DELIMITER $$
 
-CREATE TRIGGER check_insert
+CREATE TRIGGER check_bank_insert
   BEFORE INSERT
   ON bank
   FOR EACH ROW
 BEGIN
-  IF NEW.bk_percent<0 OR NEW.bk_percent>100 THEN
+  DECLARE sumPercent INT DEFAULT 0;
+
+  IF NEW.bk_percent < 0 OR NEW.bk_percent > 100 THEN
     SIGNAL sqlstate '45000' set message_text = 'Invalid percent value!';
   END IF;
 
   IF IFNULL(NEW.bk_id, 0) = 0 THEN
     SET NEW.bk_id = (SELECT COUNT(1) FROM bank b WHERE b.bk_employee_id = NEW.bk_employee_id) + 1;
   END IF;
+
+  SET @sumPercent = (SELECT SUM(bk_percent) FROM bank b WHERE b.bk_employee_id = NEW.bk_employee_id) + NEW.bk_percent;
+  IF @sumPercent  > 100 THEN
+    SIGNAL sqlstate '45000' set message_text = 'Total percent cannot exceed 100!';
+  END IF;
 END$$
 
-CREATE TRIGGER check_percent_update
+CREATE TRIGGER check_bank_update
   BEFORE UPDATE
   ON bank
   FOR EACH ROW
 BEGIN
+  DECLARE sumPercent INT DEFAULT 0;
+
   IF NEW.bk_percent<0 OR NEW.bk_percent>100 THEN
     SIGNAL sqlstate '45000' set message_text = 'Invalid percent value!';
+  END IF;
+
+  SET @sumPercent = (SELECT SUM(bk_percent) FROM bank b WHERE b.bk_employee_id = NEW.bk_employee_id) + NEW.bk_percent;
+  IF @sumPercent  > 100 THEN
+    SIGNAL sqlstate '45000' set message_text = 'Total percent cannot exceed 100!';
   END IF;
 END$$
 
@@ -214,5 +228,22 @@ INSERT INTO bank VALUES(1, NULL, "PNC", "CHECKING", "1234567", "1234567788", 100
 INSERT INTO bank VALUES(2, NULL, "PNC", "CHECKING", "1234567", "1234567788", 90);
 INSERT INTO bank VALUES(2, NULL, "Chase", "SAVING", "1234567", "1234567788", 10);
 INSERT INTO bank VALUES(3, NULL, "PNC", "CHECKING", "1234567", "1234567788", 100);
+-- INSERT INTO bank VALUES(1, NULL, "BOAaaa", "CHECKING", "1234567", "1234567788", 100);
 -- UPDATE bank SET bk_percent = 101 WHERE bk_employee_id = 1;
 -- UPDATE bank SET bk_percent = -1 WHERE bk_employee_id = 1;
+
+-- ----------------------------
+-- Table structure for `paychecks`
+-- ----------------------------
+DROP TABLE IF EXISTS paychecks;
+CREATE TABLE paychecks (
+  pc_employee_id INT NOT NULL,
+  pc_payment_method VARCHAR(10) NOT NULL,
+  PRIMARY KEY (pc_employee_id),
+  CONSTRAINT FK_pc_emp FOREIGN KEY (pc_employee_id) REFERENCES employee (em_employee_id)
+  ON DELETE CASCADE
+  );
+
+INSERT INTO paychecks VALUES(1, "PC");
+INSERT INTO paychecks VALUES(2, "DD");
+INSERT INTO paychecks VALUES(3, "DD");

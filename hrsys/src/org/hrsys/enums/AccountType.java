@@ -12,12 +12,12 @@ public enum AccountType {
     private final char id;
     private final String description;
     private static Map<Character, AccountType> IdMap = new HashMap<Character, AccountType>();
-    private static Map<String, Character> DescriptionMap = new HashMap<String, Character>();
+    private static Map<String, Character> descriptionMap = new HashMap<String, Character>();
     
     static {
         for (AccountType type : AccountType.values()) {
             IdMap.put(type.id, type);
-            DescriptionMap.put(type.description, type.id);
+            descriptionMap.put(type.description, type.id);
         }
     }
     
@@ -34,11 +34,11 @@ public enum AccountType {
         return description;
     }
     
-    public static AccountType getAccountTypeById(char id) {
+    public static AccountType byId(char id) {
         return IdMap.get(id);
     }
     
-    public static char getIdByDescription(String description) {
-        return DescriptionMap.get(description);
+    public static char byDescription(String description) {
+        return descriptionMap.get(description);
     }
 }
