@@ -15,7 +15,7 @@ public class MainActionController {
     @IsAuthenticated
     public String showWelcome(ModelMap modelMap) {
         modelMap.addAttribute("urls", new UrlDTO());
-        return "template_top";
+        return "dashboard";
     }
 
     @RequestMapping(value = ServicePaths.EMPLOYEE_INFO_URL, method = RequestMethod.GET)
