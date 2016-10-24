@@ -27,9 +27,21 @@ function formatBankAccount(data) {
 }
 
 function formatPaycheckDistribution(data) {
-	return '<div class="row panel-body-row-2">'
-			+	'<div class="col-sm-4 label-text-2">' + data.nickname + ' ( ' + data.accountNumber + ' )' + '</div>'
-			+	'<div class="col-sm-8 content-text">' + data.percent + '%</div>'
+	return  '<div class="row panel-body-row-2">'
+		    +  '<div class="col-sm-4 label-text-2">' + data.nickname + ' ( ' + data.accountNumber + ' )' + '</div>'
+			+  '<div class="col-sm-4 content-text">' + data.percent + '%</div>'
+			+'</div>'
+}
+
+function formatEditPaycheckDistribution(data) {
+	return  '<div class="row panel-body-row-2">'
+			+  '<label class="control-label col-sm-3 label-text-2" for="' + data.accountId + '">' + data.nickname + '</label>'
+			+  '<div class="col-sm-5">'
+			+		'<div class="input-group">'
+			+       	'<input type="number" name="' + data.accountId + '" class="form-control" placeholder="100%" maxlength="3" required />'
+			+			'<span class="input-group-addon">%</span>'
+			+		'</div>'
+			+  '</div>'
 			+'</div>'
 }
 
@@ -44,13 +56,18 @@ $(document).ready(function() {
 			$(".edit-bank-account-icon", newAccount).data(account);
 
 			if (account.percent > 0) {
-				var node = $.parseHTML(formatPaycheckDistribution(account));
-				$("#paycheck-distribution-display").append(node);
-			}
+				var newDist = $.parseHTML(formatPaycheckDistribution(account));
+				$("#paycheck-distribution-display").append(newDist);
 
-			var option = $("<option></option>");
-			option.val(account.accountId).text(account.nickname);
-			$("#edit-paychecks-form select").append(option);
+				var newInput = $.parseHTML(formatEditPaycheckDistribution(account));
+				$("#edit-paycheck-distribution").prepend(newInput);
+				$("input", newInput).val(account.percent);
+
+			} else {
+				var option = $("<option></option>");
+				option.val(account.accountId).text(account.nickname);
+				$("#edit-paychecks-form select").append(option);
+			}
 		});
     }).fail(function(data) {
         alert("Get bank accounts failed.");
@@ -65,30 +82,6 @@ $(document).ready(function() {
         alert("Get paychecks failed.");
     });
 
-    var handle = $( "#slider-value" );
-    $( "#slider" ).slider({
-      create: function() {
-        handle.text( $( this ).slider( "value" ) + "%");
-      },
-      slide: function( event, ui ) {
-        handle.text( ui.value + "%");
-        handle2.text( 100-ui.value + "%");
-        $( "#slider2" ).slider("value", 100-ui.value);
-      }
-    });
-
-    var handle2 = $( "#slider2-value" );
-    $( "#slider2" ).slider({
-      create: function() {
-        handle2.text( $( this ).slider( "value" ) + "%");
-      },
-      slide: function( event, ui ) {
-        handle2.text( ui.value + "%");
-        handle.text( 100-ui.value + "%");
-        $( "#slider" ).slider("value", 100-ui.value);
-      }
-    });
-
 
 	var $modal = $("#bank-modal");
 	$modal.on("show.bs.modal", function(e) {
@@ -101,6 +94,7 @@ $(document).ready(function() {
         	$("input[value='" + account.accountType.id + "']", $modal).prop("checked", true);
         	$("input[name='routingNumber']", $modal).val(account.routingNumber);
         	$("input[name='accountNumber']", $modal).val(account.accountNumber);
+        	$("input[name='accountId']", $modal).val(account.accountId);
         } else if (purpose == "add") {
         	$("#bank-modal").find("form")[0].reset();
         } else {
@@ -115,9 +109,9 @@ $(document).ready(function() {
 
     $("input[type='radio'][name='payment-method']").change(function(e) {
     	if ($(e.target).val() == "PC") {
-    		$("#edit-paycheck-distribution").hide();
+    		$("#edit-paycheck-distribution-wrapper").hide();
     	} else {
-    		$("#edit-paycheck-distribution").show();
+    		$("#edit-paycheck-distribution-wrapper").show();
     	}
 
     })
