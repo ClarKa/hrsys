@@ -45,56 +45,73 @@ function formatEditPaycheckDistribution(data) {
 			+'</div>'
 }
 
-$(document).ready(function() {
-	$.ajax({
-        type : "GET",
-        url : bankInfoUrl + "/" + userEmployeeId,
-    }).done(function(data) {
-        $.each(data, function(key, account) {
-			var newAccount = $.parseHTML(formatBankAccount(account));
-			$("#bank-account-panel .panel-body").prepend(newAccount);
-			$(".edit-bank-account-icon", newAccount).data(account);
+function loadBankSection() {
+	var bankAccounts = $("#bank-account-display").empty();
+	var distr = $("#paycheck-distribution-display").empty();
+	var distrEdit = $("#paycheck-distribution-edit").empty();
+	var select = $("#paychecks-edit-form select");
+	select.empty();
+	bankAccounts.empty();
+	distr.empty();
+	distrEdit.empty();
 
-			if (account.percent > 0) {
-				var newDist = $.parseHTML(formatPaycheckDistribution(account));
-				$("#paycheck-distribution-display").append(newDist);
-
-				var newInput = $.parseHTML(formatEditPaycheckDistribution(account));
-				$("#edit-paycheck-distribution").prepend(newInput);
-				$("input", newInput).val(account.percent);
-
-			} else {
-				var option = $("<option></option>");
-				option.val(account.accountId).text(account.nickname);
-				$("#edit-paychecks-form select").append(option);
-			}
-		});
-    }).fail(function(data) {
-        alert("Get bank accounts failed.");
-    });
-
+	// populate payment method
 	$.ajax({
         type : "GET",
         url : paychecksUrl + "/" + userEmployeeId,
     }).done(function(data) {
     	$("#payment-method-display").text(data.paymentMethod.description)
     }).fail(function(data) {
-        alert("Get paychecks failed.");
+        alert("Get payment method failed.");
     });
 
+
+	$.ajax({
+        type : "GET",
+        url : bankInfoUrl + "/" + userEmployeeId,
+    }).done(function(data) {
+        $.each(data, function(key, account) {
+        	// populate banks accounts panel.
+			var newAccount = $.parseHTML(formatBankAccount(account));
+			bankAccounts.append(newAccount);
+			$(".edit-bank-account-icon", newAccount).data("account", account);
+
+			// populate paychecks panel
+			if (account.percent > 0) {
+				var newDistr = $.parseHTML(formatPaycheckDistribution(account));
+				distr.append(newDistr);
+
+				var newInput = $.parseHTML(formatEditPaycheckDistribution(account));
+				distrEdit.append(newInput);
+				$("input", newInput).val(account.percent);
+			} else {
+				var option = $("<option></option>");
+				option.val(account.accountId).text(account.nickname);
+				select.append(option);
+			}
+		});
+    }).fail(function(data) {
+        alert("Get bank accounts data failed.");
+    });
+}
+
+$(document).ready(function() {
+
+	loadBankSection();
 
 	var $modal = $("#bank-modal");
 	$modal.on("show.bs.modal", function(e) {
         var $button = $(e.relatedTarget);
-        var account = $button.data();
+        var account = $button.data("account");
         var purpose = $button.data("purpose");
 
         if (purpose == "edit") {
-        	$("input[name='accountNickname']", $modal).val(account.nickname);
+        	$("input[name='nickname']", $modal).val(account.nickname);
         	$("input[value='" + account.accountType.id + "']", $modal).prop("checked", true);
         	$("input[name='routingNumber']", $modal).val(account.routingNumber);
         	$("input[name='accountNumber']", $modal).val(account.accountNumber);
-        	$("input[name='accountId']", $modal).val(account.accountId);
+        	$("input[name='accountNumberConfirm']", $modal).val("");
+        	$modal.data("accountId", account.accountId);
         } else if (purpose == "add") {
         	$("#bank-modal").find("form")[0].reset();
         } else {
@@ -103,7 +120,7 @@ $(document).ready(function() {
     });
 
     $("#edit-paychecks-icon, #cancel-edit-paychecks").click(function() {
-    	$("#edit-paychecks-form").toggleClass("hide");
+    	$("#paychecks-edit-form").toggleClass("hide");
     	$("#paychecks-display").toggleClass("hide");
     });
 
@@ -114,5 +131,51 @@ $(document).ready(function() {
     		$("#edit-paycheck-distribution-wrapper").show();
     	}
 
-    })
+    });
+
+    $("#bank-account-form").submit(function( event ) {
+    	event.preventDefault();
+    	var $form = $( this );
+    	var $accountId = $modal.data("accountId");
+    	console.log($accountId);
+    	if ($accountId == null) {
+			$.ajax({
+			   	type: "POST",
+			  	url: bankInfoUrl + "/" + userEmployeeId,
+			   	data: $form.serialize(),
+			   	beforeSend: function(xhr) {
+					xhr.setRequestHeader(header, token);
+			   	}
+			}).done(function(data) {
+				// $("#banking").load(location.href+" #banking>*","");
+				if (data.error != null) {
+					alert(data.error);
+				} else {
+					$modal.modal('hide');
+					loadBankSection();
+				}
+			}).fail(function(data) {
+				alert(data);
+			});
+    	} else {
+    		$.ajax({
+			   	type: "PUT",
+			  	url: bankInfoUrl + "/" + userEmployeeId + "/" + $accountId,
+			   	data: $form.serialize(),
+			   	beforeSend: function(xhr) {
+					xhr.setRequestHeader(header, token);
+			   	}
+			}).done(function(data) {
+				// $("#banking").load(location.href+" #banking>*","");
+				if (data.error != null) {
+					alert(data.error);
+				} else {
+					$modal.modal('hide');
+					loadBankSection();
+				}
+			}).fail(function(data) {
+				alert(data);
+			});
+    	}
+    });
 });

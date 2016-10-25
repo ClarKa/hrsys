@@ -11,7 +11,7 @@ function toggleSuccessAlert() {
 $(document).ready(function() {
 	var purpose;
 	var url;
-    var employeeId;
+  var employeeId;
 
     // employee modal setup
     $(".alert-danger").hide();
@@ -20,7 +20,6 @@ $(document).ready(function() {
     $("#employee-modal").on("show.bs.modal", function(e) {
         var button = $(e.relatedTarget);
         var purpose = button.data('purpose');
-        var url = "rest/employee";
 
     	// populate department list
         $.ajax({
@@ -57,6 +56,8 @@ $(document).ready(function() {
         	}).fail(function(data) {
         		alert("Employee entry no longer exists.");
         	});
+        } else {
+          url = employeeInfoUrl;
         }
 
     });
@@ -72,30 +73,30 @@ $(document).ready(function() {
 
     // submit add/edit employee action
     $( "#employee-modal-form" ).submit(function( event ) {
-      event.preventDefault();
+        event.preventDefault();
 
-      var $form = $( this );
+        var $form = $( this );
 
-      $.ajax({
-           type: "POST",
-           url: url,
-           data: $form.serialize(),
-           beforeSend: function(xhr) {
-        	   xhr.setRequestHeader(header, token);
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $form.serialize(),
+            beforeSend: function(xhr) {
+               xhr.setRequestHeader(header, token);
            }
-      }).done(function(data) {
-           var error = data.error;
-           if (error == null) {
-               toggleSuccessAlert();
-               $("#employee-datatable").DataTable().ajax.reload();
-               $('#employee-modal').modal('hide');
-           } else {
-        	   $(".alert-danger").text(error);
-               toggleFailAlert();
-           }
-      }).fail(function(data) {
-          toggleFailAlert();
-      });
+        }).done(function(data) {
+            var error = data.error;
+            if (error == null) {
+                toggleSuccessAlert();
+                $("#employee-datatable").DataTable().ajax.reload();
+                $('#employee-modal').modal('hide');
+            } else {
+        	    $(".alert-danger").text(error);
+                toggleFailAlert();
+            }
+        }).fail(function(data) {
+            toggleFailAlert();
+        });
     });
 
     // datepicker setup
@@ -122,8 +123,8 @@ $(document).ready(function() {
            newVal += val.substr(3, 2) + '-';
            val = val.substr(5);
          }
-         newVal += val;
-         this.value = newVal;
+        newVal += val;
+        this.value = newVal;
       });
 });
 

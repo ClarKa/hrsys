@@ -7,7 +7,7 @@ import org.hrsys.entity.Bank;
 
 public interface BankManager {
     public List<Bank> getEmployeBanks(int employeeId);
-    public Bank createBankForEmployee(int employeeId, String nickname);
-    public Bank updateBankForEmployee(Bank bank) throws SQLException;
-    public Bank deleteBankForEmployee(int employeeId, String nickname) throws SQLException;
+    public void createBankForEmployee(Bank bank) throws SQLException;
+    public void updateBankForEmployee(Bank bank) throws SQLException;
+    public void deleteBankForEmployee(int employeeId, String nickname) throws SQLException;
 }

@@ -32,22 +32,19 @@ public class BankManagerImpl implements BankManager {
     }
 
     @Override
-    public Bank createBankForEmployee(int employeeId, String nickname) {
-        // TODO Auto-generated method stub
-        return null;
+    public void createBankForEmployee(Bank bank) {
+        mgr.persist(bank);
     }
 
     @Override
-    public Bank updateBankForEmployee(Bank bank) throws SQLException {
+    public void updateBankForEmployee(Bank bank) throws SQLException {
         // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
-    public Bank deleteBankForEmployee(int employeeId, String nickname)
+    public void deleteBankForEmployee(int employeeId, String nickname)
             throws SQLException {
         // TODO Auto-generated method stub
-        return null;
     }
 
 }

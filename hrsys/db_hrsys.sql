@@ -190,6 +190,10 @@ CREATE TRIGGER check_bank_insert
 BEGIN
   DECLARE sumPercent INT DEFAULT 0;
 
+  IF NEW.bk_nickname in (SELECT bk_nickname FROM bank b WHERE b.bk_employee_id = NEW.bk_employee_id) THEN
+    SIGNAL sqlstate '45000' set message_text = 'Bank account nickname already exists.';
+  END IF;
+
   IF NEW.bk_percent < 0 OR NEW.bk_percent > 100 THEN
     SIGNAL sqlstate '45000' set message_text = 'Invalid percent value!';
   END IF;

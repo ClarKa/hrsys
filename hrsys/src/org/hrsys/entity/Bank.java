@@ -31,10 +31,10 @@ public class Bank {
     private AccountType accountType;
     
     @Column(name = "bk_routing_number", unique = false, nullable = false, insertable = true, updatable = true)
-    private int routingNumber;
+    private String routingNumber;
     
     @Column(name = "bk_account_number", unique = false, nullable = false, insertable = true, updatable = true)
-    private int accountNumber;
+    private String accountNumber;
     
     @Column(name = "bk_percent", unique = false, nullable = true, insertable = true, updatable = true)
     private int percent;
@@ -98,28 +98,28 @@ public class Bank {
     /**
      * @return the routingNumber
      */
-    public int getRoutingNumber() {
+    public String getRoutingNumber() {
         return routingNumber;
     }
 
     /**
      * @param routingNumber the routingNumber to set
      */
-    public void setRoutingNumber(int routingNumber) {
+    public void setRoutingNumber(String routingNumber) {
         this.routingNumber = routingNumber;
     }
 
     /**
      * @return the accountNumber
      */
-    public int getAccountNumber() {
+    public String getAccountNumber() {
         return accountNumber;
     }
 
     /**
      * @param accountNumber the accountNumber to set
      */
-    public void setAccountNumber(int accountNumber) {
+    public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 

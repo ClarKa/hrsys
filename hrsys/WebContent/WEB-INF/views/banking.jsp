@@ -26,7 +26,7 @@
 				</div>
 			</div>
 
-			<form class="form-horizontal hide" role="form" id="edit-paychecks-form">
+			<form class="form-horizontal hide" role="form" id="paychecks-edit-form">
 				<div class="form-group">
 					<label class="control-label col-sm-4" for="payment-method"> Payment Method </label>
 					<div class="col-sm-8">
@@ -37,13 +37,15 @@
 				</div>
 				<div class="form-group" id="edit-paycheck-distribution-wrapper">
 					<label class="control-label col-sm-4">Paycheck Distribution</label>
-					<div class="col-sm-8 content-text" id="edit-paycheck-distribution">
+					<div class="col-sm-8 content-text">
+						<div id="paycheck-distribution-edit">
 						<!-- <div class="row panel-body-row-2">
 							<label class="control-label col-sm-2 label-text-2" for="bankpercent"> PNC </label>
 							<div class="col-sm-8">
 								<input type="number" name="bankpercent" class="form-control" placeholder="100%" maxlength="3" required />
 							</div>
 						</div> -->
+						</div>
 						<br>
 						<div class="row panel-body-row-2">
 							<label class="control-label col-sm-3">
@@ -51,8 +53,8 @@
 							</label>
 							<div class="col-sm-5">
 								<select class="form-control" id="add-paycheck-distribution-icon">
-									<option selected>Select to add an account to distribution</option>
 								</select>
+								<small class="text-muted">Select to add an account to distribution.</small>
 							</div>
 						</div>
 					</div>
@@ -68,12 +70,13 @@
 		</div>
 	</div>
 
-	<div class="panel panel-default" id="bank-account-panel">
+	<div class="panel panel-default">
 		<div class="panel-heading">
 			<div>Bank Accounts</div>
 		</div>
 
 		<div class="panel-body">
+			<div id="bank-account-display"></div>
 			<hr>
 			<div class="panel-body-icon">
 				<a data-toggle="modal" data-target="#bank-modal" data-purpose="add">
@@ -93,13 +96,13 @@
 				</button>
 				<h4 class="modal-title"></h4>
 			</div>
-			<form class="form-horizontal" role="form">
+			<form class="form-horizontal" role="form" id="bank-account-form">
 				<div class="modal-body">
 					<div class="form-group">
-						<label class="control-label col-sm-5" for="accountNickname"> Account Nickame <span class="glyphicon glyphicon-question-sign"
+						<label class="control-label col-sm-5" for="nickname"> Account Nickame <span class="glyphicon glyphicon-question-sign"
 							aria-hidden="true" data-toggle="tooltip" title="Any name helps you identify your bank account."></span></label>
 						<div class="col-sm-6">
-							<input type="text" name="accountNickname" class="form-control" placeholder="Maximum length is 20 characters" maxlength="20" required />
+							<input type="text" name="nickname" class="form-control" placeholder="Maximum length is 20 characters" maxlength="20" required />
 						</div>
 					</div>
 					<div class="form-group">
@@ -113,26 +116,25 @@
 					<div class="form-group">
 						<label class="control-label col-sm-5" for="routingNumber"> Routing Number </label>
 						<div class="col-sm-6">
-							<input type="number" name="routingNumber" class="form-control" required />
+							<input type="text" name="routingNumber" class="form-control" required />
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-5" for="accountNumber"> Account Number </label>
 						<div class="col-sm-6">
-							<input type="number" name="accountNumber" class="form-control" required />
+							<input type="text" name="accountNumber" class="form-control" required />
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-5" for="accountNumberConfirm"> Re-enter Account Number </label>
 						<div class="col-sm-6">
-							<input type="number" name="accountNumberConfirm" class="form-control" required />
+							<input type="text" name="accountNumberConfirm" class="form-control" required />
 						</div>
 					</div>
-					<input type="hidden" name="accountId" />
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save</button>
+					<input type="submit" class="btn btn-primary" />
 				</div>
 			</form>
 		</div>

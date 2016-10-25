@@ -1,8 +1,11 @@
 package org.hrsys.dto;
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hrsys.constants.ValidationConstants;
 import org.hrsys.entity.Bank;
@@ -11,11 +14,17 @@ import org.hrsys.enums.AccountType;
 public class BankDTO {
     private int         employeeId;
     private int         accountId;
-    @Pattern(regexp = ValidationConstants.PURE_WORD, message = ValidationConstants.INVALID_BANK_NICKNAME)
+    @Pattern(regexp = ValidationConstants.WORDS_WITH_NUMBER, message = ValidationConstants.INVALID_BANK_NICKNAME)
     private String      nickname;
+    @NotNull(message = ValidationConstants.NULL_ACCOUNT_TYPE)
     private AccountType accountType;
-    private int         routingNumber;
-    private int         accountNumber;
+    @Pattern(regexp = ValidationConstants.PURE_NUMBER, message = ValidationConstants.INVALID_ROUTING_NUMBER)
+    @Size(max = 9, min = 9, message = ValidationConstants.INVALID_ROUTING_NUMBER)
+    private String      routingNumber;
+    @Pattern(regexp = ValidationConstants.PURE_NUMBER, message = ValidationConstants.INVALID_ACCOUNT_NUMBER)
+    private String      accountNumber;
+    @Pattern(regexp = ValidationConstants.PURE_NUMBER, message = ValidationConstants.INVALID_ACCOUNT_NUMBER)
+    private String      accountNumberConfirm;
     @Max(value = 100, message = ValidationConstants.INVALID_PERCENT)
     @Min(value = 0, message = ValidationConstants.INVALID_PERCENT)
     private int         percent;
@@ -58,7 +67,8 @@ public class BankDTO {
     }
 
     /**
-     * @param accountId the accountId to set
+     * @param accountId
+     *            the accountId to set
      */
     public void setAccountId(int accountId) {
         this.accountId = accountId;
@@ -97,7 +107,7 @@ public class BankDTO {
     /**
      * @return the routingNumber
      */
-    public int getRoutingNumber() {
+    public String getRoutingNumber() {
         return routingNumber;
     }
 
@@ -105,14 +115,14 @@ public class BankDTO {
      * @param routingNumber
      *            the routingNumber to set
      */
-    public void setRoutingNumber(int routingNumber) {
+    public void setRoutingNumber(String routingNumber) {
         this.routingNumber = routingNumber;
     }
 
     /**
      * @return the accountNumber
      */
-    public int getAccountNumber() {
+    public String getAccountNumber() {
         return accountNumber;
     }
 
@@ -120,8 +130,22 @@ public class BankDTO {
      * @param accountNumber
      *            the accountNumber to set
      */
-    public void setAccountNumber(int accountNumber) {
+    public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
+    }
+
+    /**
+     * @return the accountNumberConfirm
+     */
+    public String getAccountNumberConfirm() {
+        return accountNumberConfirm;
+    }
+
+    /**
+     * @param accountNumberConfirm the accountNumberConfirm to set
+     */
+    public void setAccountNumberConfirm(String accountNumberConfirm) {
+        this.accountNumberConfirm = accountNumberConfirm;
     }
 
     /**
@@ -152,5 +176,14 @@ public class BankDTO {
      */
     public void setError(String error) {
         this.error = error;
+    }
+
+    @AssertTrue(message = ValidationConstants.UNMATCHED_ACCOUNT_NUMBER)
+    private boolean isValid() {
+        if (this.accountNumberConfirm == null) {
+            return true;
+        } else {
+            return this.accountNumber.equals(this.accountNumberConfirm);
+        }
     }
 }

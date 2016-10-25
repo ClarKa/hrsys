@@ -33,7 +33,7 @@ public class EmployeeDTO {
     private String education;
     private Date enrollmentDate;
     
-    @Pattern(regexp=ValidationConstants.PURE_WORD, message=ValidationConstants.INVALID_POSITION)
+    @Pattern(regexp=ValidationConstants.PURE_WORD_OR_EMPTY, message=ValidationConstants.INVALID_POSITION)
     private String position;
     
     @Pattern(regexp=ValidationConstants.PHONE, message=ValidationConstants.INVALID_PHONE)

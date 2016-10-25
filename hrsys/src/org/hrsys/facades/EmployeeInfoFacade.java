@@ -33,6 +33,7 @@ public class EmployeeInfoFacade {
             employeeManager.createEmployee(employee);
         } catch (Exception e) {
             employeeDto.setError(ExceptionUtils.getRootCause(e).getLocalizedMessage());
+            return employeeDto;
         }
         return employeeDto;
     }

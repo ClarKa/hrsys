@@ -43,7 +43,11 @@ public class EmployeeInfoServices {
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     @IsAdmin
-    public EmployeeDTO createEmployee(@Valid EmployeeDTO employeeDto) {
+    public EmployeeDTO createEmployee(@Valid EmployeeDTO employeeDto, BindingResult result) {
+        if (result.hasErrors()) {
+            employeeDto.setError(result.getAllErrors().get(0).getDefaultMessage());
+            return employeeDto;
+        }
         return employeeInfoFacade.createEmployee(employeeDto, employeeManager);
     }
     
