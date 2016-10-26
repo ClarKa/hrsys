@@ -49,10 +49,12 @@
 						<br>
 						<div class="row panel-body-row-2">
 							<label class="control-label col-sm-3">
-								<a><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+								<div class="panel-body-icon">
+									<a id="add-paycheck-distribution-icon"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+								</div>
 							</label>
 							<div class="col-sm-5">
-								<select class="form-control" id="add-paycheck-distribution-icon">
+								<select class="form-control">
 								</select>
 								<small class="text-muted">Select to add an account to distribution.</small>
 							</div>
@@ -141,7 +143,7 @@
 	</div>
 </div>
 
-<div class="modal fade" tabindex="-1" role="dialog" id="bank-confirm">
+<div class="modal fade" tabindex="-1" role="dialog" id="delete-bank-confirm-modal">
 	<div class="modal-dialog" role="dialog">
 		<div class="modal-content">
 			<div class="modal-body">
@@ -149,7 +151,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-				<button type="button" class="btn btn-primary">Yes</button>
+				<button type="button" class="btn btn-primary" id="delete-bank-confirm-button">Yes</button>
 			</div>
 		</div>
 	</div>

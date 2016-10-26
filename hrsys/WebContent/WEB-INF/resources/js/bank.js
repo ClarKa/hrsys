@@ -19,7 +19,7 @@ function formatBankAccount(data) {
 			+			'</div>'
 			+			'<div class="col-sm-3 text-center panel-body-icon">'
 			+				'<a data-toggle="modal" data-target="#bank-modal" data-purpose="edit" class="edit-bank-account-icon"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>'
-			+				'<a data-toggle="modal" data-target="#bank-confirm" class="delete-bank-account-icon"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>'
+			+				'<a data-toggle="modal" data-target="#delete-bank-confirm-modal" class="delete-bank-account-icon"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>'
 			+			'</div>'
 			+		'</div>'
 			+	'</div>'
@@ -75,6 +75,7 @@ function loadBankSection() {
 			var newAccount = $.parseHTML(formatBankAccount(account));
 			bankAccounts.append(newAccount);
 			$(".edit-bank-account-icon", newAccount).data("account", account);
+			$(".delete-bank-account-icon", newAccount).data("accountId", account.accountId);
 
 			// populate paychecks panel
 			if (account.percent > 0) {
@@ -114,9 +115,37 @@ $(document).ready(function() {
         	$modal.data("accountId", account.accountId);
         } else if (purpose == "add") {
         	$("#bank-modal").find("form")[0].reset();
+        	$modal.data("accountId", -1);
         } else {
         	alert(" Wrong button clicked! ");
         }
+    });
+
+	var $deleteModal = $("#delete-bank-confirm-modal");
+    $deleteModal.on("show.bs.modal", function(e) {
+    	var $button = $(e.relatedTarget);
+    	var accountId = $button.data("accountId");
+    	$(this).data("accountIdToDelete", accountId);
+    });
+
+    $("#delete-bank-confirm-button").click(function(e) {
+    	var accountIdToDelete = $deleteModal.data("accountIdToDelete");
+    	$.ajax({
+			   	type: "DELETE",
+			  	url: bankInfoUrl + "/" + userEmployeeId + "/" + accountIdToDelete,
+			   	beforeSend: function(xhr) {
+					xhr.setRequestHeader(header, token);
+			   	}
+			}).done(function(data) {
+				if (data.error != null) {
+					alert(data.error);
+				} else {
+					$deleteModal.modal('hide');
+					loadBankSection();
+				}
+			}).fail(function(data) {
+				alert(data);
+			});
     });
 
     $("#edit-paychecks-icon, #cancel-edit-paychecks").click(function() {
@@ -130,15 +159,14 @@ $(document).ready(function() {
     	} else {
     		$("#edit-paycheck-distribution-wrapper").show();
     	}
-
     });
 
     $("#bank-account-form").submit(function( event ) {
     	event.preventDefault();
     	var $form = $( this );
     	var $accountId = $modal.data("accountId");
-    	console.log($accountId);
-    	if ($accountId == null) {
+
+    	if ($accountId == null || $accountId == -1) {
 			$.ajax({
 			   	type: "POST",
 			  	url: bankInfoUrl + "/" + userEmployeeId,
@@ -147,7 +175,6 @@ $(document).ready(function() {
 					xhr.setRequestHeader(header, token);
 			   	}
 			}).done(function(data) {
-				// $("#banking").load(location.href+" #banking>*","");
 				if (data.error != null) {
 					alert(data.error);
 				} else {
@@ -166,7 +193,6 @@ $(document).ready(function() {
 					xhr.setRequestHeader(header, token);
 			   	}
 			}).done(function(data) {
-				// $("#banking").load(location.href+" #banking>*","");
 				if (data.error != null) {
 					alert(data.error);
 				} else {

@@ -7,6 +7,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.hrsys.dao.BankManager;
 import org.hrsys.dto.BankDTO;
 import org.hrsys.entity.Bank;
+import org.hrsys.helpers.BankPK;
 
 public class BankFacade {
     public List<BankDTO> getEmployeeBanks(int employeeId, BankManager bankManager) {
@@ -25,6 +26,44 @@ public class BankFacade {
         Bank bank = setBankFromBankDTO(bankDTO);
         try {
             bankManager.createBankForEmployee(bank);
+        } catch(Exception e) {
+            bankDTO.setError(ExceptionUtils.getRootCause(e).getLocalizedMessage());
+            return bankDTO;
+        }
+        
+        return bankDTO;
+    }
+    
+    public BankDTO updateBankForEmployee(int employeeId, int accountId, BankDTO bankDTO, BankManager bankManager) {
+        bankDTO.setEmployeeId(employeeId);
+        bankDTO.setAccountId(accountId);
+        Bank bank = setBankFromBankDTO(bankDTO);
+        
+        if (bank.getPercent() == null) {
+            BankPK pk = new BankPK();
+            pk.setAccountId(accountId);
+            pk.setEmployeeId(employeeId);
+            Bank oldBank = bankManager.getOneBankForEmployee(pk);
+            bank.setPercent(oldBank.getPercent());
+        }
+        
+        try {
+            bankManager.updateBankForEmployee(bank);
+        } catch(Exception e) {
+            bankDTO.setError(ExceptionUtils.getRootCause(e).getLocalizedMessage());
+            return bankDTO;
+        }
+        
+        return bankDTO;
+    }
+    
+    public BankDTO deleteBankForEmployee(int employeeId, int accountId, BankManager bankManager) {
+        BankDTO bankDTO = new BankDTO();
+        try {
+            BankPK bankPK = new BankPK();
+            bankPK.setAccountId(accountId);
+            bankPK.setEmployeeId(employeeId);
+            bankManager.deleteBankForEmployee(bankPK);
         } catch(Exception e) {
             bankDTO.setError(ExceptionUtils.getRootCause(e).getLocalizedMessage());
             return bankDTO;

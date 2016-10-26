@@ -40,4 +40,20 @@ public class BankServices {
         }
         return bankFacade.createBankForEmployee(employeeID, bankDTO, bankManager);
     }
+    
+    @RequestMapping(value = "/{employeeid}/{accountid}", method = RequestMethod.PUT, produces = "application/json")
+    @EmployeeIdMatch
+    public BankDTO updateBankForEmployee(@Valid BankDTO bankDTO, BindingResult result, @PathVariable("employeeid") int employeeID, @PathVariable("accountid") int accountId) {
+        if (result.hasErrors()) {
+            bankDTO.setError(result.getAllErrors().get(0).getDefaultMessage());
+            return bankDTO;
+        }
+        return bankFacade.updateBankForEmployee(employeeID, accountId, bankDTO, bankManager);
+    }
+    
+    @RequestMapping(value = "/{employeeid}/{accountid}", method = RequestMethod.DELETE, produces = "application/json")
+    @EmployeeIdMatch
+    public BankDTO deleteBankForEmployee(@PathVariable("employeeid") int employeeID, @PathVariable("accountid") int accountId) {
+        return bankFacade.deleteBankForEmployee(employeeID, accountId, bankManager);
+    }
 }

@@ -27,7 +27,7 @@ public class BankDTO {
     private String      accountNumberConfirm;
     @Max(value = 100, message = ValidationConstants.INVALID_PERCENT)
     @Min(value = 0, message = ValidationConstants.INVALID_PERCENT)
-    private int         percent;
+    private Integer         percent;
     private String      error;
 
     public BankDTO() {
@@ -151,7 +151,7 @@ public class BankDTO {
     /**
      * @return the percent
      */
-    public int getPercent() {
+    public Integer getPercent() {
         return percent;
     }
 
@@ -159,7 +159,7 @@ public class BankDTO {
      * @param percent
      *            the percent to set
      */
-    public void setPercent(int percent) {
+    public void setPercent(Integer percent) {
         this.percent = percent;
     }
 

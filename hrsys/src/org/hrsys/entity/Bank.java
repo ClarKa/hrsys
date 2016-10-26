@@ -37,7 +37,7 @@ public class Bank {
     private String accountNumber;
     
     @Column(name = "bk_percent", unique = false, nullable = true, insertable = true, updatable = true)
-    private int percent;
+    private Integer percent;
 
     /**
      * @return the employeeId
@@ -126,14 +126,14 @@ public class Bank {
     /**
      * @return the percent
      */
-    public int getPercent() {
+    public Integer getPercent() {
         return percent;
     }
 
     /**
      * @param percent the percent to set
      */
-    public void setPercent(int percent) {
+    public void setPercent(Integer percent) {
         this.percent = percent;
     }
 }

@@ -1,5 +1,8 @@
 package org.hrsys.config;
 
+import javax.servlet.Filter;
+
+import org.springframework.web.filter.HttpPutFormContentFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -18,5 +21,9 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
     protected String[] getServletMappings() {
         return new String[] { "/" };
     }
-
+    
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[] { new HttpPutFormContentFilter() };
+    }
 }

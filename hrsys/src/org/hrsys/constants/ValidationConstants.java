@@ -3,8 +3,8 @@ package org.hrsys.constants;
 public class ValidationConstants {
     public static final String PURE_WORD = "\\w+";
     public static final String PURE_WORD_OR_EMPTY = "\\w*";
-    public static final String WORDS_WITH_NUMBER = "^[a-zA-Z0-9\\s]*$";
-    public static final String PURE_NUMBER = "^[0-9]*$";
+    public static final String WORDS_WITH_NUMBER = "^[a-zA-Z0-9\\s]+$";
+    public static final String PURE_NUMBER = "^[0-9]+$";
     public static final String GENDER = "Male|Female";
     public static final String PHONE = "[0-9]+"; 
     public static final String INVALID_EMPLOYEE_NAME = "Employee name cannot contain special characters.";

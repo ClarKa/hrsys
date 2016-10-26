@@ -219,7 +219,7 @@ BEGIN
     SIGNAL sqlstate '45000' set message_text = 'Invalid percent value!';
   END IF;
 
-  SET @sumPercent = (SELECT SUM(bk_percent) FROM bank b WHERE b.bk_employee_id = NEW.bk_employee_id) + NEW.bk_percent;
+  SET @sumPercent = (SELECT SUM(bk_percent) FROM bank b WHERE b.bk_employee_id = NEW.bk_employee_id AND b.bk_id <> NEW.bk_id) + NEW.bk_percent;
   IF @sumPercent  > 100 THEN
     SIGNAL sqlstate '45000' set message_text = 'Total percent cannot exceed 100!';
   END IF;

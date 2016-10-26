@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.hrsys.entity.Bank;
+import org.hrsys.helpers.BankPK;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,13 +39,20 @@ public class BankManagerImpl implements BankManager {
 
     @Override
     public void updateBankForEmployee(Bank bank) throws SQLException {
-        // TODO Auto-generated method stub
+        mgr.merge(bank);
     }
 
     @Override
-    public void deleteBankForEmployee(int employeeId, String nickname)
+    public void deleteBankForEmployee(BankPK pk)
             throws SQLException {
-        // TODO Auto-generated method stub
+        Bank bank = mgr.find(Bank.class, pk);
+        mgr.remove(bank);
+    }
+
+    @Override
+    public Bank getOneBankForEmployee(BankPK pk) {
+        Bank bank = mgr.find(Bank.class, pk);
+        return bank;
     }
 
 }
