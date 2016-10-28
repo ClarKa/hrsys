@@ -35,6 +35,17 @@ $(document).ready(function() {
             alert("approve all training record for " + trSelectedEmployee.firstname + " " + trSelectedEmployee.lastname + " failed");
         });
     });
+
+    $("#training-employee-list").on("change", function() {
+        $.ajax({
+            type: "GET",
+            url: employeeInfoUrl + getOneEmployeeUrl + $( this ).val()
+        }).done(function(data) {
+            initializeTrainingCalendarForUser(data);
+        }).fail(function() {
+            alert("Ajax failed to fetch data");
+        });
+    });
 });
 
 // employee select list setup

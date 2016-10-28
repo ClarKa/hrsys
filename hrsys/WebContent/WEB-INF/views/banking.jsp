@@ -20,18 +20,18 @@
 					<div class="col-sm-3 label-text">Payment Method</div>
 					<div class="col-sm-9 content-text" id="payment-method-display"></div>
 				</div>
-				<div class="row panel-body-row">
+				<div class="row panel-body-row" id="paycheck-distribution-display-wrapper">
 					<div class="col-sm-3 label-text">Paycheck Distribution</div>
 					<div class="col-sm-9 content-text" id="paycheck-distribution-display"></div>
 				</div>
 			</div>
 
-			<form class="form-horizontal hide" role="form" id="paychecks-edit-form">
+			<form class="form-horizontal" role="form" id="paychecks-edit-form">
 				<div class="form-group">
-					<label class="control-label col-sm-4" for="payment-method"> Payment Method </label>
+					<label class="control-label col-sm-4" for="paymentMethod"> Payment Method </label>
 					<div class="col-sm-8">
-						<label class="radio-inline"> <input type="radio" name="payment-method" value="DD"> Direct Deposit
-						</label> <label class="radio-inline"> <input type="radio" name="payment-method" value="PC"> Paper Check
+						<label class="radio-inline"> <input type="radio" name="paymentMethod" value="dd"> Direct Deposit
+						</label> <label class="radio-inline"> <input type="radio" name="paymentMethod" value="pc"> Paper Check
 						</label>
 					</div>
 				</div>
@@ -48,15 +48,14 @@
 						</div>
 						<br>
 						<div class="row panel-body-row-2">
-							<label class="control-label col-sm-3">
-								<div class="panel-body-icon">
-									<a id="add-paycheck-distribution-icon"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-								</div>
-							</label>
+							<div class="col-sm-2"></div>
 							<div class="col-sm-5">
 								<select class="form-control">
 								</select>
 								<small class="text-muted">Select to add an account to distribution.</small>
+							</div>
+							<div class="panel-body-icon control-label col-sm-1">
+								<a id="add-paycheck-distribution-icon"><span class="glyphicon 		glyphicon-plus" aria-hidden="true"></span></a>
 							</div>
 						</div>
 					</div>

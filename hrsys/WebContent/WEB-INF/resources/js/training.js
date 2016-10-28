@@ -2,16 +2,7 @@ var trSelectedEmployee;
 var trFilterDays;
 
 $(document).ready(function() {
-    $("#training-employee-list").on("change", function() {
-        $.ajax({
-            type: "GET",
-            url: employeeInfoUrl + getOneEmployeeUrl + $( this ).val()
-        }).done(function(data) {
-            initializeTrainingCalendarForUser(data);
-        }).fail(function() {
-            alert("Ajax failed to fetch data");
-        });
-    });
+
 
     //training modal setup
     $("#training-modal input[name='date']").datepicker({dateFormat: "yy-mm-dd"});

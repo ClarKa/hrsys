@@ -11,7 +11,7 @@ function toggleSuccessAlert() {
 $(document).ready(function() {
 	var purpose;
 	var url;
-  var employeeId;
+    var employeeId;
 
     // employee modal setup
     $(".alert-danger").hide();
@@ -39,7 +39,7 @@ $(document).ready(function() {
         // populate employee data if editing
         if (purpose == "edit") {
         	employeeId = button.data('employeeid');
-        	url = url + "/employeeid/" + employeeId;
+        	url = employeeInfoUrl + "/employeeid/" + employeeId;
 
         	$.ajax({
         		type: "GET",

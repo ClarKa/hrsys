@@ -8,6 +8,10 @@ public class PaychecksDTO {
     private PaymentMethod paymentMethod;
     private String error;
     
+    public PaychecksDTO() {
+        
+    }
+    
     public PaychecksDTO(Paychecks paychecks) {
         employeeId = paychecks.getEmployeeId();
         paymentMethod = paychecks.getPaymentMethod();

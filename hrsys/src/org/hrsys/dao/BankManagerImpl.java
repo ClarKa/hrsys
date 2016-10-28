@@ -3,6 +3,7 @@ package org.hrsys.dao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -53,6 +54,28 @@ public class BankManagerImpl implements BankManager {
     public Bank getOneBankForEmployee(BankPK pk) {
         Bank bank = mgr.find(Bank.class, pk);
         return bank;
+    }
+
+    @Override
+    public void updateDistributionForEmployee(Map<String, String> map, List<Integer> accountIds, int employeeId)
+            throws SQLException {
+        Query jpqlQuery = mgr
+                .createQuery(
+                        "UPDATE Bank b SET b.percent = 0 WHERE b.employeeId = :employeeId AND b.accountId NOT IN :accountIds")
+                .setParameter("employeeId", employeeId)
+                .setParameter("accountIds", accountIds);
+        jpqlQuery.executeUpdate();
+        
+        for (Integer accountId : accountIds) {
+            BankPK pk = new BankPK();
+            pk.setAccountId(accountId);
+            pk.setEmployeeId(employeeId);
+            Bank bank = mgr.find(Bank.class, pk);
+            if (bank != null) {
+                bank.setPercent(Integer.parseInt(map.get(accountId.toString())));
+            }
+            
+        }
     }
 
 }
