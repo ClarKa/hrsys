@@ -135,7 +135,7 @@ $(document).ready(function() {
 
     	$.ajax({
     		type: "DELETE",
-    		url: "rest/employee/employeeid/" + rowId,
+    		url: employeeInfoUrl + "/" + rowId,
     		beforeSend: function(xhr) {
     			xhr.setRequestHeader(header, token);
     		}

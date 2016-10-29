@@ -137,6 +137,9 @@ function loadBankSection() {
         type : "GET",
         url : paychecksUrl + "/" + userEmployeeId,
     }).done(function(data) {
+    	if (data.error != null) {
+    		return;
+    	}
     	$("#payment-method-display").text(data.paymentMethod.description);
     	$("#paychecks-edit-form input[value='" + data.paymentMethod.id + "']").prop("checked", true);
     	if (data.paymentMethod.id == "pc") {
@@ -155,6 +158,9 @@ function loadBankSection() {
         type : "GET",
         url : bankInfoUrl + "/" + userEmployeeId,
     }).done(function(data) {
+    	if (data.error != null) {
+    		return;
+    	}
         $.each(data, function(key, account) {
         	var accountId = account.accountId;
         	// populate banks accounts panel.

@@ -59,6 +59,16 @@ public class BankManagerImpl implements BankManager {
     @Override
     public void updateDistributionForEmployee(Map<String, String> map, List<Integer> accountIds, int employeeId)
             throws SQLException {
+        if (accountIds == null || accountIds.isEmpty()) {
+            Query jpqlQuery = mgr
+                    .createQuery(
+                            "UPDATE Bank b SET b.percent = 0 WHERE b.employeeId = :employeeId")
+                    .setParameter("employeeId", employeeId);
+            jpqlQuery.executeUpdate();
+            return;
+        }
+        
+        
         Query jpqlQuery = mgr
                 .createQuery(
                         "UPDATE Bank b SET b.percent = 0 WHERE b.employeeId = :employeeId AND b.accountId NOT IN :accountIds")

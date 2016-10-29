@@ -13,6 +13,10 @@ public class PaychecksDTO {
     }
     
     public PaychecksDTO(Paychecks paychecks) {
+        if(paychecks == null) {
+            error = "No paycheck record found.";
+            return;
+        }
         employeeId = paychecks.getEmployeeId();
         paymentMethod = paychecks.getPaymentMethod();
     }

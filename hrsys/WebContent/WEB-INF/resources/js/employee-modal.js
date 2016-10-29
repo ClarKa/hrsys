@@ -39,7 +39,7 @@ $(document).ready(function() {
         // populate employee data if editing
         if (purpose == "edit") {
         	employeeId = button.data('employeeid');
-        	url = employeeInfoUrl + "/employeeid/" + employeeId;
+        	url = employeeInfoUrl + "/" + employeeId;
 
         	$.ajax({
         		type: "GET",

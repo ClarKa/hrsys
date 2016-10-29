@@ -1,12 +1,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%-- <jsp:include page="template_top.jsp" /> --%>
-
-<sec:authorize access="hasRole('ADMIN')" var="isAdmin" />
-<sec:authorize access="hasRole('USER')" var="isUser" />
-<sec:authentication property="principal.employeeID" var="employeeId"/>
-
 <script>
 $(document).ready(function() {
     // initialize calendar

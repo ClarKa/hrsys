@@ -39,7 +39,7 @@ $(document).ready(function() {
     $("#training-employee-list").on("change", function() {
         $.ajax({
             type: "GET",
-            url: employeeInfoUrl + getOneEmployeeUrl + $( this ).val()
+            url: employeeInfoUrl + "/" + $( this ).val()
         }).done(function(data) {
             initializeTrainingCalendarForUser(data);
         }).fail(function() {

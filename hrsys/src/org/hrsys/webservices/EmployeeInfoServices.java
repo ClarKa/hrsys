@@ -35,7 +35,7 @@ public class EmployeeInfoServices {
         return employeeInfoFacade.getAllEmployees(employeeManager);
     }
 
-    @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/{employeeid}", method = RequestMethod.GET, produces = "application/json")
     @EmployeeIdMatchOrIsAdmin
     public EmployeeDTO getOneEmployee(@PathVariable("employeeid") int employeeID) {
         return employeeInfoFacade.getOneEmployee(employeeID, employeeManager);
@@ -51,13 +51,13 @@ public class EmployeeInfoServices {
         return employeeInfoFacade.createEmployee(employeeDto, employeeManager);
     }
     
-    @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}", method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value =  "/{employeeid}", method = RequestMethod.DELETE, produces = "application/json")
     @IsAdmin
     public EmployeeDTO deleteOneEmployee(@PathVariable("employeeid") int employeeID) {
         return employeeInfoFacade.deleteOneEmployee(employeeID, employeeManager);
     }
     
-    @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/{employeeid}", method = RequestMethod.POST, produces = "application/json")
     @IsAdmin
     public EmployeeDTO updateOneEmployee(@Valid EmployeeDTO employeeDto, BindingResult result, @PathVariable("employeeid") int employeeID) {
         if (result.hasErrors()) {

@@ -7,7 +7,7 @@
 	$(document).ready(function() {
 		$.ajax({
 			type : "GET",
-			url : "rest/employee/employeeid/" + userEmployeeId,
+			url : employeeInfoUrl + "/" + userEmployeeId,
 		}).done(function(data) {
 			$.each(data, function(key, value) {
 				$("#myinfo-" + key).text(value);
