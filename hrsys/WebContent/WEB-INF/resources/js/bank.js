@@ -135,7 +135,7 @@ function loadBankSection() {
 	// populate payment method
 	$.ajax({
         type : "GET",
-        url : paychecksUrl + "/" + userEmployeeId,
+        url : paychecksUrl + "/" +  selectedEmployee.employeeID,
     }).done(function(data) {
     	if (data.error != null) {
     		return;
@@ -156,7 +156,7 @@ function loadBankSection() {
 
 	$.ajax({
         type : "GET",
-        url : bankInfoUrl + "/" + userEmployeeId,
+        url : bankInfoUrl + "/" + selectedEmployee.employeeID,
     }).done(function(data) {
     	if (data.error != null) {
     		return;
@@ -191,9 +191,6 @@ function loadBankSection() {
 }
 
 $(document).ready(function() {
-
-	loadBankSection();
-
 	var $modal = $("#bank-modal");
 	$modal.on("show.bs.modal", function(e) {
         var $button = $(e.relatedTarget);

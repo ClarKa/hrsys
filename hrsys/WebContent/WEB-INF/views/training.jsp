@@ -39,11 +39,11 @@
 		<div class="panel-body">
 
 			<sec:authorize access="hasRole('ADMIN')">
-			<p>
+<!-- 			<p>
 				<select class="form-control" name="employeeID" id="training-employee-list">
 					<option selected disabled>Select an employee</option>
 				</select>
-			</p>
+			</p> -->
 			</sec:authorize>
 
 			<p>

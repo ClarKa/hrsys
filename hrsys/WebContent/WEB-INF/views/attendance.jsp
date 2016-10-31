@@ -11,10 +11,10 @@ $(document).ready(function() {
       maxDate: "+0D",
       dateFormat: "yy-mm-dd",
       onSelect: function(dateText, inst) {
-            if ($( "#employeeID" ).val() != null) {
+            if (selectedEmployee != null) {
                 $.ajax({
                     type: "GET",
-                    url:"rest/attendance/employeeid/" + $( "#employeeID" ).val() + "/" + dateText
+                    url:"rest/attendance/employeeid/" + selectedEmployee.employeeID + "/" + dateText
                 }).done(function(data) {
                     $( "#attendance-table-body" ).empty();
                     if (data.error != null ) {
@@ -100,14 +100,14 @@ function initializeAttendanceCalendarForUser(data) {
 
 	<div class="row">
 		<div class="col-sm-4">
-		    <select class="form-control" name="employeeID" id="employeeID">
+<!-- 		    <select class="form-control" name="employeeID" id="employeeID">
 	            <option selected disabled>Select an employee</option>
 	        </select>
-	        <br>
+	        <br> -->
 	    </div>
 	    <div class="col-sm-4"></div>
         <div class="col-sm-4 text-right">
-            <button class="btn btn-default" id="punch">Punch</button>
+            <!-- <button class="btn btn-default" id="punch">Punch</button> -->
         </div>
     </div>
 

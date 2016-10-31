@@ -42,6 +42,7 @@
             var getOneEmployeeUrl = "${urls.oneEmployeeUrl}" + "/";
             var isAdmin = "${isAdmin}";
             var userEmployeeId = "${employeeId}";
+            var selectedEmployee;
 
             $(document).ready(function() {
                 if (isAdmin == "true") {
@@ -49,35 +50,38 @@
                         type: "GET",
                         url: employeeInfoUrl
                     }).done(function(data) {
-                        initializeTrainingEmployeeSelectList(data);
-                        initializeAttendanceEmployeeSelectList(data);
+                        // initializeTrainingEmployeeSelectList(data);
+                        // initializeAttendanceEmployeeSelectList(data);
                         populateSideNav(data);
-                    }).fail(function() {
-                        alert("Ajax failed to fetch data");
-                    });
-                } else {
-                    $.ajax({
-                        type: "GET",
-                        url: employeeInfoUrl + "/" + userEmployeeId
-                    }).done(function(data) {
-                        initializeTrainingCalendarForUser(data);
-                        initializeAttendanceEmployeeSelectList([data]);
                     }).fail(function() {
                         alert("Ajax failed to fetch data");
                     });
                 }
 
+                $.ajax({
+                    type: "GET",
+                    url: employeeInfoUrl + "/" + userEmployeeId
+                }).done(function(data) {
+                	selectedEmployee = data;
+                    initializeTrainingCalendarForUser(data);
+                    // initializeAttendanceEmployeeSelectList([data]);
+                    initializeAttendanceCalendarForUser(data);
+                    loadBankSection();
+                }).fail(function() {
+                    alert("Ajax failed to fetch data");
+                });
+
     			$("#sideUl").click(function(e) {
 					var employeeId = $(e.target).data("employeeId");
-					userEmployeeId = employeeId;
 					$.ajax({
                         type: "GET",
                         url: employeeInfoUrl + "/" + employeeId
                     }).done(function(data) {
+                    	selectedEmployee = data;
                     	$("#sideUl .active").removeClass("active");
                     	$(e.target).addClass("active");
                         initializeTrainingCalendarForUser(data);
-                        initializeAttendanceEmployeeSelectList([data]);
+                        initializeAttendanceCalendarForUser(data);
                         loadBankSection();
                     }).fail(function() {
                         alert("Ajax failed to fetch data");
@@ -123,6 +127,11 @@
 				$.each(data, function(key, employee) {
 					var li = $("<li></li>");
 					var a = $("<a href='#'></a>").text(employee.firstname + " " + employee.lastname).data("employeeId", employee.employeeID);
+
+
+					if (employee.employeeID == userEmployeeId) {
+						a.addClass("active");
+					}
 					li.append(a);
 					$("#sideUl").prepend(li);
 				});
@@ -132,11 +141,11 @@
 
 	<sec:authorize access="hasRole('ADMIN')">
     <div id="sideNav" class="sidenav">
-	  <a id="side-close-icon" onclick="closeNav()">&times;</a>
-	  <input type="text" id="sideSearchInput" onkeyup="filterSideList()" placeholder="Search for names..">
-
-		<ul id="sideUl">
-		</ul>
+	    <div id="sideNav-controls">
+			<a id="side-close-icon" onclick="closeNav()">&times;</a>
+		</div>
+		<input type="text" id="sideSearchInput" onkeyup="filterSideList()" placeholder="Search for names..">
+		<ul id="sideUl"></ul>
 	</div>
 
 	<!-- Use any element to open the sidenav -->
@@ -181,13 +190,15 @@
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						</form>
 						<ul class="nav navbar-nav navbar-right">
-							<li><a href="<c:url value='/' />">
-									<span class="glyphicon glyphicon-user"></span>
-									<sec:authentication property="principal.username" />
-								</a>
-							<li><a href="javascript:formSubmit()">
-									<span class="glyphicon glyphicon-log-out"></span> Log Out
-								</a></li>
+							<li>
+								<a href="#" id="punch"><span class="glyphicon glyphicon-pushpin"></span> Punch</a>
+							</li>
+							<li>
+								<a href="<c:url value='/' />"><span class="glyphicon glyphicon-user"></span> <sec:authentication property="principal.username" /></a>
+							</li>
+							<li>
+								<a href="javascript:formSubmit()"><span class="glyphicon glyphicon-log-out"></span> Log Out</a>
+							</li>
 						</ul>
 					</div>
 				</sec:authorize>

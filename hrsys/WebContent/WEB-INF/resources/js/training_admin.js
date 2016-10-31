@@ -4,15 +4,15 @@ $(document).ready(function() {
 		 $.ajax({
              type: "POST",
              url: trainingUrl,
-             data: {"employeeId": trSelectedEmployee.employeeID},
+             data: {"employeeId": selectedEmployee.employeeID},
              beforeSend: function(xhr) {
                  xhr.setRequestHeader(header, token);
              }
         }).done(function(data) {
             alert(data.length + " records have been approved.");
-        	initializeTrainingCalendarForUser(trSelectedEmployee);
+        	initializeTrainingCalendarForUser(selectedEmployee);
         }).fail(function(data) {
-            alert("approve all training record for " + trSelectedEmployee.firstname + " " + trSelectedEmployee.lastname + " failed");
+            alert("approve all training record for " + selectedEmployee.firstname + " " + selectedEmployee.lastname + " failed");
         });
     });
 
@@ -24,15 +24,15 @@ $(document).ready(function() {
          $.ajax({
              type: "POST",
              url: trainingUrl,
-             data: {"employeeId": trSelectedEmployee.employeeID, "date": $("#training-modal input[name='date']").val()},
+             data: {"employeeId": selectedEmployee.employeeID, "date": $("#training-modal input[name='date']").val()},
              beforeSend: function(xhr) {
                  xhr.setRequestHeader(header, token);
              }
         }).done(function(data) {
         	alert(data.length + " records have been approved.");
-            initializeTrainingCalendarForUser(trSelectedEmployee);
+            initializeTrainingCalendarForUser(selectedEmployee);
         }).fail(function(data) {
-            alert("approve all training record for " + trSelectedEmployee.firstname + " " + trSelectedEmployee.lastname + " failed");
+            alert("approve all training record for " + selectedEmployee.firstname + " " + selectedEmployee.lastname + " failed");
         });
     });
 

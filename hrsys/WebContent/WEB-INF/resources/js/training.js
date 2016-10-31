@@ -1,4 +1,3 @@
-var trSelectedEmployee;
 var trFilterDays;
 
 $(document).ready(function() {
@@ -56,7 +55,7 @@ $(document).ready(function() {
                $("#training-approve-one-button").prop("disabled", true);
             }
 
-            if (trSelectedEmployee.employeeID != userEmployeeId) {
+            if (selectedEmployee.employeeID != userEmployeeId) {
             	$("#training-modal input[name='hour']").prop("readonly", true);
                 $("#training-modal input[type='submit']").prop("disabled", true);
             }
@@ -75,7 +74,7 @@ $(document).ready(function() {
 
         $.ajax({
              type: "POST",
-             url: trainingUrl + getOneEmployeeUrl + trSelectedEmployee.employeeID + "/" + $("#training-modal input[name='date']").val(),
+             url: trainingUrl + getOneEmployeeUrl + selectedEmployee.employeeID + "/" + $("#training-modal input[name='date']").val(),
              data: $form.serialize(),
              beforeSend: function(xhr) {
                  xhr.setRequestHeader(header, token);
@@ -83,7 +82,7 @@ $(document).ready(function() {
         }).done(function(data) {
              if (data.error == null) {
                  $('#training-modal').modal('hide');
-                 initializeTrainingCalendarForUser(trSelectedEmployee);
+                 initializeTrainingCalendarForUser(selectedEmployee);
              } else {
                  alert(data.error);
              }
@@ -105,7 +104,7 @@ $(document).ready(function() {
         $('#training-calendar').data('calendar').setDataSource("[]");
         $.ajax({
                 type : "GET",
-                url : trainingUrl + getOneEmployeeUrl + trSelectedEmployee.employeeID,
+                url : trainingUrl + getOneEmployeeUrl + selectedEmployee.employeeID,
                 data:  {"approved": approved}
             }).done(function(data) {
                 addTrainingRecord(data);
@@ -122,7 +121,7 @@ $(document).ready(function() {
 function updateTrainingStat() {
     $.ajax({
         type: "GET",
-        url: trainingUrl + getOneEmployeeUrl + trSelectedEmployee.employeeID
+        url: trainingUrl + getOneEmployeeUrl + selectedEmployee.employeeID
     }).done(function(data) {
         var stat = {totalDays:0, totalHours:0, approvedDays:0, approvedHours:0, unapprovedDays:0, unapprovedHours:0};
 
@@ -146,12 +145,12 @@ function updateTrainingStat() {
         $("#training-records-collapse .well").append(total, approved, unapproved);
 
     }).fail(function(data) {
-        alert("get record for " + trSelectedEmployee.firstname + " " + trSelectedEmployee.lastname + " failed");
+        alert("get record for " + selectedEmployee.firstname + " " + selectedEmployee.lastname + " failed");
     });
 }
 
 function initializeTrainingCalendarForUser(employee) {
-	trSelectedEmployee = employee;
+	selectedEmployee = employee;
     var enrollmentDate = new Date(employee.enrollmentDate);
 
     updateTrainingStat();

@@ -82,24 +82,28 @@ body {
     left: 0;
     background-color: #d1d3d6; /* gray */
     overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 70px; /* Place content 60px from the top */
+    padding-top: 50px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
 
 /* Position and style the close button (top right corner) */
 #side-close-icon {
-    position: absolute;
+/*    position: absolute;
     top: 50px;
-    right: 10px;
+    right: 10px;*/
     font-size: 36px;
-    margin-left: 50px;
+    margin-right: 10px;
 }
 
 #side-close-icon:hover {
     text-decoration: none;
     cursor: pointer;
     color: #67babe;
+}
+
+#sideNav-controls {
+    text-align: right;
 }
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
@@ -117,7 +121,7 @@ body {
     padding: 12px 20px 12px 40px; /* Add some padding */
     border: 1px solid #ddd; /* Add a grey border */
     margin-bottom: 12px; /* Add some space below the input */
-    margin-top: 30px;
+/*    margin-top: 30px;*/
 }
 
 #sideUl {
