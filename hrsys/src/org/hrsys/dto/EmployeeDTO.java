@@ -24,7 +24,7 @@ public class EmployeeDTO {
     
     @Email(message=ValidationConstants.INVALID_EMAIL)
     private String email;
-    private int departmentID;
+    private Integer departmentID;
     private String departmentName;
     private Date birth;
     private String ssn;
@@ -44,6 +44,7 @@ public class EmployeeDTO {
     private String error;
     private String username;
     private String role;
+    private EmployeeTempDTO temp;
 
     public EmployeeDTO() {
 
@@ -79,6 +80,10 @@ public class EmployeeDTO {
         } else {
             this.username = employee.getUser().getUsername();
             this.role = employee.getUser().getRole().getRoleName();
+        }
+        
+        if (employee.getTemp() != null) {
+            this.temp = new EmployeeTempDTO(employee.getTemp());
         }
     }
 
@@ -126,11 +131,11 @@ public class EmployeeDTO {
         this.email = email;
     }
 
-    public int getDepartmentID() {
+    public Integer getDepartmentID() {
         return departmentID;
     }
 
-    public void setDepartmentID(int departmentID) {
+    public void setDepartmentID(Integer departmentID) {
         this.departmentID = departmentID;
     }
 
@@ -256,5 +261,13 @@ public class EmployeeDTO {
      */
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public EmployeeTempDTO getTemp() {
+        return temp;
+    }
+
+    public void setTemp(EmployeeTempDTO temp) {
+        this.temp = temp;
     }
 }

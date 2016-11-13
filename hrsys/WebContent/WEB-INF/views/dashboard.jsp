@@ -44,9 +44,16 @@
             var userEmployeeId = "${employeeId}";
             var selectedEmployee;
 
+            function loadDashboard(data) {
+                initializeTrainingCalendarForUser(data);
+                initializeAttendanceCalendarForUser(data);
+                loadBankSection();
+                loadEmployeeInfoSection(data);
+            }
+
             $(document).ready(function() {
                 if (isAdmin == "true") {
-                    $.ajax({
+                    $getAllUser = $.ajax({
                         type: "GET",
                         url: employeeInfoUrl
                     }).done(function(data) {
@@ -58,13 +65,13 @@
                     });
                 }
 
-                $.ajax({
+                $getUser = $.ajax({
                     type: "GET",
                     url: employeeInfoUrl + "/" + userEmployeeId
                 }).done(function(data) {
                 	selectedEmployee = data;
+                	$("#card-name").text(data.firstname + " " + data.lastname);
                     initializeTrainingCalendarForUser(data);
-                    // initializeAttendanceEmployeeSelectList([data]);
                     initializeAttendanceCalendarForUser(data);
                     loadBankSection();
                 }).fail(function() {
@@ -80,9 +87,9 @@
                     	selectedEmployee = data;
                     	$("#sideUl .active").removeClass("active");
                     	$(e.target).addClass("active");
-                        initializeTrainingCalendarForUser(data);
-                        initializeAttendanceCalendarForUser(data);
-                        loadBankSection();
+                    	$("#card-name").text(data.firstname + " " + data.lastname);
+                    	loadDashboard(data);
+    	                console.log($("#sideUl a.active"));
                     }).fail(function() {
                         alert("Ajax failed to fetch data");
                     });
@@ -96,13 +103,13 @@
 			/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
 			function openNav() {
 			    $("#sideNav").width("220px");
-			    $("#main").css("marginLeft", "220px");
+			    $("#main").css("marginRight", "220px");
 			}
 
 			/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
 			function closeNav() {
 			    $("#sideNav").width("0");
-			    $("#main").css("marginLeft", "0");
+			    $("#main").css("marginRight", "0");
 			}
 
 			function filterSideList() {
@@ -128,6 +135,10 @@
 					var li = $("<li></li>");
 					var a = $("<a href='#'></a>").text(employee.firstname + " " + employee.lastname).data("employeeId", employee.employeeID);
 
+					if (employee.temp != null) {
+						var span = $("<span class='badge pull-right'>1</span>");
+						a.append(span);
+					}
 
 					if (employee.employeeID == userEmployeeId) {
 						a.addClass("active");
@@ -147,15 +158,26 @@
 		<input type="text" id="sideSearchInput" onkeyup="filterSideList()" placeholder="Search for names..">
 		<ul id="sideUl"></ul>
 	</div>
-
-	<!-- Use any element to open the sidenav -->
-	<div class="pull-left">
+	<div class="pull-right">
 		<a onclick="openNav()" id="side-open-icon">
 			<span  class="glyphicon glyphicon-list"></span>
 		</a>
 	</div>
 	</sec:authorize>
     <div id="main">
+    	<sec:authorize access="isAuthenticated()">
+<%--     	<form method="POST" action="<c:url value='/upload' />" enctype="multipart/form-data">
+
+		    Please select a file to upload : <input type="file" name="file" />
+		    <input type="submit" value="upload" />
+		</form> --%>
+			<div class="card">
+			    <img src="<c:url value='resources/img/img_avatar.png' />" alt="Avatar" style="width:100%">
+			    <div class="card-text">
+			      <h4><b id="card-name"></b></h4>
+			    </div>
+			</div>
+		</sec:authorize>
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -172,18 +194,19 @@
 					<div class="collapse navbar-collapse" id="navbar-collapse">
 						<ul class="nav navbar-nav">
 							<sec:authorize access="hasRole('ADMIN')">
-								<li class="active"><a data-toggle="tab" href="#welcome"> Welcome </a></li>
-								<li><a data-toggle="tab" href="#employee-info"> Employee Info </a></li>
-								<li><a data-toggle="tab" href="#attendance"> Attendance </a></li>
-								<li><a data-toggle="tab" href="#training"> Training </a></li>
-								<li><a data-toggle="tab" href="#banking"> Banking </a></li>
+								<li class="active"><a data-toggle="tab" href="#welcome-tab"> Welcome </a></li>
+								<li><a data-toggle="tab" href="#employee-info-tab"> Employee Info </a></li>
+								<li><a data-toggle="tab" href="#attendance-tab"> Attendance </a></li>
+								<li><a data-toggle="tab" href="#training-tab"> Training </a></li>
+								<li><a data-toggle="tab" href="#banking-tab"> Banking </a></li>
+								<li><a data-toggle="tab" href="#employee-table-tab"> Employee Table </a></li>
 							</sec:authorize>
 							<sec:authorize access="hasRole('USER')">
-								<li class="active"><a data-toggle="tab" href="#welcome"> Welcome </a></li>
-								<li><a data-toggle="tab" href="#employee-info"> Personal Info </a></li>
-								<li><a data-toggle="tab" href="#attendance"> Attendance </a></li>
-								<li><a data-toggle="tab" href="#training"> Training </a></li>
-								<li><a data-toggle="tab" href="#banking"> Bank Info </a></li>
+								<li class="active"><a data-toggle="tab" href="#welcome-tab"> Welcome </a></li>
+								<li><a data-toggle="tab" href="#employee-info-tab"> Personal Info </a></li>
+								<li><a data-toggle="tab" href="#attendance-tab"> Attendance </a></li>
+								<li><a data-toggle="tab" href="#training-tab"> Training </a></li>
+								<li><a data-toggle="tab" href="#banking-tab"> Bank Info </a></li>
 							</sec:authorize>
 						</ul>
 						<form action="<c:url value='/perform_logout' />" method="post" id="logoutForm">
@@ -207,25 +230,31 @@
 
 		<sec:authorize access="isAuthenticated()">
 		<div class="tab-content">
-			<div id="welcome" class="tab-pane fade in active">
+			<div id="welcome-tab" class="tab-pane fade in active">
 				<jsp:include page="welcome.jsp" />
 			</div>
 
-			<div id="employee-info" class="tab-pane fade">
+			<div id="employee-info-tab" class="tab-pane fade">
 				<jsp:include page="employee_info.jsp" />
 			</div>
 
-			<div id="attendance" class="tab-pane fade">
+			<div id="attendance-tab" class="tab-pane fade">
 				<jsp:include page="attendance.jsp" />
 			</div>
 
-			<div id="training" class="tab-pane fade">
+			<div id="training-tab" class="tab-pane fade">
 				<jsp:include page="training.jsp" />
 			</div>
 
-			<div id="banking" class="tab-pane fade">
+			<div id="banking-tab" class="tab-pane fade">
 				<jsp:include page="banking.jsp" />
 			</div>
+
+			<sec:authorize access="hasRole('ADMIN')">
+			<div id="employee-table-tab" class="tab-pane fade">
+				<jsp:include page="employee_datatable.jsp" />
+			</div>
+			</sec:authorize>
 		</div>
 		</sec:authorize>
 	</div>

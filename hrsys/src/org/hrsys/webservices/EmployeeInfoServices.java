@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ public class EmployeeInfoServices {
     private EmployeeInfoFacade employeeInfoFacade = new EmployeeInfoFacade();
     
     @Autowired
+    @Qualifier("employee")
     EmployeeManager employeeManager;
 
     @Autowired

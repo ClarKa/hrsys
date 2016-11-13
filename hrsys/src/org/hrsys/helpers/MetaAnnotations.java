@@ -36,4 +36,11 @@ public class MetaAnnotations {
     public @interface EmployeeIdMatch
     {
     }
+    
+    @Target(ElementType.METHOD)
+    @Retention(RetentionPolicy.RUNTIME)
+    @PreAuthorize(CommonConstants.HAS_ROLE_USER)
+    public @interface IsUser
+    {
+    }
 }

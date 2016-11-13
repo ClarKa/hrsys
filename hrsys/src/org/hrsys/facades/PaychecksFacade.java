@@ -1,18 +1,14 @@
 package org.hrsys.facades;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.hrsys.dao.BankManager;
 import org.hrsys.dao.PaychecksManager;
 import org.hrsys.dto.PaychecksDTO;
 import org.hrsys.enums.PaymentMethod;
-import org.hrsys.helpers.BankPK;
 
 public class PaychecksFacade {
     public PaychecksDTO getPaychecksForEmployee(int employeeId, PaychecksManager paychecksManager) {

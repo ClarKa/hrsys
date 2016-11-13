@@ -76,7 +76,9 @@ public class Employee implements java.io.Serializable {
     
     @OneToOne(cascade = { CascadeType.ALL }, optional = true, fetch = FetchType.EAGER, mappedBy = "employee")
     private CustomUser user;
-
+    
+    @OneToOne(cascade = { CascadeType.ALL }, optional = true, fetch = FetchType.EAGER, mappedBy = "employee")
+    private EmployeeTemp temp;
 
     public int getEmployeeID()         { return employeeID; }
     public String getFirstname()  { return firstname; }
@@ -122,5 +124,17 @@ public class Employee implements java.io.Serializable {
      */
     public void setUser(CustomUser user) {
         this.user = user;
+    }
+    /**
+     * @return the temp
+     */
+    public EmployeeTemp getTemp() {
+        return temp;
+    }
+    /**
+     * @param temp the temp to set
+     */
+    public void setTemp(EmployeeTemp temp) {
+        this.temp = temp;
     }
 }

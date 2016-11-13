@@ -1,5 +1,6 @@
 package org.hrsys.facades;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,12 +41,14 @@ public class EmployeeInfoFacade {
 
     public EmployeeDTO deleteOneEmployee(int employeeID, EmployeeManager employeeManager) {
         Employee employee;
-        EmployeeDTO employeeDto;
+        EmployeeDTO employeeDto = new EmployeeDTO();
 
         try {
             employee = employeeManager.deleteOneEmployee(employeeID);
+        } catch (SQLException e) {
+            employeeDto.setError(e.getLocalizedMessage());
+            return employeeDto;
         } catch (Exception e) {
-            employeeDto = new EmployeeDTO();
             employeeDto.setError(ExceptionUtils.getRootCause(e).getLocalizedMessage());
             return employeeDto;
         }
@@ -61,8 +64,13 @@ public class EmployeeInfoFacade {
 
         try {
             employeeManager.updateOneEmployee(employeeID, employee);
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            employeeDto.setError(e.getLocalizedMessage());
+            return employeeDto;
+        }
+        catch (Exception e) {
             employeeDto.setError(ExceptionUtils.getRootCause(e).getLocalizedMessage());
+            return employeeDto;
         }
 
         return employeeDto;

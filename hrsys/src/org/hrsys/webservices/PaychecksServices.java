@@ -1,8 +1,6 @@
 package org.hrsys.webservices;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.hrsys.constants.ServicePaths;
 import org.hrsys.dao.BankManager;

@@ -108,8 +108,9 @@ $(document).ready(function() {
                 "defaultContent": ""
             }
         ],
-        "order": [[1, 'asc']]
-    } );
+        "order": [[1, 'asc']],
+        responsive: true
+    });
 
     // Add event listener for opening and closing details
     $('#employee-datatable-body').on('click', 'td.details-control', function () {
@@ -126,7 +127,7 @@ $(document).ready(function() {
             row.child( format(row.data()) ).show();
             tr.addClass('shown');
         }
-    } );
+    });
 
     $('#employee-datatable-body').on('click', 'td.delete-control', function () {
     	var tr = $(this).closest('tr');
@@ -148,21 +149,67 @@ $(document).ready(function() {
     	}).fail(function() {
     		alert("Ajax request failed.");
     	});
-    } );
+    });
+
+    $( "#employee-modal-form" ).submit(function( event ) {
+        event.preventDefault();
+
+        var $form = $( this );
+
+        $.ajax({
+            type: "POST",
+            url: employeeModal.url,
+            data: $form.serialize(),
+            beforeSend: function(xhr) {
+               xhr.setRequestHeader(header, token);
+           }
+        }).done(function(data) {
+            var error = data.error;
+            if (error == null) {
+                toggleSuccessAlert();
+                $("#employee-datatable").DataTable().ajax.reload();
+                $('#employee-modal').modal('hide');
+            } else {
+                $(".alert-danger").text(error);
+                toggleFailAlert();
+            }
+        }).fail(function(data) {
+            toggleFailAlert();
+        });
+    });
 });
+
+$(document).ready(function() {
+     // submit add/edit employee action
+
+});
+
 </script>
 
-<table id="employee-datatable" class="table table-hover table-bordered" cellspacing="0" width="100%">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Department</th>
-            <th></th>
-        </tr>
-    </thead>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">Employee Information</div>
+        <div class="panel-body">
+            <div>
+                <button class="btn btn-default" data-toggle="modal" data-target="#employee-modal" data-purpose="add">Add Employee</button>
+                <button class="btn btn-default">Add User account</button>
+            </div>
+            <hr>
+            <table id="employee-datatable" class="table table-hover table-bordered table-responsive" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Department</th>
+                        <th></th>
+                    </tr>
+                </thead>
 
-    <tbody id="employee-datatable-body">
-    </tbody>
-</table>
+                <tbody id="employee-datatable-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

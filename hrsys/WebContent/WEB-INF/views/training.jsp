@@ -106,7 +106,7 @@
 						<div class="form-group">
 							<label class="control-label col-sm-4" for="hour"> Hour: </label>
 							<div class="col-sm-6">
-								<input type="text" name="hour" class="form-control" required />
+								<input type="number" name="hour" class="form-control" required />
 							</div>
 						</div>
 					</div>

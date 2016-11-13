@@ -251,3 +251,30 @@ CREATE TABLE paychecks (
 INSERT INTO paychecks VALUES(1, "PC");
 INSERT INTO paychecks VALUES(2, "DD");
 INSERT INTO paychecks VALUES(3, "DD");
+
+-- ----------------------------
+-- Table structure for `employee_temp`
+-- ----------------------------
+DROP TABLE IF EXISTS employee_temp;
+CREATE TABLE employee_temp (
+  emt_employee_id INT NOT NULL,
+  emt_firstname varchar(100) DEFAULT NULL,
+  emt_lastname varchar(100) DEFAULT NULL,
+  emt_gender varchar(11) DEFAULT NULL,
+  emt_birth date DEFAULT NULL,
+  emt_ssn varchar(11) DEFAULT NULL UNIQUE,
+  emt_marriage varchar(20) DEFAULT NULL,
+  emt_nationality varchar(50) DEFAULT NULL,
+  emt_education varchar(20) DEFAULT NULL,
+  emt_enrollment_date date DEFAULT NULL,
+  emt_email varchar(50) DEFAULT NULL UNIQUE,
+  emt_position varchar(100) DEFAULT NULL,
+  emt_phone varchar(11) DEFAULT NULL UNIQUE,
+  emt_address varchar(200) DEFAULT NULL,
+  emt_comment text,
+  emt_department_id int DEFAULT NULL,
+  PRIMARY KEY (emt_employee_id),
+  CONSTRAINT FK_emp_empt FOREIGN KEY (emt_employee_id) REFERENCES employee(em_employee_id)
+  ON DELETE CASCADE
+  );
+

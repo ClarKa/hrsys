@@ -12,6 +12,7 @@ import org.hrsys.enums.Role;
 import org.hrsys.facades.AttendanceFacade;
 import org.hrsys.helpers.MetaAnnotations.EmployeeIdMatchOrIsAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class AttendanceServices {
     AttendanceManager attendanceManager;
 
     @Autowired
+    @Qualifier("employee")
     EmployeeManager employeeManager;
 
     private AttendanceFacade attendanceFacade = new AttendanceFacade();

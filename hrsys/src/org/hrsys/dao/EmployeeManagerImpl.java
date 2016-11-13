@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.hrsys.entity.*;
 
-@Repository
+@Repository(value="employee")
 @Transactional
 @SuppressWarnings("unchecked")
 public class EmployeeManagerImpl implements EmployeeManager {

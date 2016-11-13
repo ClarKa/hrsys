@@ -9,94 +9,80 @@ function toggleSuccessAlert() {
 }
 
 $(document).ready(function() {
-	var purpose;
 	var url;
-    var employeeId;
+
+    employeeModal = {
+        url: "",
+        _this: $("#employee-modal"),
+        show: function(e) {
+            // $("#employee-modal").modal();
+            var purpose = $(e.relatedTarget).data("purpose");
+            // populate employee data if editing
+            if (purpose == "edit") {
+                var employeeId = $(e.relatedTarget).data('employeeid');
+                this.url = employeeInfoUrl + "/" + employeeId;
+                employeeModal.fillInput(employeeId);
+            } else if (purpose == "add"){
+                this.url = employeeInfoUrl;
+            } else {
+                this.url = employeeInfoUrl + "/" + userEmployeeId;
+                employeeModal.fillInput();
+            }
+        },
+        hide: function(e) {
+            $(".alert-danger").hide();
+            $(".alert-success").hide();
+
+            $("#employee-modal").find("form")[0].reset();
+            $(".changed-input").removeClass("changed-input");
+        },
+        fillInput: function() {
+            $.ajax({
+                type: "GET",
+                url: this.url,
+            }).done(function(data) {
+                if(data.employeeID == null || data.emloyeeID == '') {
+                    alert("Employee entry no long exists");
+                    $("#employee-datatable").DataTable().ajax.reload();
+                }
+                $.each(data, function(key, value){
+                    $("#"+key).val(value);
+                });
+            }).fail(function(data) {
+                alert("Employee entry no longer exists.");
+            });
+        }
+    }
 
     // employee modal setup
     $(".alert-danger").hide();
     $(".alert-success").hide();
 
-    $("#employee-modal").on("show.bs.modal", function(e) {
-        var button = $(e.relatedTarget);
-        var purpose = button.data('purpose');
+    $("#employee-modal input, #employee-modal select").change(function(e) {
+        $(this).addClass("changed-input");
+    })
 
-    	// populate department list
-        $.ajax({
-            type: "GET",
-            url:"rest/department"
-        }).done(function(data) {
-            for (var key in data) {
-                var option = $("<option></option>").text(data[key].departmentName);
-                option.val(data[key].departmentID);
+    // populate department list
+    $.ajax({
+        type: "GET",
+        url:"rest/department"
+    }).done(function(data) {
+        for (var key in data) {
+            var option = $("<option></option>").text(data[key].departmentName);
+            option.val(data[key].departmentID);
 
-                $("#departmentID").append(option);
-            }
-        }).fail(function() {
-            alert("Ajax failed to fetch data");
-        });
-
-        // populate employee data if editing
-        if (purpose == "edit") {
-        	employeeId = button.data('employeeid');
-        	url = employeeInfoUrl + "/" + employeeId;
-
-        	$.ajax({
-        		type: "GET",
-        		url: url,
-        	}).done(function(data) {
-        		if(data.employeeID == null || data.emloyeeID == '') {
-        			alert("Employee entry no long exists");
-        			$("#employee-datatable").DataTable().ajax.reload();
-        		}
-
-        		$.each(data, function(key, value){
-                    $("#"+key).val(value);
-                });
-        	}).fail(function(data) {
-        		alert("Employee entry no longer exists.");
-        	});
-        } else {
-          url = employeeInfoUrl;
+            $("#departmentID").append(option);
         }
-
+    }).fail(function() {
+        alert("Ajax failed to fetch data");
     });
 
-    // clear modal after closing
+    $("#employee-modal").on("show.bs.modal", function(e) {
+        employeeModal.show(e);
+    });
+
     $("#employee-modal").on("hidden.bs.modal", function(e){
-        $(".alert-danger").hide();
-        $(".alert-success").hide();
-
-        $("#employee-modal").find("form")[0].reset();
-        $("#departmentID").children().remove();
-    });
-
-    // submit add/edit employee action
-    $( "#employee-modal-form" ).submit(function( event ) {
-        event.preventDefault();
-
-        var $form = $( this );
-
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: $form.serialize(),
-            beforeSend: function(xhr) {
-               xhr.setRequestHeader(header, token);
-           }
-        }).done(function(data) {
-            var error = data.error;
-            if (error == null) {
-                toggleSuccessAlert();
-                $("#employee-datatable").DataTable().ajax.reload();
-                $('#employee-modal').modal('hide');
-            } else {
-        	    $(".alert-danger").text(error);
-                toggleFailAlert();
-            }
-        }).fail(function(data) {
-            toggleFailAlert();
-        });
+        employeeModal.hide(e);
     });
 
     // datepicker setup

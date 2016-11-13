@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script src="<c:url value='/resources/js/employee-modal.js' />"></script>
 
     <div class="modal fade" id="employee-modal" tabindex="-1" role="dialog" aria-labelledby="employee-modal-label">
       <div class="modal-dialog" role="document">
@@ -9,7 +8,7 @@
             <h4 class="modal-title" id="employee-modal-label">Add Employee</h4>
           </div>
 
-          <form id="employee-modal-form" action="<c:url value='/rest/employee' />" class="form-horizontal" role="form">
+          <form id="employee-modal-form" class="form-horizontal" role="form">
               <div class="modal-body">
                 <div class="form-group">
                   <div class="alert alert-danger">

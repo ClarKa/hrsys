@@ -1,5 +1,22 @@
+/*Bootstrap responsive table for Firefox*/
+@-moz-document url-prefix() {
+  fieldset { display: table-cell; }
+}
+
 body {
 	padding-top: 70px;
+}
+
+a[href="#employee-table-tab"] {
+    border-left: 1px solid #d1d3d6;
+}
+
+input.changed-input {
+    background: url('../img/tag_green.png') no-repeat center right 5px;
+}
+
+select.changed-input {
+    background: url('../img/tag_green.png') no-repeat center right 15px;
 }
 
 .panel {
@@ -68,8 +85,9 @@ body {
 
 /* The side navigation menu */
 #side-open-icon {
-    margin-left: 10px;
-    padding: 15px;
+    position: fixed;
+    top: 65px;
+    right: 15px;
     font-size: 25px;
 }
 
@@ -79,7 +97,7 @@ body {
     position: fixed; /* Stay in place */
     z-index: 1; /* Stay on top */
     top: 0;
-    left: 0;
+    right: 0;
     background-color: #d1d3d6; /* gray */
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 50px; /* Place content 60px from the top */
@@ -108,14 +126,13 @@ body {
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
-    transition: margin-left .5s;
+    transition: margin-right .5s;
     padding: 10px;
+    clear: left;
 }
 
 #sideSearchInput {
-    background-image: url('/css/searchicon.png'); /* Add a search icon to input */
-    background-position: 10px 12px; /* Position the search icon */
-    background-repeat: no-repeat; /* Do not repeat the icon image */
+    background: url('../img/search.png') no-repeat center left 5px; /* Add a search icon to input */
     width: 100%; /* Full-width */
     font-size: 16px; /* Increase font-size */
     padding: 12px 20px 12px 40px; /* Add some padding */
@@ -156,7 +173,53 @@ body {
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
+@media screen and (max-width: 800px) {
 /*    .sidenav {padding-top: 15px;}*/
     #sideUl li a {font-size: 12px;}
+}
+
+@media screen and (max-width: 1450px) {
+/*    .sidenav {padding-top: 15px;}*/
+    .card {position: static !important; margin: auto;}
+}
+
+.card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width:92%;
+    max-width:125px;
+    position: fixed;
+    top: 50px;
+    left: 15px;
+    margin: 15px auto;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+    padding: 2px 16px;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px; /* 5px rounded corners */
+}
+
+.card-text {
+    padding: 10px;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+
+
+/* Add rounded corners to the top left and the top right corner of the image */
+img {
+    border-radius: 5px 5px 0 0;
 }
