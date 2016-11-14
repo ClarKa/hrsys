@@ -24,6 +24,8 @@
 	<script src="<c:url value='/resources/jquery/jquery-ui-1.12.1.custom/jquery-ui.js' />"></script>
 	<script src="<c:url value='/resources/bootstrap/js/bootstrap.min.js' />"></script>
 	<script src="<c:url value='/resources/js/bootstrap-formhelpers.min.js' />"></script>
+	<script src="<c:url value='/resources/js/employee-modal.js' />"></script>
+
 	<sec:authorize access="isAuthenticated()">
         <sec:authorize access="hasRole('ADMIN')" var="isAdmin" />
         <sec:authorize access="hasRole('USER')" var="isUser" />
@@ -229,13 +231,14 @@
 		</nav>
 
 		<sec:authorize access="isAuthenticated()">
+		<jsp:include page="employee_modal.jsp" />
 		<div class="tab-content">
 			<div id="welcome-tab" class="tab-pane fade in active">
 				<jsp:include page="welcome.jsp" />
 			</div>
 
 			<div id="employee-info-tab" class="tab-pane fade">
-				<jsp:include page="employee_info.jsp" />
+				<jsp:include page="user_employee_info.jsp" />
 			</div>
 
 			<div id="attendance-tab" class="tab-pane fade">
