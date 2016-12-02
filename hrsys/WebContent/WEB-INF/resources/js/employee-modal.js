@@ -14,9 +14,11 @@ $(document).ready(function() {
     employeeModal = {
         url: "",
         _this: $("#employee-modal"),
+        action: "",
         show: function(e) {
             // $("#employee-modal").modal();
             var purpose = $(e.relatedTarget).data("purpose");
+            this.action = purpose;
             // populate employee data if editing
             if (purpose == "edit") {
                 var employeeId = $(e.relatedTarget).data('employeeid');
@@ -51,6 +53,49 @@ $(document).ready(function() {
             }).fail(function(data) {
                 alert("Employee entry no longer exists.");
             });
+        },
+        submitForm: function() {
+            var $form = $( "#employee-modal-form" );
+            if (this.action == "" || this.action == null) {
+                $.ajax({
+                    type: "POST",
+                    url: "rest/temp/" + selectedEmployee.employeeID,
+                    data: $(".changed-input", $form).serialize(),
+                    beforeSend: function(xhr) {
+                       xhr.setRequestHeader(header, token);
+                    }
+                }).done(function(data) {
+                    if (data.error == null) {
+                        $('#employee-modal').modal('hide');
+                        renderRequest(data, selectedEmployee);
+                    } else {
+                        alert(data.error);
+                    }
+                }).fail(function(data) {
+                    alert("Ajax failed to fetch data");
+                });
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: this.url,
+                    data: $form.serialize(),
+                    beforeSend: function(xhr) {
+                       xhr.setRequestHeader(header, token);
+                   }
+                }).done(function(data) {
+                    var error = data.error;
+                    if (error == null) {
+                        toggleSuccessAlert();
+                        $("#employee-datatable").DataTable().ajax.reload();
+                        $('#employee-modal').modal('hide');
+                    } else {
+                        $(".alert-danger").text(error);
+                        toggleFailAlert();
+                    }
+                }).fail(function(data) {
+                    toggleFailAlert();
+                });
+            }
         }
     }
 

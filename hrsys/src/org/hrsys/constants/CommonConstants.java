@@ -13,4 +13,5 @@ public class CommonConstants {
     public static final String CANNOT_UPDATE_APPROVED_TRAINING_RECORDS = "Cannot change approved training records.";
     public static final String NO_CHANGE = "No change has been made. Request has not been submitted.";
     public static final String REQUEST_ALREADY_EXISTS = "There is still a pending request waiting for processing. Please cancel the current request before submitting a new request.";
+    public static final String DEFAULT_PASSWORD = "changeme";
 }

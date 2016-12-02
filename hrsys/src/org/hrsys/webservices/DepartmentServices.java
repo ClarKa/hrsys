@@ -6,10 +6,8 @@ import org.hrsys.constants.ServicePaths;
 import org.hrsys.dao.DepartmentManager;
 import org.hrsys.dao.EmployeeManager;
 import org.hrsys.entity.Department;
-import org.hrsys.helpers.MetaAnnotations.IsAdmin;
 import org.hrsys.helpers.MetaAnnotations.IsAuthenticated;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,12 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = ServicePaths.GET_DEPARTMENT_PATH)
 public class DepartmentServices {
     @Autowired
-    @Qualifier("employee")
     EmployeeManager empManager;
 
     @Autowired
     DepartmentManager departmentManager;
-    
+
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     @IsAuthenticated
     public List<Department> getAllDepartment() {

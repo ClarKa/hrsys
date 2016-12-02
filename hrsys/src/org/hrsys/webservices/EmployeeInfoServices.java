@@ -1,15 +1,17 @@
 package org.hrsys.webservices;
 
+import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.hrsys.dao.DepartmentManager;
 import org.hrsys.dao.EmployeeManager;
@@ -23,9 +25,8 @@ import org.hrsys.constants.ServicePaths;
 @RequestMapping(value = ServicePaths.GET_EMPLOYEE_PATH)
 public class EmployeeInfoServices {
     private EmployeeInfoFacade employeeInfoFacade = new EmployeeInfoFacade();
-    
+
     @Autowired
-    @Qualifier("employee")
     EmployeeManager employeeManager;
 
     @Autowired
@@ -33,8 +34,8 @@ public class EmployeeInfoServices {
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     @IsAdmin
-    public List<EmployeeDTO> getAllEmployees() {
-        return employeeInfoFacade.getAllEmployees(employeeManager);
+    public List<EmployeeDTO> getEmployees(@RequestParam HashMap<String, Object> filters) throws ParseException {
+        return employeeInfoFacade.getEmployees(employeeManager, filters);
     }
 
     @RequestMapping(value = "/{employeeid}", method = RequestMethod.GET, produces = "application/json")
@@ -52,13 +53,13 @@ public class EmployeeInfoServices {
         }
         return employeeInfoFacade.createEmployee(employeeDto, employeeManager);
     }
-    
+
     @RequestMapping(value =  "/{employeeid}", method = RequestMethod.DELETE, produces = "application/json")
     @IsAdmin
     public EmployeeDTO deleteOneEmployee(@PathVariable("employeeid") int employeeID) {
         return employeeInfoFacade.deleteOneEmployee(employeeID, employeeManager);
     }
-    
+
     @RequestMapping(value = "/{employeeid}", method = RequestMethod.POST, produces = "application/json")
     @IsAdmin
     public EmployeeDTO updateOneEmployee(@Valid EmployeeDTO employeeDto, BindingResult result, @PathVariable("employeeid") int employeeID) {

@@ -80,11 +80,36 @@ function format ( d ) {
     '</table>';
 }
 
+function getEmployeeHasNoAccount() {
+    $.ajax({
+        type: "GET",
+        url:  employeeInfoUrl,
+        data: {"hasAccount": false}
+    }).done(function(data) {
+        // if (data.error == null) {
+        //     $('#activate-account-modal').modal('hide');
+        //     $("#employee-datatable").DataTable().ajax.reload();
+        // } else {
+        //     alert(data.error);
+        // }
+        if (data.length == 0 || data == null) {
+
+        } else {
+            $.each(data, function(key, value) {
+                var $option = $("<option></option>").text(value.firstname + " " + value.lastname);
+                $option.val(value.employeeID);
+                $("#employee-need-account").prepend($option);
+            });
+        }
+    }).fail(function(data) {
+        alert("Ajax failed to fetch data");
+    });
+}
 $(document).ready(function() {
 
     var table = $('#employee-datatable').DataTable( {
     	"ajax": {
-    	    "url": "rest/employee",
+    	    "url": employeeInfoUrl,
     	    "dataSrc": ""
     	},
     	"rowId": "employeeID",
@@ -151,39 +176,36 @@ $(document).ready(function() {
     	});
     });
 
+    getEmployeeHasNoAccount();
+
     $( "#employee-modal-form" ).submit(function( event ) {
         event.preventDefault();
+        employeeModal.submitForm();
+    });
 
+    $( "#activate-account-form" ).submit(function( event ) {
+        event.preventDefault();
         var $form = $( this );
+        var $id = $("select", $form).val();
+        console.log($id);
 
-        $.ajax({
-            type: "POST",
-            url: employeeModal.url,
-            data: $form.serialize(),
-            beforeSend: function(xhr) {
-               xhr.setRequestHeader(header, token);
-           }
-        }).done(function(data) {
-            var error = data.error;
-            if (error == null) {
-                toggleSuccessAlert();
-                $("#employee-datatable").DataTable().ajax.reload();
-                $('#employee-modal').modal('hide');
-            } else {
-                $(".alert-danger").text(error);
-                toggleFailAlert();
-            }
-        }).fail(function(data) {
-            toggleFailAlert();
-        });
+        // $.ajax({
+        //     type: "POST",
+        //     url: "rest/account" + "/" + ,
+        //     beforeSend: function(xhr) {
+        //         xhr.setRequestHeader(header, token);
+        //     }
+        // }).done(function(data) {
+        //     if (data.error == null) {
+        //         row.remove().draw( false );
+        //     } else {
+        //         alert("Delete fail!");
+        //     }
+        // }).fail(function() {
+        //     alert("Ajax request failed.");
+        // });
     });
 });
-
-$(document).ready(function() {
-     // submit add/edit employee action
-
-});
-
 </script>
 
 <div class="container">
@@ -192,7 +214,7 @@ $(document).ready(function() {
         <div class="panel-body">
             <div>
                 <button class="btn btn-default" data-toggle="modal" data-target="#employee-modal" data-purpose="add">Add Employee</button>
-                <button class="btn btn-default">Add User account</button>
+                <button class="btn btn-default" data-toggle="modal" data-target="#activate-account-modal">Activate User account</button>
             </div>
             <hr>
             <table id="employee-datatable" class="table table-hover table-bordered table-responsive" cellspacing="0" width="100%">
@@ -209,6 +231,41 @@ $(document).ready(function() {
                 <tbody id="employee-datatable-body">
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="activate-account-modal" tabindex="-1" role="dialog" aria-labelledby="activate-account-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="employee-modal-label">Activate account for employee</h4>
+                </div>
+
+                <form id="activate-account-form" class="form-horizontal" role="form">
+                    <div class="modal-body">
+                        <div class="form-group">
+                        <label class="control-label col-sm-5" for="role">  Select Employee: </label>
+                            <div class="col-sm-6">
+                                <select name="employeeId" class="form-control" id="employee-need-account">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-5" for="role"> Account Privilege </label>
+                            <div class="col-sm-6">
+                                <label class="radio-inline"> <input type="radio" name="role" value="ADMIN"> Administrator
+                                </label> <label class="radio-inline"> <input type="radio" name="role" value="USER"> User
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Activate"></input>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

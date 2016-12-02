@@ -17,7 +17,7 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public void createUser(CustomUser user) throws SQLException {
-
+        mgr.persist(user);
     }
 
     @Override

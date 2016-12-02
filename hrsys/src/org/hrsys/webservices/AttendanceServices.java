@@ -8,11 +8,10 @@ import org.hrsys.dao.AttendanceManager;
 import org.hrsys.dao.EmployeeManager;
 import org.hrsys.dto.AttendanceDTO;
 import org.hrsys.dto.UserDTO;
-import org.hrsys.enums.Role;
+import org.hrsys.enums.RoleEnum;
 import org.hrsys.facades.AttendanceFacade;
 import org.hrsys.helpers.MetaAnnotations.EmployeeIdMatchOrIsAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +25,6 @@ public class AttendanceServices {
     AttendanceManager attendanceManager;
 
     @Autowired
-    @Qualifier("employee")
     EmployeeManager employeeManager;
 
     private AttendanceFacade attendanceFacade = new AttendanceFacade();
@@ -43,7 +41,7 @@ public class AttendanceServices {
     @RequestMapping(value = ServicePaths.GET_ONE_EMPLOYEE_PATH + "/{employeeid}"
             + "/{date}", method = RequestMethod.GET, produces = "application/json")
     @EmployeeIdMatchOrIsAdmin
-    public AttendanceDTO getOneEmployeeAttendance(
+    public AttendanceDTO getAttendanceForDate(
             @PathVariable("employeeid") int employeeID,
             @PathVariable("date") Date date) {
         return attendanceFacade.getAttendanceForDate(employeeID, date,
@@ -63,7 +61,7 @@ public class AttendanceServices {
         UserDTO userDto = (UserDTO) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
         String roleText = userDto.getAuthorities().toArray()[0].toString();
-        if (roleText.equals(Role.ADMIN.getDescription())
+        if (roleText.equals(RoleEnum.ADMIN.getDescription())
                 || employeeID == userDto.getEmployeeID()) {
             return true;
         } else {

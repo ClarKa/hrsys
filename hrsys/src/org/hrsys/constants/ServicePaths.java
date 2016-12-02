@@ -16,4 +16,5 @@ public class ServicePaths {
     public final static String GET_BANK_INFO_PATH = "/rest/bank";
     public final static String GET_PAYCHECKS_PATH = "/rest/paychecks";
     public final static String GET_ALL_REST_URLS_PATH = "/rest/urls";
+    public final static String GET_ACCOUNT_PATH = "/rest/account";
 }

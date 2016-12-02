@@ -49,26 +49,26 @@ $(document).ready(function() {
     // submit modal form
     $( "#employee-modal-form" ).submit(function( event ) {
         event.preventDefault();
+        employeeModal.submitForm();
+        // var $form = $( this );
 
-        var $form = $( this );
-
-        $.ajax({
-            type: "POST",
-            url: "rest/temp/" + selectedEmployee.employeeID,
-            data: $(".changed-input", $form).serialize(),
-            beforeSend: function(xhr) {
-               xhr.setRequestHeader(header, token);
-            }
-        }).done(function(data) {
-            if (data.error == null) {
-                $('#employee-modal').modal('hide');
-                renderRequest(data, selectedEmployee);
-            } else {
-                alert(data.error);
-            }
-        }).fail(function(data) {
-            alert("Ajax failed to fetch data");
-        });
+        // $.ajax({
+        //     type: "POST",
+        //     url: "rest/temp/" + selectedEmployee.employeeID,
+        //     data: $(".changed-input", $form).serialize(),
+        //     beforeSend: function(xhr) {
+        //        xhr.setRequestHeader(header, token);
+        //     }
+        // }).done(function(data) {
+        //     if (data.error == null) {
+        //         $('#employee-modal').modal('hide');
+        //         renderRequest(data, selectedEmployee);
+        //     } else {
+        //         alert(data.error);
+        //     }
+        // }).fail(function(data) {
+        //     alert("Ajax failed to fetch data");
+        // });
     });
 
     // Cancel request

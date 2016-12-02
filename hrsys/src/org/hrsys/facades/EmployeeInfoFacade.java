@@ -1,8 +1,14 @@
 package org.hrsys.facades;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.hrsys.dao.EmployeeManager;
@@ -18,13 +24,41 @@ public class EmployeeInfoFacade {
         return employeeDto;
     }
 
-    public List<EmployeeDTO> getAllEmployees(EmployeeManager employeeManager) {
-        List<Employee> employees= employeeManager.getAllEmployee();
-        List<EmployeeDTO> employeesDto = new ArrayList<>();
-        for (Employee employee : employees) {
-            employeesDto.add(new EmployeeDTO(employee));
+    public List<EmployeeDTO> getEmployees(EmployeeManager employeeManager, HashMap<String, Object> filters) throws ParseException {
+        List<Employee> employees;
+        if (!filters.isEmpty()) {
+            for (Entry<String, Object> entry : filters.entrySet()) {
+                String key = entry.getKey();
+                
+                // work with bootstrap data table;
+                if (key.equals("_")) {
+                    filters.remove(key);
+                } else if (key == null || key.matches("[^a-zA-Z]")) {
+                    return null;
+                }
+                
+                if (key.equals("birth") || key.equals("enrollmentDate")) {
+                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                    java.util.Date date = dateFormat.parse(entry.getValue().toString());
+                    Date sqlDate = new Date(date.getTime());
+                    entry.setValue(sqlDate);
+                }
+            }
+            
+            try {
+                employees = employeeManager.getFiltered(filters);
+            } catch (Exception e) {
+                return null;
+            }
+        } else {
+            employees = employeeManager.getAllEmployee();
         }
-        return employeesDto;
+        
+        List<EmployeeDTO> employeeDtos = new ArrayList<>();
+        for (Employee employee : employees) {
+            employeeDtos.add(new EmployeeDTO(employee));
+        }
+        return employeeDtos;
     }
 
     public EmployeeDTO createEmployee(EmployeeDTO employeeDto, EmployeeManager employeeManager) {
