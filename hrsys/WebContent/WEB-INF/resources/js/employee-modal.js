@@ -72,7 +72,7 @@ $(document).ready(function() {
                         alert(data.error);
                     }
                 }).fail(function(data) {
-                    alert("Ajax failed to fetch data");
+                    alert("Ajax failed to fetch data.");
                 });
             } else {
                 $.ajax({

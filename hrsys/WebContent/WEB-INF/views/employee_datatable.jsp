@@ -95,6 +95,7 @@ function getEmployeeHasNoAccount() {
         if (data.length == 0 || data == null) {
 
         } else {
+            $("#employee-need-account").empty();
             $.each(data, function(key, value) {
                 var $option = $("<option></option>").text(value.firstname + " " + value.lastname);
                 $option.val(value.employeeID);
@@ -176,7 +177,9 @@ $(document).ready(function() {
     	});
     });
 
-    getEmployeeHasNoAccount();
+    $( '#activate-account-modal' ).on("show.bs.modal", function(e) {
+        getEmployeeHasNoAccount();
+    });
 
     $( "#employee-modal-form" ).submit(function( event ) {
         event.preventDefault();
@@ -187,23 +190,26 @@ $(document).ready(function() {
         event.preventDefault();
         var $form = $( this );
         var $id = $("select", $form).val();
-        console.log($id);
 
-        // $.ajax({
-        //     type: "POST",
-        //     url: "rest/account" + "/" + ,
-        //     beforeSend: function(xhr) {
-        //         xhr.setRequestHeader(header, token);
-        //     }
-        // }).done(function(data) {
-        //     if (data.error == null) {
-        //         row.remove().draw( false );
-        //     } else {
-        //         alert("Delete fail!");
-        //     }
-        // }).fail(function() {
-        //     alert("Ajax request failed.");
-        // });
+        $.ajax({
+            type: "POST",
+            url: "rest/account/" + $id,
+            data: $form.serialize(),
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            }
+        }).done(function(data) {
+            if (data == null) {
+                alert("Employee has already been assigned an account!");
+            } else {
+                alert("Activate account success. username is " + data.username + " and initial password is " + data.password);
+                $( "#activate-account-modal" ).modal('hide');
+                $( "#employee-datatable" ).DataTable().ajax.reload();
+            }
+        }).fail(function(data) {
+            console.log(data);
+            alert("Activate account request failed.");
+        });
     });
 });
 </script>
@@ -254,8 +260,9 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="role"> Account Privilege </label>
                             <div class="col-sm-6">
-                                <label class="radio-inline"> <input type="radio" name="role" value="ADMIN"> Administrator
-                                </label> <label class="radio-inline"> <input type="radio" name="role" value="USER"> User
+                                <label class="radio-inline"> <input type="radio" name="role" value="1"> User
+                                </label>
+                                <label class="radio-inline"> <input type="radio" name="role" value="2"> Administrator
                                 </label>
                             </div>
                         </div>
@@ -263,6 +270,7 @@ $(document).ready(function() {
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <input type="submit" class="btn btn-primary" value="Activate"></input>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     </div>
                 </form>
             </div>

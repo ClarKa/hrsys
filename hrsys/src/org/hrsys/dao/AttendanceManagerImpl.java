@@ -76,8 +76,8 @@ public class AttendanceManagerImpl implements AttendanceManager {
                 result.setInTime(attendance.getInTime());
             case CommonConstants.ATTENDANCE_SET_OUT_TIME_CODE:
                 result.setOutTime(attendance.getOutTime());
-            case CommonConstants.ATTENDANCE_SET_COMMENT_CODE:
-                result.setComment(attendance.getComment());
+            case CommonConstants.ATTENDANCE_SET_STATUS_CODE:
+                result.setStatus(attendance.getStatus());
             default:
                 ;
          }

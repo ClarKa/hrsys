@@ -1,7 +1,7 @@
 package org.hrsys.enums;
 
 public enum AttendanceStatus {
-    Late(1, "Late"), Normal(2, "Normal"), Early_Leave(3, "Leave Early"), Absence(4, "Absence");
+    Normal(1, "Normal"), LESS_HOURS(2, "Less Hours"), OVERTIME(3, "Overtime"); 
     
     private final int id;
     private final String description;

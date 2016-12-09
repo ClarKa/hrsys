@@ -1,7 +1,5 @@
 package org.hrsys.webservices;
 
-import java.sql.SQLException;
-
 import org.hrsys.constants.CommonConstants;
 import org.hrsys.constants.ServicePaths;
 import org.hrsys.dao.EmployeeManager;
@@ -29,12 +27,11 @@ public class AccountServices {
     
     @RequestMapping(value =  "/{employeeid}", method = RequestMethod.POST, produces = "application/json")
     @IsAdmin
-    public String activateAccount(@PathVariable int employeeId, @RequestParam RoleEnum roleEnum) {
+    public CustomUser activateAccount(@PathVariable("employeeid") int employeeId, @RequestParam(value = "role", required = true) int roleId) {
+        RoleEnum roleEnum = RoleEnum.byId(roleId);
         Employee employee = employeeManager.getOneEmployee(employeeId);
-        if (employee == null) {
-            return "No such employee in profile.";
-        } else if (employee.getUser() != null) {
-            return "Employee already has an active account.";
+        if (employee == null || employee.getUser() != null) {
+            return null;
         } else {
             CustomUser user = new CustomUser();
             Role role = new Role();
@@ -48,11 +45,11 @@ public class AccountServices {
             
             try {
                 userManager.createUser(user);
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                return null;
             }
-            return "";
+            return user;
         }
     }
 }

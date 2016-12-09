@@ -66,6 +66,9 @@ public class EmployeeInfoFacade {
 
         try {
             employeeManager.createEmployee(employee);
+        } catch (SQLException e) {
+            employeeDto.setError(e.getLocalizedMessage());
+            return employeeDto;
         } catch (Exception e) {
             employeeDto.setError(ExceptionUtils.getRootCause(e).getLocalizedMessage());
             return employeeDto;

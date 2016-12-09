@@ -1,9 +1,3 @@
-/*
-* @Author: kaifu
-* @Date:   2016-03-16 14:28:56
-* @Last Modified by:   kaifu
-* @Last Modified time: 2016-03-24 14:53:30
-*/
 package org.hrsys.dao;
 
 import java.util.List;
@@ -105,7 +99,7 @@ public class EmployeeManagerImpl implements EmployeeManager {
                 cQuery.where(cb.equal(emp.get(entry.getKey()), entry.getValue()));
             }
         }
-        
+
         TypedQuery<Employee> tq = mgr.createQuery(cQuery);
         List<Employee> results = tq.getResultList();
         return results;

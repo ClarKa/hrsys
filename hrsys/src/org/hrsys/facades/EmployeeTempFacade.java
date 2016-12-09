@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.beanutils.PropertyUtilsBean;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.hrsys.constants.CommonConstants;
 import org.hrsys.dao.EmployeeManager;
 import org.hrsys.dao.EmployeeTempManager;
@@ -118,9 +119,20 @@ public class EmployeeTempFacade {
                 propUtils.setProperty(emp, propName, newProp);
             }
         }
-
-        employeeManager.updateOneEmployee(employeeId, emp);
+        
+        EmployeeTempDTO employeeTempDto = new EmployeeTempDTO();
+        
+        try {
+            employeeManager.updateOneEmployee(employeeId, emp);
+        } catch (SQLException e) {
+            employeeTempDto.setError(e.getLocalizedMessage());
+            return employeeTempDto;
+        } catch (Exception e) {
+            employeeTempDto.setError(ExceptionUtils.getRootCause(e).getLocalizedMessage());
+            return employeeTempDto;
+        }
+        
         employeeTempManager.deleteOneRequest(employeeId);
-        return null;
+        return employeeTempDto;
     }
 }

@@ -2,8 +2,12 @@ package org.hrsys.facades;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.hrsys.constants.CommonConstants;
 import org.hrsys.dao.AttendanceManager;
@@ -11,6 +15,7 @@ import org.hrsys.dao.EmployeeManager;
 import org.hrsys.dto.AttendanceDTO;
 import org.hrsys.entity.Attendance;
 import org.hrsys.entity.Employee;
+import org.hrsys.enums.AttendanceStatus;
 
 public class AttendanceFacade {
     public List<AttendanceDTO> getOneEmployeeAttendance(int employeeID,
@@ -45,7 +50,7 @@ public class AttendanceFacade {
 
     public AttendanceDTO createAttendance(int employeeID,
             AttendanceManager attendanceManager,
-            EmployeeManager employeeManager) {
+            EmployeeManager employeeManager) throws ParseException {
         if (employeeID == 0) {
             AttendanceDTO attendanceDto = new AttendanceDTO();
             attendanceDto.setError(
@@ -60,6 +65,7 @@ public class AttendanceFacade {
         Employee employee = employeeManager.getOneEmployee(employeeID);
         AttendanceDTO attendanceDto = null;
 
+        // Record in time.
         if (attendance == null) {
             Attendance newAttendance = new Attendance();
             newAttendance.setEmployeeID(employeeID);
@@ -74,16 +80,35 @@ public class AttendanceFacade {
                 attendanceDto.setError(e.getMessage());
             }
         } else {
+            // Record out time.
             if (attendance.getOutTime() == null) {
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+                java.util.Date date1 = format.parse(attendance.getInTime().toString());
+                java.util.Date date2 = format.parse(time.toString());
+                long difference = date2.getTime() - date1.getTime(); 
+                
+                long normalHour = CommonConstants.NORMAL_WORK_HOUR_IN_MS;
+                
                 Attendance newAttendance = new Attendance();
                 newAttendance.setEmployeeID(employeeID);
                 newAttendance.setDate(date);
                 newAttendance.setOutTime(time);
+                
+                if (difference > normalHour) {
+                    newAttendance.setStatus(AttendanceStatus.OVERTIME.getDescription());
+                } else if (difference < normalHour) {
+                    newAttendance.setStatus(AttendanceStatus.LESS_HOURS.getDescription());
+                } else {
+                    newAttendance.setStatus(AttendanceStatus.Normal.getDescription());
+                }
+                
                 attendanceDto = new AttendanceDTO(newAttendance, employee);
-
+                
                 try {
                     attendanceManager.updateAttendanceForDate(newAttendance,
                             CommonConstants.ATTENDANCE_SET_OUT_TIME_CODE);
+                    attendanceManager.updateAttendanceForDate(newAttendance,
+                            CommonConstants.ATTENDANCE_SET_STATUS_CODE);
                 } catch (Exception e) {
                     attendanceDto.setError(e.getMessage());
                 }

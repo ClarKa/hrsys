@@ -88,9 +88,9 @@ CREATE TABLE employee (
   ON DELETE SET NULL
   );
 
-INSERT INTO employee VALUES (null, 'Kaifu', 'Wang', 'Male', '1991-10-08', '123-45-4446', 'Married', 'CN', 'Master', '2014-03-03', 'kaifuww@gmail.com', 'Developer', '4129999999', 'pittsburgh', null, 03);
-INSERT INTO employee VALUES (null, 'Zac', 'Zhou', 'Male', '1991-01-08', '123-45-5556', 'Married', 'CN', 'Master', '2016-03-03', 'kaifuw@gmail.com', 'Developer', '4129999899', 'pittsburgh', null, 02);
-INSERT INTO employee VALUES (null, 'Menglei', 'Zhang', 'Male', '1991-09-25', '123-45-5557', 'Single', 'CN', 'Bachelor', '2015-04-03', 'mengleizhangm@gmail.com', 'Developer', '2134445559', 'Connecticut', null, 02);
+INSERT INTO employee VALUES (null, 'Menglei', 'Zhang', 'Female', '1991-09-25', '123-45-5557', 'Single', 'CN', 'Bachelor', '2015-04-03', 'mengleizhangm@gmail.com', 'Developer', '2134445559', 'Connecticut', null, 02);
+INSERT INTO employee VALUES (null, 'Kevin', 'Wang', 'Male', '1991-10-08', '123-45-4446', 'Married', 'CN', 'Master', '2014-03-03', 'kaifuww@gmail.com', 'Developer', '4129999999', 'Pittsburgh', null, 03);
+INSERT INTO employee VALUES (null, 'Zac', 'Zhou', 'Male', '1991-01-08', '123-45-5556', 'Married', 'CN', 'Master', '2016-03-03', 'mengleizhangm123@gmail.com', 'Developer', '4129999899', 'Pittsburgh', null, 02);
 
 
 -- ----------------------------
@@ -111,27 +111,27 @@ CREATE TABLE attendance (
 
 INSERT INTO attendance VALUES(1, DATE("2015-9-11"), TIME("08:00:00"), TIME("19:00:00"), "Normal", "");
 INSERT INTO attendance VALUES(1, DATE("2015-9-12"), TIME("09:00:00"), TIME("19:00:00"), "Normal", "");
-INSERT INTO attendance VALUES(1, DATE("2015-9-13"), TIME("10:00:00"), TIME("19:00:00"), "Late", "Im sick");
+INSERT INTO attendance VALUES(1, DATE("2015-9-13"), TIME("10:00:00"), TIME("19:00:00"), "Less Hours", "Sick");
 INSERT INTO attendance VALUES(1, DATE("2015-9-14"), TIME("09:00:00"), TIME("19:00:00"), "Normal", "");
 INSERT INTO attendance VALUES(1, DATE("2015-9-15"), TIME("08:00:00"), TIME("19:00:00"), "Normal", "");
-INSERT INTO attendance VALUES(1, DATE("2015-9-16"), TIME("08:30:00"), TIME("15:00:00"), "Early Leave", "Period");
+INSERT INTO attendance VALUES(1, DATE("2015-9-16"), TIME("08:30:00"), TIME("15:00:00"), "Less Hours", "Period");
 INSERT INTO attendance VALUES(1, DATE("2015-9-17"), TIME("08:20:00"), TIME("19:00:00"), "Normal", "");
 INSERT INTO attendance VALUES(1, DATE("2015-9-18"), TIME("08:00:00"), TIME("19:00:00"), "Normal", "");
 INSERT INTO attendance VALUES(1, DATE("2015-9-19"), TIME("08:00:00"), TIME("19:00:00"), "Normal", "");
-INSERT INTO attendance VALUES(1, DATE("2015-9-20"), TIME("08:10:00"), TIME("12:00:00"), "Early Leave", "waichu");
+INSERT INTO attendance VALUES(1, DATE("2015-9-20"), TIME("08:10:00"), TIME("12:00:00"), "Less Hours", "waichu");
 INSERT INTO attendance VALUES(1, DATE("2015-9-21"), null, null, "absence", "Im the boss");
 
-INSERT INTO attendance VALUES(2, DATE("2016-9-11"), NOW(), NOW(), "Absence", "blah");
-INSERT INTO attendance VALUES(1, DATE("2016-9-11"), TIME("08:00:00"), TIME("19:00:00"), "Normal", "");
-INSERT INTO attendance VALUES(1, DATE("2016-9-12"), TIME("09:00:00"), TIME("19:00:00"), "Normal", "");
-INSERT INTO attendance VALUES(1, DATE("2016-9-13"), TIME("10:00:00"), TIME("19:00:00"), "Late", "rain");
-INSERT INTO attendance VALUES(1, DATE("2016-9-14"), TIME("09:00:00"), TIME("19:00:00"), "Normal", "");
-INSERT INTO attendance VALUES(1, DATE("2016-9-15"), TIME("08:00:00"), TIME("19:00:00"), "Normal", "");
-INSERT INTO attendance VALUES(1, DATE("2016-9-16"), TIME("08:30:00"), TIME("15:00:00"), "Early Leave", "good");
-INSERT INTO attendance VALUES(1, DATE("2016-9-17"), TIME("08:20:00"), TIME("19:00:00"), "Normal", "");
-INSERT INTO attendance VALUES(1, DATE("2016-9-18"), TIME("08:00:00"), TIME("19:00:00"), "Normal", "");
-INSERT INTO attendance VALUES(1, DATE("2016-9-19"), TIME("08:00:00"), TIME("19:00:00"), "Normal", "");
-INSERT INTO attendance VALUES(1, DATE("2016-9-20"), TIME("08:10:00"), TIME("12:00:00"), "Early Leave", "Im the boss too");
+INSERT INTO attendance VALUES(2, DATE("2016-9-10"), NOW(), NOW(), "Absence", "blah");
+INSERT INTO attendance VALUES(2, DATE("2016-9-11"), TIME("08:00:00"), TIME("19:00:00"), "Overtime", "");
+INSERT INTO attendance VALUES(2, DATE("2016-9-12"), TIME("09:00:00"), TIME("19:00:00"), "Overtime", "");
+INSERT INTO attendance VALUES(2, DATE("2016-9-13"), TIME("10:00:00"), TIME("16:00:00"), "Late", "rain");
+INSERT INTO attendance VALUES(2, DATE("2016-9-14"), TIME("09:00:00"), TIME("17:00:00"), "Normal", "");
+INSERT INTO attendance VALUES(2, DATE("2016-9-15"), TIME("08:00:00"), TIME("16:00:00"), "Normal", "");
+INSERT INTO attendance VALUES(2, DATE("2016-9-16"), TIME("08:30:00"), TIME("16:00:00"), "Less Hours", "good");
+INSERT INTO attendance VALUES(2, DATE("2016-9-17"), TIME("08:20:00"), TIME("16:00:00"), "Normal", "");
+INSERT INTO attendance VALUES(2, DATE("2016-9-18"), TIME("08:00:00"), TIME("16:00:00"), "Normal", "");
+INSERT INTO attendance VALUES(2, DATE("2016-9-19"), TIME("08:00:00"), TIME("16:00:00"), "Normal", "");
+INSERT INTO attendance VALUES(2, DATE("2016-9-20"), TIME("08:10:00"), TIME("12:00:00"), "Less Hours", "Im the boss");
 
 -- ----------------------------
 -- Table structure for `Training`

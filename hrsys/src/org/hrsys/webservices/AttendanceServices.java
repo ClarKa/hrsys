@@ -1,6 +1,7 @@
 package org.hrsys.webservices;
 
 import java.sql.Date;
+import java.text.ParseException;
 import java.util.List;
 
 import org.hrsys.constants.ServicePaths;
@@ -52,7 +53,7 @@ public class AttendanceServices {
             + "/{employeeid}", method = RequestMethod.POST, produces = "application/json")
     @EmployeeIdMatchOrIsAdmin
     public AttendanceDTO createAttendance(
-            @PathVariable("employeeid") int employeeID) {
+            @PathVariable("employeeid") int employeeID) throws ParseException {
         return attendanceFacade.createAttendance(employeeID, attendanceManager,
                 employeeManager);
     }
