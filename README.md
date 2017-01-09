@@ -1,7 +1,11 @@
 # hrsys
 
-TO DO:
+Human Resources System based on SpringMVC and Hibernate.
 
-1. More strict input check.
+Features: 
 
-2. Make database field into enums if necessary.
+• Admin panel to manager all users.
+• Employee Info management panel.
+• Attendance record panel.
+• Training record panel.
+• Paychecks & Bank Account Info panel.
