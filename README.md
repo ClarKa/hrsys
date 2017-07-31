@@ -13,3 +13,9 @@ Features:
 • Training record panel.
 
 • Paychecks & Bank Account Info panel.
+
+TODO: 
+
+1. Separate front end and back end.
+
+2. Incorporate Angular.
